@@ -8,13 +8,13 @@ void Debug::Update()
 
 void Debug::Draw()
 {
-	clsDx;
+	clsDx();
 
 	printfDx("LeftStickX : %.0f \n", Input::GetInput().GetLeftStickX());
 	printfDx("LeftStickY : %.0f \n", Input::GetInput().GetLeftStickY());
 	printfDx("LeftStickPower : %.0f \n", Input::GetInput().GetLeftStickPower());
 
-	DrawGridLine(5.0f, 50.0f);
+	DrawGridLine(10.0f, 200.0f);
 }
 
 void Debug:: DrawGridLine(float interval, float diameter)

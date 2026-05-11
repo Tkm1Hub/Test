@@ -12,17 +12,28 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void SetCamera();
+	void SetCamera(const std::weak_ptr<Camera>& cameraPtr);
 
 	const VECTOR& GetModelForward() const { return modelFoward; }
 
 private:
-	void PlayerMove();
+
+	float Accel = 0.035f;				// 移動加速度
+	float Decel = 0.9f;				// 移動減速度
+	float MaxMoveSpeed = 0.7;			// 最大移動速度
 
 	std::weak_ptr<Camera> camera;
 
-	VECTOR moveVec;
+	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR moveVelocity = VGet(0.0f, 0.0f, 0.0f);		// x,z方向移動速度
+	float verticalVelocity = 0.0f;	// 垂直方向速度
+	VECTOR modelFoward = VGet(0.0f, 0.0f, 0.0f);
 
-	float moveSpeed = 0.5f;
+	float currentMoveSpeed = 0.0f;
 	bool isMove;
+
+
+	void PlayerMove();
+	void culcMoveSpeed(const VECTOR& input);
+	VECTOR GetMoveInput();		// スティックによる移動ベクトルの取得
 };

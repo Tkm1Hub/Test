@@ -29,7 +29,6 @@ void Input::CalcStickInput()
     rightStickX = 0.0f;
     rightStickY = 0.0f;
 
-
     // 左右のスティックの状態を取得
     GetJoypadAnalogInput(&inputX_L, &inputY_L, DX_INPUT_PAD1);
     GetJoypadAnalogInputRight(&inputX_R, &inputY_R, DX_INPUT_PAD1);

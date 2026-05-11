@@ -16,19 +16,35 @@ void TestScene::Init()
 	debug = std::make_shared<Debug>();
 	objects = std::make_shared<Objects>();
 	player = std::make_shared<Player>();
+	camera = std::make_shared<Camera>();
+
+	camera->SetPlayer(player);
+	player->SetCamera(camera);
 
 	// オブジェクトリストに追加
 	objects->Add(player);
 
-	// カメラ設定
-	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 5.0f, -10.0f), VGet(0.0f, 5.0f, 1.0f));
-	SetCameraNearFar(10, 500);
+	camera->Init();
 
+	SetMaterialUseVertSpcColor(false);
+
+	MATERIALPARAM Material;
+
+	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);
+	Material.Specular = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
+	Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
+	Material.Emissive = GetColorF(0.0f, 0.0f, 0.5f, 0.0f);
+	Material.Power = 20.0f;
+	SetMaterialParam(Material);
+
+	SetLightDifColor(GetColorF(0.7f, 0.7f, 0.7f, 0.0f));
 }
 
 void TestScene::Update()
 {
 	Input::GetInput().Update();
+	objects->Update();
+	camera->Update();
 }
 
 void TestScene::Draw() const

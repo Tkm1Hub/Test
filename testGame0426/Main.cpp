@@ -16,7 +16,7 @@ int constexpr SCREEN_COLOR = 32;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	//全画面モード
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(FALSE);
 
 	// 画面のサイズと色深度の設定
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_COLOR);
