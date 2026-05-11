@@ -427,3 +427,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+testGame0426/Base.vcxproj
+testGame0426/Base.vcxproj.filters
