@@ -427,6 +427,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
-testGame0426/Base.vcxproj
-testGame0426/Base.vcxproj.filters
 /Dxlib_h
+testGame0426/Log.txt
+testGame0426/Log.txt
+*.txt

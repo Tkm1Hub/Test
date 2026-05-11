@@ -13,6 +13,7 @@ void Debug::Draw()
 	printfDx("LeftStickX : %.0f \n", Input::GetInput().GetLeftStickX());
 	printfDx("LeftStickY : %.0f \n", Input::GetInput().GetLeftStickY());
 	printfDx("LeftStickPower : %.0f \n", Input::GetInput().GetLeftStickPower());
+	printfDx("nowFrameInput : %i \n", Input::GetInput().GetNowFrameInput());
 
 	DrawGridLine(10.0f, 200.0f);
 }

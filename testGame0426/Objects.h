@@ -6,6 +6,7 @@ public:
 	std::vector<std::shared_ptr<Object>> objects;
 
 	void Add(std::shared_ptr<Object> obj);
+	void Init();
 	void Update();
 	void Draw();
 };

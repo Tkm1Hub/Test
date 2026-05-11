@@ -1,0 +1,15 @@
+#include "Object.h"
+
+void Object::ApplyGravity()
+{
+	if (isGround) return;
+
+	verticalVelocity -= GRAVITY;
+	
+	// ë¨ìxÇ™ëÅÇ≠Ç»ÇËÇ∑Ç¨Ç»Ç¢ÇÊÇ§Ç…êßå¿
+	if (verticalVelocity < -1.0f)
+	{
+		verticalVelocity = -1.0;
+	}
+
+}

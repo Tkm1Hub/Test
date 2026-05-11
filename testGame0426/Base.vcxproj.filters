@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Include">
+      <UniqueIdentifier>{dc7136ea-5dbf-470a-9320-77c2f91f6bd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneLibrary">
+      <UniqueIdentifier>{3a13e8f3-071d-4bf6-a392-657a738c1647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scenes">
+      <UniqueIdentifier>{5dd5ef34-cba4-45e0-a93e-dfe752d9f350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scenes\TestScene">
+      <UniqueIdentifier>{c9f39b34-388f-4708-9922-0654dc7ae028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object">
+      <UniqueIdentifier>{a0c6b1bb-f6e9-4849-8e1e-410dd86cf306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Player">
+      <UniqueIdentifier>{0566a9ed-fae0-4220-bbcc-c11f793619d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{69b09cc4-3064-4992-802d-2d10c67c4c54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Camera">
+      <UniqueIdentifier>{853ec62f-e5fb-470e-9e83-f2e6f802c147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Debug">
+      <UniqueIdentifier>{7541a14b-9bf0-4799-a42f-cea83049b0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects">
+      <UniqueIdentifier>{8646f1b3-cdf6-4a92-a653-3d52f4d77802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State">
+      <UniqueIdentifier>{4d344983-2f1f-42cf-a87d-6bee72bd2c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState">
+      <UniqueIdentifier>{9741a187-9204-4c31-91c4-1e54e86be156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Jump">
+      <UniqueIdentifier>{7174c345-3827-425f-91c5-bf4fbee164cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Attack">
+      <UniqueIdentifier>{a6e70fc1-87d5-4c4c-a857-dd07e53fa5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Dodge">
+      <UniqueIdentifier>{80416491-4c51-4679-836b-04738d45db89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Guard">
+      <UniqueIdentifier>{c3077dfb-a000-4b68-868c-a65f6b3524c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Damage">
+      <UniqueIdentifier>{2ba2841a-7f2d-4b37-b126-8f0650eb8672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Dead">
+      <UniqueIdentifier>{759422ef-ec55-4945-b25f-c90730f6ed78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Idle">
+      <UniqueIdentifier>{db57ecd1-3507-49ce-8153-db231174f91a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Walk">
+      <UniqueIdentifier>{5cd0a3ff-ea49-4bfd-b2ce-95999da72d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\StateMachine">
+      <UniqueIdentifier>{573f8bbc-2acc-439a-9af3-f58cb3a122c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Fall">
+      <UniqueIdentifier>{b8e4d2ee-6d5e-4827-9627-daceb9dcadd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\ObjectBase">
+      <UniqueIdentifier>{9586edd5-4d9a-4792-8dfb-f4f78c7247d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>ソース ファイル\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\SceneLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\SceneLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>ソース ファイル\Scenes\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects.cpp">
+      <Filter>ソース ファイル\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>ソース ファイル\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWalkState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFallState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Fall</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>ソース ファイル\object\ObjectBase</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>ソース ファイル\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ソース ファイル\SceneLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\SceneLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>ソース ファイル\Scenes\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects.h">
+      <Filter>ソース ファイル\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>ソース ファイル\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="StateBase.h">
+      <Filter>ソース ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>ソース ファイル\State\PlayerState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWalkState.h">
+      <Filter>ソース ファイル\State\PlayerState\Walk</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ソース ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateBase.h">
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpState.h">
+      <Filter>ソース ファイル\State\PlayerState\Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFallState.h">
+      <Filter>ソース ファイル\State\PlayerState\Fall</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>ソース ファイル\object\ObjectBase</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

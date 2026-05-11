@@ -23,6 +23,8 @@ public:
         return instance;
     }
 
+    XINPUT_STATE inputState;
+
     //ƒL[‚Ìí—Ş
     enum KeyKinds
     {

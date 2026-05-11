@@ -24,6 +24,7 @@ void TestScene::Init()
 	// オブジェクトリストに追加
 	objects->Add(player);
 
+	objects->Init();
 	camera->Init();
 
 	SetMaterialUseVertSpcColor(false);
