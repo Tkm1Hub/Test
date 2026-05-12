@@ -22,8 +22,8 @@ void PlayerJumpState::OnUpdate()
 	// verticalVelocity‚ª‚OˆÈ‰º‚È‚çFall
 	if (GetPlayer()->GetVerticalVelocity() < 0.0f)
 	{
-		auto spFallState = std::make_shared<PlayerFallState>();
-		GetPlayer()->ChangeState(spFallState);
+		auto state = std::make_shared<PlayerFallState>();
+		GetPlayer()->ChangeState(state);
 		return;
 	}
 }

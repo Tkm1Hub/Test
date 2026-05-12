@@ -21,15 +21,15 @@ void PlayerFallState::OnUpdate()
 	if (!Input::GetInput().GetIsMoveLStick())
 	{
 		// Idle
-		auto spIdleState = std::make_shared<PlayerIdleState>();
-		GetPlayer()->ChangeState(spIdleState);
+		auto state = std::make_shared<PlayerIdleState>();
+		GetPlayer()->ChangeState(state);
 		return;
 	}
 	else
 	{
 		// Walk
-		auto spWalkState = std::make_shared<PlayerWalkState>();
-		GetPlayer()->ChangeState(spWalkState);
+		auto state = std::make_shared<PlayerWalkState>();
+		GetPlayer()->ChangeState(state);
 		return;
 	}
 }

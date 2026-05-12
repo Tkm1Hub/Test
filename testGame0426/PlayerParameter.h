@@ -8,8 +8,10 @@ struct PlayerParameter
 
 	float jumpPower = 0.8f;
 
-	float dodgeSpeed = 1.2f;
+	float dodgeSpeed = 3.0f;
 	float angleSpeed = 0.5f;
 
 	int attackPower = 10;
+
+	float dodgeTime = 0.35;
 };

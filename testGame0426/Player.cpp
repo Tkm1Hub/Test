@@ -67,7 +67,7 @@ void Player::Draw()
 	// Velocity
 	DrawLine3D(
 		pos,
-		VAdd(pos, VScale(moveVelocity, 6.5f)),
+		VAdd(pos, VScale(moveVelocity, 8.0f)),
 		GetColor(0, 0, 255)
 	);
 

@@ -4,6 +4,7 @@
 #include "PlayerIdleState.h"
 #include "PlayerWalkState.h"
 #include "PlayerJumpState.h"
+#include "PlayerDodgeState.h"
 
 void PlayerWalkState::OnStart()
 {
@@ -17,18 +18,27 @@ void PlayerWalkState::OnUpdate()
 	// 左スティックが入力なしならIdle
 	if (!Input::GetInput().GetIsMoveLStick())
 	{
-		auto spIdleState = std::make_shared<PlayerIdleState>();
-		GetPlayer()->ChangeState(spIdleState);
+		auto state = std::make_shared<PlayerIdleState>();
+		GetPlayer()->ChangeState(state);
 		return;
 	}
 
 	// Aボタンでジャンプ
 	if (Input::GetInput().GetNowFrameNewInput() & 16)
 	{
-		auto spJumpState = std::make_shared<PlayerJumpState>();
-		GetPlayer()->ChangeState(spJumpState);
+		auto state = std::make_shared<PlayerJumpState>();
+		GetPlayer()->ChangeState(state);
 		return;
 	}
+
+	// Rボタンで回避
+	if (Input::GetInput().GetNowFrameNewInput() & 516)
+	{
+		auto state = std::make_shared<PlayerDodgeState>();
+		GetPlayer()->ChangeState(state);
+		return;
+	}
+
 }
 
 void PlayerWalkState::OnExit()
