@@ -23,7 +23,7 @@ void PlayerWalkState::OnUpdate()
 	}
 
 	// Aボタンでジャンプ
-	if (Input::GetInput().GetNowFrameNewInput() & PAD_INPUT_3)
+	if (Input::GetInput().GetNowFrameNewInput() & 16)
 	{
 		auto spJumpState = std::make_shared<PlayerJumpState>();
 		GetPlayer()->ChangeState(spJumpState);

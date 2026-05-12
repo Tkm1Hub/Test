@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "PlayerIdleState.h"
+#include "Time.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
 {
@@ -29,6 +30,9 @@ void Player::Update()
 	// ステート更新
 	stateMachine.Update();
 
+	// 方向更新
+	RotateCharacter();
+
 	// 重力を適用
 	ApplyGravity();
 
@@ -39,8 +43,36 @@ void Player::Update()
 void Player::Draw()
 {
 	DrawCapsule3D(pos, VAdd(pos, VGet(0.0f, 5.0f, 0.0f)), 2.0f, 8, GetColor(18, 105, 204), GetColor(0, 0, 0),TRUE);
+
+	// 向いてる方向表示
+	DrawLine3D(
+		VAdd(pos, VGet(0.0f, 2.5f, 0.0f)),
+		VAdd(
+			VAdd(pos, VGet(0.0f, 2.5f, 0.0f)),
+			VScale(forward, 10.0f)
+		),
+		GetColor(255, 0, 0)
+	);
+
+	// 入力方向表示
+	DrawLine3D(
+		VAdd(pos, VGet(0.0f, 2.0f, 0.0f)),
+		VAdd(
+			VAdd(pos, VGet(0.0f, 2.0f, 0.0f)),
+			VScale(input, 8.0f)
+		),
+		GetColor(0, 255, 0)
+	);
+
+	// Velocity
+	DrawLine3D(
+		pos,
+		VAdd(pos, VScale(moveVelocity, 6.5f)),
+		GetColor(0, 0, 255)
+	);
+
+
 	printfDx("[Player.moveVelocity : %f, %f, %f ]", moveVelocity.x, moveVelocity.y, moveVelocity.z);
-	printfDx("");
 }
 
 void Player::ApplyVelocity()
@@ -59,9 +91,15 @@ void Player::ApplyVelocity()
 	// 移動速度を計算
 	culcMoveSpeed();
 
+	float dt =
+		Time::GetInstance().GetScaledDeltaTime()
+		* 60.0f;
+
 	moveVelocity.y = verticalVelocity;	// 垂直移動速度を加算
 
-	pos = VAdd(pos, moveVelocity);
+	VECTOR filalVelocity = VAdd(moveVelocity, externalVelocity);
+
+	pos = VAdd(pos,VScale(filalVelocity,dt));
 
 	if (pos.y < 0.0f)
 	{
@@ -92,18 +130,25 @@ void Player::MoveInput()
 	}
 }
 
+
 void Player::culcMoveSpeed()
 {
+	float dt =
+		Time::GetInstance().GetScaledDeltaTime()
+		* 60.0f;
+
 	// 移動中
 	if (isMove)
 	{
-		moveVelocity.x += input.x * Accel;
-		moveVelocity.z += input.z * Accel;
+		moveVelocity.x += forward.x * Accel * dt;
+		moveVelocity.z += forward.z * Accel * dt;
 	}
 	else
 	{
-		moveVelocity.x *= Decel;
-		moveVelocity.z *= Decel;
+		float decel = powf(Decel, dt);
+
+		moveVelocity.x *= decel * dt;
+		moveVelocity.z *= decel * dt;
 
 		// 微小値停止
 		if (fabs(moveVelocity.x) < 0.001f)
@@ -112,6 +157,12 @@ void Player::culcMoveSpeed()
 		if (fabs(moveVelocity.z) < 0.001f)
 			moveVelocity.z = 0.0f;
 	}
+
+	// 外的速度の減衰
+	float extDecel = powf(Decel, dt);
+
+	externalVelocity.x *= extDecel;
+	externalVelocity.z *= extDecel;
 
 	// 最大速度制限
 	float speed =
@@ -125,4 +176,22 @@ void Player::culcMoveSpeed()
 		moveVelocity.x *= rate;
 		moveVelocity.z *= rate;
 	}
+}
+
+void Player::RotateCharacter()
+{
+	// 入力がないなら回転しない
+	if (VSize(input) <= 0.01f) return;
+
+	float dt =
+		Time::GetInstance().GetScaledDeltaTime()
+		* 60.0f;
+
+	// 現在方向 → 入力方向へ補間
+	forward = VNorm(
+		VAdd(
+			VScale(forward, 1.0f - param.angleSpeed),
+			VScale(input, param.angleSpeed)
+		)
+	);
 }

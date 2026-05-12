@@ -28,7 +28,7 @@ public:
 
 private:
 	long long prevTime = 0;
-	float deltaTime = 0.0f;       // 実時間
-	float scaledDeltaTime = 0.0f; // スロー適用後
-	float timeScale = 1.0f;
+	float deltaTime = 0.0f;			// 実時間
+	float scaledDeltaTime = 0.0f;	// スロー適用後
+	float timeScale = 1.0f;			// タイムスケール
 };

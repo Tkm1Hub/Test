@@ -1,15 +1,13 @@
 #pragma once
 #include "Object.h"
 #include "StateMachine.h"
+#include "PlayerParameter.h"
 
 class Camera;
 class PlayerStateBase;
 class Player :public Object
 {
 public:
-	int HP;			// 体力
-	int Energy;		// 射撃用エネルギー
-
 	void Init() override;
 	void Update() override;
 	void Draw() override;
@@ -19,17 +17,16 @@ public:
 	void ChangeState(std::shared_ptr<PlayerStateBase>a_spState);		// ステート変更
 
 	const VECTOR& GetModelForward() const { return modelFoward; }
+	const VECTOR& GetInputDir() const { return input; }
 
 	void MoveInput();		// スティックによる移動入力
 
-
-	void SetVerticalVelocity(float velocity) { verticalVelocity = velocity; }
-	float GetVerticalVelocity() const { return verticalVelocity; }
-
 	float GetJumpPower() const { return JumpPower; }
+	PlayerParameter GetParam() const { return param; }
 
 private:
 	StateMachine stateMachine;			// ステートマシン
+	PlayerParameter param;				// パラメーター
 
 	float Accel = 0.04f;				// 移動加速度
 	float Decel = 0.88f;				// 移動減速度
@@ -47,4 +44,5 @@ private:
 
 	void ApplyVelocity();
 	void culcMoveSpeed();
+	void RotateCharacter();
 };

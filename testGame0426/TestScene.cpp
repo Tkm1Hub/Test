@@ -5,6 +5,7 @@
 #include "Objects.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Time.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -44,6 +45,7 @@ void TestScene::Init()
 void TestScene::Update()
 {
 	Input::GetInput().Update();
+	Time::GetInstance().Update();
 	objects->Update();
 	camera->Update();
 }

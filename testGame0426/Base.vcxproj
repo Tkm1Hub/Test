@@ -28,6 +28,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDodgeState.cpp" />
     <ClCompile Include="PlayerFallState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -47,9 +49,11 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDodgeState.h" />
     <ClInclude Include="PlayerFallState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpState.h" />
+    <ClInclude Include="PlayerParameter.h" />
     <ClInclude Include="PlayerStateBase.h" />
     <ClInclude Include="PlayerWalkState.h" />
     <ClInclude Include="Scene.h" />
@@ -58,6 +62,7 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

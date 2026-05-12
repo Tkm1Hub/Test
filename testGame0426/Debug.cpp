@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Debug.h"
 #include "Input.h"
+#include "Time.h"
 
 void Debug::Update()
 {
@@ -14,6 +15,7 @@ void Debug::Draw()
 	printfDx("LeftStickY : %.0f \n", Input::GetInput().GetLeftStickY());
 	printfDx("LeftStickPower : %.0f \n", Input::GetInput().GetLeftStickPower());
 	printfDx("nowFrameInput : %i \n", Input::GetInput().GetNowFrameInput());
+	printfDx("TimeScale : %.1f \n", Time::GetInstance().GetTimeScale());
 
 	DrawGridLine(10.0f, 200.0f);
 }

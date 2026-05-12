@@ -83,6 +83,15 @@
     <Filter Include="ソース ファイル\object\Enemy\EnemyMelee">
       <UniqueIdentifier>{f886dedc-a03d-4d74-9d8e-5c4e049197ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Parameter">
+      <UniqueIdentifier>{49d9b4a4-29ee-44d1-9b78-efa0c8720283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Parameter\Player">
+      <UniqueIdentifier>{7d2be7d2-a303-45e7-98a9-2a0365c91728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Time">
+      <UniqueIdentifier>{86af1cc2-b794-4a8a-8603-77a90a0adde4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -135,6 +144,12 @@
     </ClCompile>
     <ClCompile Include="EnemyMelee.cpp">
       <Filter>ソース ファイル\object\Enemy\EnemyMelee</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDodgeState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Dodge</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>ソース ファイル\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +212,15 @@
     </ClInclude>
     <ClInclude Include="EnemyMelee.h">
       <Filter>ソース ファイル\object\Enemy\EnemyMelee</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDodgeState.h">
+      <Filter>ソース ファイル\State\PlayerState\Dodge</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerParameter.h">
+      <Filter>ソース ファイル\Parameter\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>ソース ファイル\Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
