@@ -16,7 +16,7 @@ void PlayerIdleState::OnUpdate()
 	if (Input::GetInput().GetIsMoveLStick())
 	{
 		auto spWalkState = std::make_shared<PlayerWalkState>();
-		player->ChangeState(spWalkState);
+		GetPlayer()->ChangeState(spWalkState);
 		return;
 	}
 
@@ -24,7 +24,7 @@ void PlayerIdleState::OnUpdate()
 	if (Input::GetInput().GetNowFrameNewInput() & PAD_INPUT_3)
 	{
 		auto spJumpState = std::make_shared<PlayerJumpState>();
-		player->ChangeState(spJumpState);
+		GetPlayer()->ChangeState(spJumpState);
 		return;
 	}
 }

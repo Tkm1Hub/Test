@@ -12,29 +12,29 @@ void PlayerFallState::OnStart()
 
 void PlayerFallState::OnUpdate()
 {
-	player->MoveInput();
+	GetPlayer()->MoveInput();
 
 	// pos.yが０以下ならIdle or Walk
-	if (player->GetPosition().y > 0.0f) return;
+	if (GetPlayer()->GetPosition().y > 0.0f) return;
 
 	// 左スティックの操作中かどうかで分岐
 	if (!Input::GetInput().GetIsMoveLStick())
 	{
 		// Idle
 		auto spIdleState = std::make_shared<PlayerIdleState>();
-		player->ChangeState(spIdleState);
+		GetPlayer()->ChangeState(spIdleState);
 		return;
 	}
 	else
 	{
 		// Walk
 		auto spWalkState = std::make_shared<PlayerWalkState>();
-		player->ChangeState(spWalkState);
+		GetPlayer()->ChangeState(spWalkState);
 		return;
 	}
 }
 
 void PlayerFallState::OnExit()
 {
-	player->SetIsGraund(true);
+	GetPlayer()->SetIsGraund(true);
 }

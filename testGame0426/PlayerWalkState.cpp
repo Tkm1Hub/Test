@@ -12,13 +12,13 @@ void PlayerWalkState::OnStart()
 
 void PlayerWalkState::OnUpdate()
 {
-	player->MoveInput();
+	GetPlayer()->MoveInput();
 
 	// 左スティックが入力なしならIdle
 	if (!Input::GetInput().GetIsMoveLStick())
 	{
 		auto spIdleState = std::make_shared<PlayerIdleState>();
-		player->ChangeState(spIdleState);
+		GetPlayer()->ChangeState(spIdleState);
 		return;
 	}
 
@@ -26,7 +26,7 @@ void PlayerWalkState::OnUpdate()
 	if (Input::GetInput().GetNowFrameNewInput() & PAD_INPUT_3)
 	{
 		auto spJumpState = std::make_shared<PlayerJumpState>();
-		player->ChangeState(spJumpState);
+		GetPlayer()->ChangeState(spJumpState);
 		return;
 	}
 }

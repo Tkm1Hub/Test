@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyMelee.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -38,6 +40,9 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMelee.h" />
+    <ClInclude Include="EnemyStateBase.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Objects.h" />

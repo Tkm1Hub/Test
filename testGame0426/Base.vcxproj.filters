@@ -74,6 +74,15 @@
     <Filter Include="ソース ファイル\object\ObjectBase">
       <UniqueIdentifier>{9586edd5-4d9a-4792-8dfb-f4f78c7247d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\Enemy">
+      <UniqueIdentifier>{b0b9d8d2-38f8-4801-b64f-2fa6fceb0612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\EnemyState">
+      <UniqueIdentifier>{f0d4242f-a299-4024-a567-a7ccdb90a762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Enemy\EnemyMelee">
+      <UniqueIdentifier>{f886dedc-a03d-4d74-9d8e-5c4e049197ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -120,6 +129,12 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>ソース ファイル\object\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMelee.cpp">
+      <Filter>ソース ファイル\object\Enemy\EnemyMelee</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +188,15 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>ソース ファイル\object\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ソース ファイル\object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateBase.h">
+      <Filter>ソース ファイル\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMelee.h">
+      <Filter>ソース ファイル\object\Enemy\EnemyMelee</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

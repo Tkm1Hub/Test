@@ -1,7 +1,6 @@
 #pragma once
 #include "Object.h"
 #include "StateMachine.h"
-#include "PlayerStateBase.h"
 
 class Camera;
 class PlayerStateBase;

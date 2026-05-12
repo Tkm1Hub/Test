@@ -7,23 +7,23 @@
 void PlayerJumpState::OnStart()
 {
 	// ジャンプ力を加算
-	player->SetVerticalVelocity(
-		player->GetJumpPower()
+	GetPlayer()->SetVerticalVelocity(
+		GetPlayer()->GetJumpPower()
 	);
 
 	// 着地フラグをFalseに
-	player->SetIsGraund(false);
+	GetPlayer()->SetIsGraund(false);
 }
 
 void PlayerJumpState::OnUpdate()
 {
-	player->MoveInput();
+	GetPlayer()->MoveInput();
 
 	// verticalVelocityが０以下ならFall
-	if (player->GetVerticalVelocity() < 0.0f)
+	if (GetPlayer()->GetVerticalVelocity() < 0.0f)
 	{
 		auto spFallState = std::make_shared<PlayerFallState>();
-		player->ChangeState(spFallState);
+		GetPlayer()->ChangeState(spFallState);
 		return;
 	}
 }

@@ -1,15 +1,13 @@
 #pragma once
 #include "StateBase.h"
+#include "Player.h"
 
-class Player;
 class PlayerStateBase : public StateBase
 {
-public:
-	void SetOwner(Player* a_pPlayer)
-	{
-		player = a_pPlayer;
-	}
-
 protected:
-	Player* player = nullptr;
+
+	Player* GetPlayer()
+	{
+		return static_cast<Player*>(Owner);
+	}
 };
