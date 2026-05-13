@@ -3,53 +3,49 @@
 #include "Input.h"
 #include "PlayerIdleState.h"
 #include "PlayerWalkState.h"
-#include "PlayerDodgeState.h"
+#include "PlayerAttackState.h"
 #include "Time.h"
 
-void PlayerDodgeState::OnStart()
+void PlayerAttackState::OnStart()
 {
-	VECTOR dodgeDir = GetPlayer()->GetMoveDir();
+	VECTOR attackDir = GetPlayer()->GetMoveDir();
 
 	// 入力が無ければ前方向を使用
-	if (VSize(dodgeDir) <= 0.1f)
+	if (VSize(attackDir) <= 0.1f)
 	{
-		dodgeDir = GetPlayer()->GetForward();
+		attackDir = GetPlayer()->GetForward();
 	}
 
 	GetPlayer()->SetExternalVelocity(
-		VScale(dodgeDir, GetPlayer()->GetParam().dodgeSpeed)
+		VScale(attackDir, GetPlayer()->GetParam().attackSpeed)
 	);
 }
 
-void PlayerDodgeState::OnUpdate()
+void PlayerAttackState::OnUpdate()
 {
-	dodgeTimer += Time::GetInstance().GetDeltaTime();
+	attackTimer += Time::GetInstance().GetDeltaTime();
 
 	// 回避時間が経過したらステート変更
-	if (dodgeTimer >=
+	if (attackTimer >=
 		GetPlayer()->GetParam().dodgeTime)
 	{
 		// スティック操作の有無で Walk or Idle
 		if (Input::GetInput().GetIsMoveLStick())
 		{
 			// Walk
-			auto state =
-				std::make_shared<PlayerWalkState>();
-
+			auto state = std::make_shared<PlayerWalkState>();
 			GetPlayer()->ChangeState(state);
 		}
 		else
 		{
 			// Idle
-			auto state =
-				std::make_shared<PlayerIdleState>();
-
+			auto state = std::make_shared<PlayerIdleState>();
 			GetPlayer()->ChangeState(state);
 		}
 	}
 }
 
-void PlayerDodgeState::OnExit()
+void PlayerAttackState::OnExit()
 {
 
 }

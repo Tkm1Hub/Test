@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Input.h"
+#include "Time.h"
 
 void Camera::SetPlayer(const std::weak_ptr<Player>& playerPtr)
 {
@@ -16,7 +17,7 @@ void Camera::Init()
 	if (auto p = player.lock())
 	{
 		VECTOR playerPos = p->GetPosition();
-		VECTOR forward = p->GetModelForward(); // プレイヤーの前方向
+		VECTOR forward = p->GetForward(); // プレイヤーの前方向
 
 		// 注視点はプレイヤーの頭上
 		target = VAdd(playerPos, VGet(0.0f, LOOK_OFFSET_Y, 0.0f));
@@ -37,7 +38,7 @@ void Camera::Update()
 		VECTOR playerPos = p->GetPosition();
 
 		// カメラの旋回速度を計算
-		currentAngleSpeed = CalcAngleSpeed();
+		//currentAngleSpeed = CalcAngleSpeed();
 
 		// 入力
 		InputAngle();
@@ -46,7 +47,7 @@ void Camera::Update()
 		target = VAdd(playerPos, VGet(0.0f, LOOK_OFFSET_Y, 0.0f));
 
 		// カメラの方向を保存
-		forward = VSub(pos, target);
+		forward = VSub(target, pos);
 		forward.y = 0.0f;
 		forward = VNorm(forward);
 
@@ -87,45 +88,30 @@ float Camera::CalcAngleSpeed()
 
 void Camera::InputAngle()
 {
-	// X軸
-	if (0.0f > Input::GetInput().GetRightStickX())
-	{
-		angleH -= currentAngleSpeed;
-		// １８０度以上になったら角度値が大きくなりすぎないように３６０度を足す
-		if (angleH > DX_PI_F)
-		{
-			angleH += DX_TWO_PI_F;
-		}
-	}
-	else if (Input::GetInput().GetRightStickX() > 0.0f)
-	{
-		angleH += currentAngleSpeed;
-		// －１８０度以下になったら角度値が大きくなりすぎないように３６０度を引く
-		if (angleH < -DX_PI_F)
-		{
-			angleH -= DX_TWO_PI_F;
-		}
-	}
+	float dt =
+		Time::GetInstance().GetScaledDeltaTime()
+		* 60.0f;
 
-	// Y軸
-	if (0.0f > Input::GetInput().GetRightStickY())
-	{
-		angleV += currentAngleSpeed;
-		// ある一定角度以下にはならないようにする
-		if (angleV > DX_PI_F * 0.5f - 0.6f)
-		{
-			angleV = DX_PI_F * 0.5f - 0.6f;
-		}
-	}
-	else if (Input::GetInput().GetRightStickY() > 0.0f)
-	{
-		angleV -= currentAngleSpeed;
-		// ある一定角度以上にはならないようにする
-		if (angleV < -DX_PI_F * 0.5f + 0.6f)
-		{
-			angleV = -DX_PI_F * 0.5f + 0.6f;
-		}
-	}
+	float stickX = Input::GetInput().GetRightStickX();
+	float stickY = Input::GetInput().GetRightStickY();
+
+	// 感度
+	float sensitivity = 0.03f;
+
+	// 横回転
+	angleH += stickX * sensitivity * dt;
+
+	// 縦回転
+	angleV += stickY * sensitivity * dt;
+
+	// 縦角度制限
+	float limit = DX_PI_F / 2.0f - 0.2f;
+
+	if (angleV > limit)
+		angleV = limit;
+
+	if (angleV < -limit)
+		angleV = -limit;
 }
 
 void Camera::FixCameraPosition()

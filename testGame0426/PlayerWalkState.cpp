@@ -5,6 +5,7 @@
 #include "PlayerWalkState.h"
 #include "PlayerJumpState.h"
 #include "PlayerDodgeState.h"
+#include "PlayerAttackState.h"
 
 void PlayerWalkState::OnStart()
 {
@@ -24,7 +25,7 @@ void PlayerWalkState::OnUpdate()
 	}
 
 	// Aボタンでジャンプ
-	if (Input::GetInput().GetNowFrameNewInput() & 16)
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_A))
 	{
 		auto state = std::make_shared<PlayerJumpState>();
 		GetPlayer()->ChangeState(state);
@@ -32,13 +33,20 @@ void PlayerWalkState::OnUpdate()
 	}
 
 	// Rボタンで回避
-	if (Input::GetInput().GetNowFrameNewInput() & 516)
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_RIGHT_SHOULDER))
 	{
 		auto state = std::make_shared<PlayerDodgeState>();
 		GetPlayer()->ChangeState(state);
 		return;
 	}
 
+	// Xボタンで攻撃
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_X))
+	{
+		auto state = std::make_shared<PlayerAttackState>();
+		GetPlayer()->ChangeState(state);
+		return;
+	}
 }
 
 void PlayerWalkState::OnExit()

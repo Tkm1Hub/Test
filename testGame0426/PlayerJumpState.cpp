@@ -8,7 +8,7 @@ void PlayerJumpState::OnStart()
 {
 	// ジャンプ力を加算
 	GetPlayer()->SetVerticalVelocity(
-		GetPlayer()->GetJumpPower()
+		GetPlayer()->GetParam().jumpPower
 	);
 
 	// 着地フラグをFalseに

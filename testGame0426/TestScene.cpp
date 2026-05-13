@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "Time.h"
+#include "EnemyMelee.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -18,15 +19,19 @@ void TestScene::Init()
 	objects = std::make_shared<Objects>();
 	player = std::make_shared<Player>();
 	camera = std::make_shared<Camera>();
+	enemyMelee = std::make_shared<EnemyMelee>();
 
 	camera->SetPlayer(player);
 	player->SetCamera(camera);
+	enemyMelee->SetPlayer(player);
 
 	// オブジェクトリストに追加
 	objects->Add(player);
+	objects->Add(enemyMelee);
 
 	objects->Init();
 	camera->Init();
+	enemyMelee->Init();
 
 	SetMaterialUseVertSpcColor(false);
 
@@ -35,7 +40,7 @@ void TestScene::Init()
 	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);
 	Material.Specular = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
 	Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-	Material.Emissive = GetColorF(0.0f, 0.0f, 0.5f, 0.0f);
+	Material.Emissive = GetColorF(0.0f, 0.0f, 0.1f, 0.0f);
 	Material.Power = 20.0f;
 	SetMaterialParam(Material);
 

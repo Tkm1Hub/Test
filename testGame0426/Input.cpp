@@ -3,17 +3,27 @@
 
 void Input::Update()
 {
-    //ひとつ前のフレームの入力を変数にとっておく
-    int Old = nowFrameInput;
-    //現在の入力状況を取得
-    nowFrameInput = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+    // 前フレーム保存
+    oldState = nowState;
 
-    //スティック関連の数値計算
-    CalcStickInput();
+    // XInput取得
+    GetJoypadXInputState(DX_INPUT_KEY_PAD1,&nowState);
 
-    //今のフレームで新たに押されたボタンのビットだけ立っている値を nowFrameNewInput に保存する。
-    nowFrameNewInput = nowFrameInput & ~Old;
+    UpdateStick();
 }
+
+bool Input::IsPress(int button) const
+{
+    return nowState.Buttons[button] == 1;
+}
+
+bool Input::IsTrigger(int button) const
+{
+    return
+        nowState.Buttons[button] == 1 &&
+        oldState.Buttons[button] == 0;
+}
+
 
 
 /// @brief スティックの数値を計算
@@ -66,4 +76,39 @@ void Input::CalcStickInput()
     // 1000を上限にクランプ（超えたら1000にする）
     if (rightStickPower > 1000.0f) rightStickPower = 1000.0f;
     if (leftStickPower > 1000.0f) leftStickPower = 1000.0f;
+}
+
+void Input::UpdateStick()
+{
+    // -1.0 ～ 1.0
+    leftStickX = nowState.ThumbLX / 32767.0f;
+
+    leftStickY = nowState.ThumbLY / 32767.0f;
+
+    rightStickX = nowState.ThumbRX / 32767.0f;
+
+    rightStickY = nowState.ThumbRY / 32767.0f;
+
+    // デッドゾーン
+    isMoveLStick = (fabs(leftStickX) > DEADZONE || fabs(leftStickY) > DEADZONE);
+
+    isMoveRStick = (fabs(rightStickX) > DEADZONE || fabs(rightStickY) > DEADZONE);
+
+    // デッドゾーン内は0
+    if (!isMoveLStick)
+    {
+        leftStickX = 0.0f;
+        leftStickY = 0.0f;
+    }
+
+    if (!isMoveRStick)
+    {
+        rightStickX = 0.0f;
+        rightStickY = 0.0f;
+    }
+
+    // トリガー
+    leftTrigger = nowState.LeftTrigger / 255.0f;
+
+    rightTrigger = nowState.RightTrigger / 255.0f;
 }

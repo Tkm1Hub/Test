@@ -1,17 +1,16 @@
 #pragma once
 #include "stdafx.h"
 #include "StateMachine.h"
+
 class StateMachine;
 class Object
 {
 public:
 	virtual void Init(){}		// 初期化
 	virtual void Update(){}		// 更新
-	virtual void Draw(){}		// 描画
+	virtual void Draw();		// 描画
 
 	virtual ~Object(){}
-
-	void ApplyGravity();		// 重力適応
 
 	// 取得関数
 	VECTOR GetPosition() const { return pos; }
@@ -23,6 +22,7 @@ public:
 	float GetVerticalVelocity() const { return verticalVelocity; }
 	VECTOR GetExternalVelocity() const { return externalVelocity; }
 	VECTOR GetMoveVelocity() const { return moveVelocity; }
+	const VECTOR& GetMoveDir() const { return moveDir; }
 
 	void SetMoveVelocity(VECTOR velocity) { moveVelocity = velocity; }
 	void SetExternalVelocity(VECTOR velocity) { externalVelocity = velocity; }
@@ -30,21 +30,34 @@ public:
 	void SetIsGraund(bool flag) { isGround = flag; }
 
 protected:
-	static constexpr float GRAVITY = 0.04f;	// 重力
+	float moveAccel = 0.04f;
+	float moveDecel = 0.88f;
+
+	float angleSpeed = 0.5f;
+	float gravity = 0.04f;
 
 	StateMachine stateMachine;					// ステートマシン
 	int modelHandle = -1;						// モデルハンドル
 
 	VECTOR pos = VGet(0.0f, 0.0f, 0.0f);		// 座標
+	VECTOR moveDir = VGet(0.0f, 0.0f, 0.0f);	// 移動方向
 	VECTOR forward = VGet(0.0f, 0.0f, 0.0f);	// 前方
 	VECTOR scale = VGet(0.0f, 0.0f, 0.0f);		// モデルサイズ
 
-	VECTOR moveVelocity = VGet(0.0f, 0.0f, 0.0f);	// 移動速度
-	float  verticalVelocity = 0.0f;					// 垂直速度
+	VECTOR moveVelocity = VGet(0.0f, 0.0f, 0.0f);		// 移動速度
 	VECTOR externalVelocity = VGet(0.0f, 0.0f, 0.0f);	// 外的影響速度
+	float  verticalVelocity = 0.0f;						// 垂直速度
+
+	float maxMoveSpeed = 0.0f;				// 最大移動速度
 
 	bool isActive = true;					// 有効フラグ
 	bool isDestroy = false;					// 削除フラグ
 	bool isCollisionEnabled = true;			// 当たり判定フラグ
+	bool isMove = false;					// 移動フラグ
 	bool isGround = false;					// 着地フラグ
+
+	void ApplyVelocity();
+	void CalcMoveSpeed();
+	void RotateAngle();
+	void ApplyGravity();		// 重力適応
 };

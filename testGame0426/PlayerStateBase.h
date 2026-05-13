@@ -5,7 +5,6 @@
 class PlayerStateBase : public StateBase
 {
 protected:
-
 	Player* GetPlayer()
 	{
 		return static_cast<Player*>(Owner);

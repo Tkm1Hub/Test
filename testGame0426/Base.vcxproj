@@ -22,7 +22,10 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyAttackState.cpp" />
+    <ClCompile Include="EnemyChaseState.cpp" />
     <ClCompile Include="EnemyMelee.cpp" />
+    <ClCompile Include="EnemyStateBase.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -38,8 +41,13 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="PlayerAttackState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyAttackState.h" />
+    <ClInclude Include="EnemyChaseState.h" />
+    <ClInclude Include="EnemyMeleeParameter.h" />
+    <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Enemy.h" />
