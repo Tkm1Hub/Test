@@ -1,10 +1,12 @@
 #pragma once
-#include "Object.h"
+#include "DamageableObject.h"
 #include "PlayerParameter.h"
+#include "AttackData.h"
 
 class Camera;
 class PlayerStateBase;
-class Player :public Object
+class AttackHitSphere;
+class Player :	public DamageableObject
 {
 public:
 	void Init() override;
@@ -17,9 +19,15 @@ public:
 
 	void MoveInput();		// スティックによる移動入力
 
-	PlayerParameter& GetParam() { return param; }
+	void Attack(const AttackStep& step);	// 近接攻撃
 
+	void OnHit(const DamageInfo& info) override;
+
+	const AttackData& GetAttackData() { return attackData; }
+
+	PlayerParameter& GetParam() { return param; }
 private:
 	PlayerParameter param;				// パラメーター
 	std::weak_ptr<Camera> camera;
+	AttackData attackData;
 };

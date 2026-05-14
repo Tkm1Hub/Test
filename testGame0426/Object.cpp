@@ -31,22 +31,39 @@ void Object::Draw()
     );
 }
 
+void Object::AddVerticalVelocity(float power)
+{
+    verticalVelocity = power;
+
+    if (verticalVelocity > 0.0f)
+    {
+        isGround = false;
+    }
+}
+
 void Object::ApplyGravity()
 {
-	if (isGround) return;
+    // 着地状態だと早期リターン
+    if (isGround)return;
 
 	verticalVelocity -= gravity;
 	
 	// 速度が早くなりすぎないように制限
-	if (verticalVelocity < -1.0f)
+	if (verticalVelocity < -5.0)
 	{
-		verticalVelocity = -1.0;
+		verticalVelocity = -5.0;
 	}
 
 }
 
 void Object::ApplyVelocity()
 {
+    // 上方向に向いているなら空中
+    if (verticalVelocity > 0.0f)
+    {
+        isGround = false;
+    }
+
     isMove = (VSize(moveDir) > 0.01f);
 
     CalcMoveSpeed();
@@ -77,8 +94,16 @@ void Object::CalcMoveSpeed()
 
     if (isMove)
     {
-        moveVelocity.x += forward.x * moveAccel * dt;
-        moveVelocity.z += forward.z * moveAccel * dt;
+        VECTOR targetVelocity =
+            VScale(forward, maxMoveSpeed);
+
+        moveVelocity = VAdd(
+            moveVelocity,
+            VScale(
+                VSub(targetVelocity, moveVelocity),
+                moveAccel * dt
+            )
+        );
     }
     else
     {
@@ -123,12 +148,34 @@ void Object::CalcMoveSpeed()
 
 void Object::RotateAngle()
 {
-    if (VSize(moveDir) <= 0.01f) return;
+    if (VSize(lookDir) <= 0.01f) return;
 
     forward = VNorm(
         VAdd(
             VScale(forward, 1.0f - angleSpeed),
-            VScale(moveDir, angleSpeed)
+            VScale(lookDir, angleSpeed)
+        )
+    );
+}
+
+VECTOR Object::GetCapsuleBottom()const
+{
+    return VAdd(pos, VGet(0, bodyRadius, 0));
+}
+
+VECTOR Object::GetCapsuleTop()const
+{
+    return VAdd(GetCapsuleBottom(), VGet(0.0f, bodyHeight, 0.0f));
+}
+
+VECTOR Object::GetCapsuleCenter()const
+{
+    return VAdd(
+        pos,
+        VGet(
+            0.0f,
+            bodyRadius + bodyHeight * 0.5f,
+            0.0f
         )
     );
 }

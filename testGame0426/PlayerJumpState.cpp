@@ -7,7 +7,7 @@
 void PlayerJumpState::OnStart()
 {
 	// ƒWƒƒƒ“ƒv—Í‚ð‰ÁŽZ
-	GetPlayer()->SetVerticalVelocity(
+	GetPlayer()->AddVerticalVelocity(
 		GetPlayer()->GetParam().jumpPower
 	);
 

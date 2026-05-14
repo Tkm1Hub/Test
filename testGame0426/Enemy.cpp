@@ -16,6 +16,8 @@ void Enemy::ChangeState(std::shared_ptr<EnemyStateBase> a_spState)
 
 void Enemy::Update()
 {
+	moveDir = VGet(0.0f, 0.0f, 0.0f);		// 毎フレーム移動入力をリセット
+
 	// ステート更新
 	stateMachine.Update();
 
@@ -40,6 +42,7 @@ void Enemy::MoveTo(const VECTOR& targetPos)
 	dir = VNorm(dir);
 
 	moveDir = dir;
+	lookDir = moveDir;
 }
 
 void Enemy::Chase()
@@ -48,4 +51,26 @@ void Enemy::Chase()
 	if (!p) return;
 
 	MoveTo(p->GetPosition());
+}
+
+float Enemy::GetDistanceToPlayer() const
+{
+	auto p = player.lock();
+	if (!p) return FLT_MAX;
+
+	VECTOR dir = VSub(p->GetPosition(), pos);
+	dir.y = 0.0f;
+
+	return VSize(dir);
+}
+
+VECTOR Enemy::GetDirectionToPlayer()const
+{
+	auto p = player.lock();
+	if (!p) return VGet(0.0f,0.0f,0.0f);
+
+	VECTOR dir = VSub(p->GetPosition(), pos);
+	dir.y = 0.0f;
+
+	return VNorm(dir);
 }

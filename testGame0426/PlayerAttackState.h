@@ -9,6 +9,8 @@ public:
 	void OnExit() override;
 
 private:
-	float attackTimer = 0.0f;
-	float dodgeTime = 0.35f;
+	int currentStep = 0;
+	float timer = 0.0f;
+	AttackPhase phase = AttackPhase::Active;
+	bool hasHit = false;
 };

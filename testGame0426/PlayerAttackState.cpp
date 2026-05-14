@@ -8,40 +8,74 @@
 
 void PlayerAttackState::OnStart()
 {
-	VECTOR attackDir = GetPlayer()->GetMoveDir();
 
-	// 入力が無ければ前方向を使用
-	if (VSize(attackDir) <= 0.1f)
-	{
-		attackDir = GetPlayer()->GetForward();
-	}
-
-	GetPlayer()->SetExternalVelocity(
-		VScale(attackDir, GetPlayer()->GetParam().attackSpeed)
-	);
 }
 
 void PlayerAttackState::OnUpdate()
 {
-	attackTimer += Time::GetInstance().GetDeltaTime();
+	// player取得
+	auto player = GetPlayer();
+	if (!player) return;
 
-	// 回避時間が経過したらステート変更
-	if (attackTimer >=
-		GetPlayer()->GetParam().dodgeTime)
+	// タイマー
+	timer += Time::GetInstance().GetDeltaTime() * 60;
+
+	// 攻撃データ取得
+	const AttackData& attackData = player->GetAttackData();
+
+	// 現在段
+	const AttackStep& step = attackData.combo[currentStep];
+
+	switch (phase)
 	{
-		// スティック操作の有無で Walk or Idle
-		if (Input::GetInput().GetIsMoveLStick())
+		// ===== 攻撃 =====
+	case AttackPhase::Active:
+		if (!hasHit)
 		{
-			// Walk
-			auto state = std::make_shared<PlayerWalkState>();
-			GetPlayer()->ChangeState(state);
+			player->Attack(step);
+			hasHit = true;
 		}
-		else
+
+		if (timer >= step.activeTime)
 		{
-			// Idle
-			auto state = std::make_shared<PlayerIdleState>();
-			GetPlayer()->ChangeState(state);
+			timer = 0.0f;
+			phase = AttackPhase::Recovery;
 		}
+		break;
+
+		// ===== 後隙 =====
+	case AttackPhase::Recovery:
+		if (timer >= step.recoveryTime)
+		{
+			timer = 0.0f;
+			currentStep++;
+
+			// コンボ終了
+			if (currentStep >= attackData.combo.size())
+			{
+				// スティック操作の有無で Walk or Idle
+				if (Input::GetInput().GetIsMoveLStick())
+				{
+					// Walk
+					auto state = std::make_shared<PlayerWalkState>();
+					GetPlayer()->ChangeState(state);
+					return;
+				}
+				else
+				{
+					// Idle
+					auto state = std::make_shared<PlayerIdleState>();
+					GetPlayer()->ChangeState(state);
+					return;
+				}
+			}
+			else
+			{
+				// 次段へ
+				phase = AttackPhase::Active;
+			}
+		}
+		break;
 	}
 }
 

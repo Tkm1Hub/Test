@@ -4,6 +4,7 @@
 #include "PlayerIdleState.h"
 #include "PlayerWalkState.h"
 #include "PlayerJumpState.h"
+#include "PlayerFallState.h"
 #include "PlayerDodgeState.h"
 #include "PlayerAttackState.h"
 
@@ -46,6 +47,13 @@ void PlayerIdleState::OnUpdate()
 		return;
 	}
 
+	// verticalVelocity‚ª‚OˆÈ‰º‚È‚çFall
+	if (GetPlayer()->GetVerticalVelocity() < 0.0f)
+	{
+		auto state = std::make_shared<PlayerFallState>();
+		GetPlayer()->ChangeState(state);
+		return;
+	}
 }
 
 void PlayerIdleState::OnExit()

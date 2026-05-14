@@ -6,6 +6,7 @@
 #include "PlayerJumpState.h"
 #include "PlayerDodgeState.h"
 #include "PlayerAttackState.h"
+#include "PlayerFallState.h"
 
 void PlayerWalkState::OnStart()
 {
@@ -44,6 +45,14 @@ void PlayerWalkState::OnUpdate()
 	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_X))
 	{
 		auto state = std::make_shared<PlayerAttackState>();
+		GetPlayer()->ChangeState(state);
+		return;
+	}
+
+	// verticalVelocity‚ª‚OˆÈ‰º‚È‚çFall
+	if (GetPlayer()->GetVerticalVelocity() < 0.0f)
+	{
+		auto state = std::make_shared<PlayerFallState>();
 		GetPlayer()->ChangeState(state);
 		return;
 	}

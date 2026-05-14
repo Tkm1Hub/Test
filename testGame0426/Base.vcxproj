@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttackCollision.cpp" />
+    <ClCompile Include="AttackHitSphere.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -26,6 +28,7 @@
     <ClCompile Include="EnemyChaseState.cpp" />
     <ClCompile Include="EnemyMelee.cpp" />
     <ClCompile Include="EnemyStateBase.cpp" />
+    <ClCompile Include="HPBarUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -33,6 +36,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDodgeState.cpp" />
     <ClCompile Include="PlayerFallState.cpp" />
+    <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
     <ClCompile Include="PlayerWalkState.cpp" />
@@ -42,11 +46,19 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackCollision.h" />
+    <ClInclude Include="AttackData.h" />
+    <ClInclude Include="AttackHitSphere.h" />
+    <ClInclude Include="DamageInfo.h" />
+    <ClInclude Include="DamageableObject.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyMeleeParameter.h" />
+    <ClInclude Include="HPBarUI.h" />
+    <ClInclude Include="IDamageable.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
@@ -59,6 +71,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDodgeState.h" />
     <ClInclude Include="PlayerFallState.h" />
+    <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpState.h" />
     <ClInclude Include="PlayerParameter.h" />
@@ -71,6 +84,8 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

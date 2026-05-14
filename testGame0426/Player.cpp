@@ -1,8 +1,10 @@
 #include "stdafx.h"
+#include "Objects.h"
 #include "Player.h"
 #include "Camera.h"
 #include "Input.h"
 #include "PlayerIdleState.h"
+#include "AttackHitSphere.h"
 #include "Time.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
@@ -22,7 +24,21 @@ void Player::Init()
 	auto spIdleState = std::make_shared<PlayerIdleState>();
 	ChangeState(spIdleState);
 
+	MaxHP = param.HP;
+	HP = MaxHP;
 	maxMoveSpeed = param.maxMoveSpeed;
+	bodyRadius = param.bodyRadius;
+	bodyHeight = param.bodyHeight;
+
+	// attackData初期化
+	attackData.combo =
+	{
+		// 1段目
+		{
+			param.windupTime, param.activeTime, param.recoveryTime,
+			param.attackPower, param.attackMoveSpeed,param.attackHitRadius
+		}
+	};
 }
 
 void Player::Update()
@@ -44,7 +60,15 @@ void Player::Update()
 
 void Player::Draw()
 {
-	DrawCapsule3D(pos, VAdd(pos, VGet(0.0f, 5.0f, 0.0f)), 2.0f, 8, GetColor(18, 105, 204), GetColor(0, 0, 0),TRUE);
+	DrawCapsule3D(
+		GetCapsuleBottom(),
+		GetCapsuleTop(),
+		param.bodyRadius,
+		8,
+		GetColor(18, 105, 204),
+		GetColor(0, 0, 0),
+		TRUE
+	);
 
 	printfDx("[Player.moveVelocity : %f, %f, %f ]", moveVelocity.x, moveVelocity.y, moveVelocity.z);
 
@@ -76,6 +100,43 @@ void Player::MoveInput()
 				);
 
 			moveDir = VNorm(moveDir);
+			lookDir = moveDir;
 		}
 	}
+}
+
+void Player::Attack(const AttackStep& step)
+{
+	// 前方へ加速
+	VECTOR attackDir = moveDir;
+
+	// 入力が無ければ前方向を使用
+	if (VSize(attackDir) <= 0.1f)
+	{
+		attackDir = forward;
+	}
+
+	SetExternalVelocity(VScale(attackDir, step.attackMoveSpeed));
+
+	// 前方にHitSphereを生成
+	auto hitSphere = std::make_shared<AttackHitSphere>();
+
+	// HitSphere初期化
+	hitSphere->Init(
+		param.attackForwardOffset,
+		step.attackHitRadius,
+		step.damage,
+		this
+	);
+
+	Objects::GetInstance().Add(hitSphere);
+}
+
+void Player::OnHit(const DamageInfo& info)
+{
+	// ダメージ
+	TakeDamage(info.damage);
+
+	// ノックバック
+	SetExternalVelocity(VScale(info.hitDir, info.knockBackPower));
 }

@@ -17,7 +17,7 @@ void Debug::Draw()
 	printfDx("nowFrameInput : %i \n", Input::GetInput().GetNowFrameInput());
 	printfDx("TimeScale : %.1f \n", Time::GetInstance().GetTimeScale());
 
-	DrawGridLine(10.0f, 200.0f);
+	DrawGridLine(50.0f, 1000.0f);
 }
 
 void Debug:: DrawGridLine(float interval, float diameter)

@@ -20,9 +20,6 @@
     <Filter Include="ソース ファイル\object">
       <UniqueIdentifier>{a0c6b1bb-f6e9-4849-8e1e-410dd86cf306}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object\Player">
-      <UniqueIdentifier>{0566a9ed-fae0-4220-bbcc-c11f793619d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Input">
       <UniqueIdentifier>{69b09cc4-3064-4992-802d-2d10c67c4c54}</UniqueIdentifier>
     </Filter>
@@ -74,14 +71,8 @@
     <Filter Include="ソース ファイル\object\ObjectBase">
       <UniqueIdentifier>{9586edd5-4d9a-4792-8dfb-f4f78c7247d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object\Enemy">
-      <UniqueIdentifier>{b0b9d8d2-38f8-4801-b64f-2fa6fceb0612}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State\EnemyState">
       <UniqueIdentifier>{f0d4242f-a299-4024-a567-a7ccdb90a762}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\object\Enemy\EnemyMelee">
-      <UniqueIdentifier>{f886dedc-a03d-4d74-9d8e-5c4e049197ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Parameter">
       <UniqueIdentifier>{49d9b4a4-29ee-44d1-9b78-efa0c8720283}</UniqueIdentifier>
@@ -92,17 +83,11 @@
     <Filter Include="ソース ファイル\Time">
       <UniqueIdentifier>{86af1cc2-b794-4a8a-8603-77a90a0adde4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object\AttackObject">
-      <UniqueIdentifier>{cc9bb849-3ee3-4f3e-a023-bd9cf6f3fb9c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State\EnemyState\EnemyChase">
       <UniqueIdentifier>{8043cb19-9940-4405-8d9f-4fc4dab47fbd}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\State\EnemyState\EnemyIdle">
       <UniqueIdentifier>{858d38da-5763-406d-9b1c-4231efb217db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\object\Enemy\EnemyBase">
-      <UniqueIdentifier>{44997867-745c-4350-9036-d2a27878f9fa}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Parameter\EnemyMelee">
       <UniqueIdentifier>{bf906194-1a1d-440f-96ce-4fdf629151f6}</UniqueIdentifier>
@@ -115,6 +100,42 @@
     </Filter>
     <Filter Include="ソース ファイル\State\EnemyState\EnemyStun">
       <UniqueIdentifier>{a1911ce3-00a6-4421-a21f-e8262ee972cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{6531697b-91bd-4267-a30a-f96ace333fd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision\AttackCollision">
+      <UniqueIdentifier>{ecbda887-5038-4218-a451-324ca0832eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{c0f91be4-7387-4437-bbc1-1a7e34794c76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UIManager">
+      <UniqueIdentifier>{48d5da00-aff0-4dfe-babf-501c98ee4377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\PlayerHPUI">
+      <UniqueIdentifier>{e37825ea-e4be-48d4-b65b-bfcb0c631a85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\HPBarUI">
+      <UniqueIdentifier>{cfbae6fb-072d-4d4d-9b19-ba9d3575ff77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Player">
+      <UniqueIdentifier>{0566a9ed-fae0-4220-bbcc-c11f793619d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Enemy">
+      <UniqueIdentifier>{b0b9d8d2-38f8-4801-b64f-2fa6fceb0612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Enemy\EnemyMelee">
+      <UniqueIdentifier>{f886dedc-a03d-4d74-9d8e-5c4e049197ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Enemy\EnemyBase">
+      <UniqueIdentifier>{44997867-745c-4350-9036-d2a27878f9fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Combat">
+      <UniqueIdentifier>{6c41e07e-35dd-442c-9dd3-aadac8ff9793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Combat\AttackHitSphere">
+      <UniqueIdentifier>{cc9bb849-3ee3-4f3e-a023-bd9cf6f3fb9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +207,21 @@
     </ClCompile>
     <ClCompile Include="EnemyAttackState.cpp">
       <Filter>ソース ファイル\State\EnemyState\EnemyAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackHitSphere.cpp">
+      <Filter>ソース ファイル\Combat\AttackHitSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCollision.cpp">
+      <Filter>ソース ファイル\Collision\AttackCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>ソース ファイル\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHPUI.cpp">
+      <Filter>ソース ファイル\UI\PlayerHPUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HPBarUI.cpp">
+      <Filter>ソース ファイル\UI\HPBarUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +305,36 @@
     </ClInclude>
     <ClInclude Include="EnemyAttackState.h">
       <Filter>ソース ファイル\State\EnemyState\EnemyAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackHitSphere.h">
+      <Filter>ソース ファイル\Combat\AttackHitSphere</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollision.h">
+      <Filter>ソース ファイル\Collision\AttackCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>ソース ファイル\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHPUI.h">
+      <Filter>ソース ファイル\UI\PlayerHPUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IDamageable.h">
+      <Filter>ソース ファイル\object</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageableObject.h">
+      <Filter>ソース ファイル\object</Filter>
+    </ClInclude>
+    <ClInclude Include="HPBarUI.h">
+      <Filter>ソース ファイル\UI\HPBarUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
+      <Filter>ソース ファイル\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageInfo.h">
+      <Filter>ソース ファイル\Combat</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

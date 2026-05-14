@@ -7,6 +7,8 @@
 #include "Camera.h"
 #include "Time.h"
 #include "EnemyMelee.h"
+#include "PlayerHPUI.h"
+#include "UIManager.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -15,8 +17,8 @@ TestScene::~TestScene(){}
 
 void TestScene::Init()
 {
+	// オブジェクト生成
 	debug = std::make_shared<Debug>();
-	objects = std::make_shared<Objects>();
 	player = std::make_shared<Player>();
 	camera = std::make_shared<Camera>();
 	enemyMelee = std::make_shared<EnemyMelee>();
@@ -26,12 +28,20 @@ void TestScene::Init()
 	enemyMelee->SetPlayer(player);
 
 	// オブジェクトリストに追加
-	objects->Add(player);
-	objects->Add(enemyMelee);
+	Objects::GetInstance().Add(player);
+	Objects::GetInstance().Add(enemyMelee);
 
-	objects->Init();
+	// オブジェクト初期化
+	Objects::GetInstance().Init();
 	camera->Init();
 	enemyMelee->Init();
+
+	// UI生成
+	auto playerHPUI = std::make_shared<PlayerHPUI>();
+	playerHPUI->SetPlayer(player.get());
+
+	// UIリスト追加
+	UIManager::GetInstance().Add(playerHPUI);
 
 	SetMaterialUseVertSpcColor(false);
 
@@ -51,12 +61,14 @@ void TestScene::Update()
 {
 	Input::GetInput().Update();
 	Time::GetInstance().Update();
-	objects->Update();
+	Objects::GetInstance().Update();
 	camera->Update();
+	UIManager::GetInstance().Update();
 }
 
 void TestScene::Draw() const
 {
 	debug->Draw();
-	objects->Draw();
+	Objects::GetInstance().Draw();
+	UIManager::GetInstance().Draw();
 }
