@@ -2,11 +2,12 @@
 #include "AttackCollision.h"
 #include "AttackHitSphere.h"
 #include "DamageableObject.h"
+#include "CharacterBase.h"
 #include "Objects.h"
 
 bool AttackCollision::CheckHit(
 	AttackHitSphere* hitSphere,
-	Object* target
+	CharacterBase* target
 )
 {
 	VECTOR capsuleBottom = target->GetCapsuleBottom();
@@ -61,18 +62,24 @@ void AttackCollision::ProcessHit(AttackHitSphere* hitSphere)
 		if ((!obj->GetIsCollision()))
 			continue;
 
+		// CharacterBase‚©Šm”F
+		auto character =
+			dynamic_cast<CharacterBase*>(obj.get());
+		if (!character)
+			continue;
+
 		// Šù‚ÉHitÏ‚Ý–³Ž‹
 		if (hitSphere->HasHitObject(obj.get()))
 			continue;
 
 		// “–‚½‚è”»’è
-		if (CheckHit(hitSphere, obj.get()))
+		if (CheckHit(hitSphere, character))
 		{
 			// Hit‹L˜^
 			hitSphere->AddHitObject(obj.get());
 
 			// ”í’e’Ê’m
-			obj->OnHit(hitSphere->GetDamageInfo());
+			character->OnHit(hitSphere->GetDamageInfo());
 		}
 	}
 }

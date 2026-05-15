@@ -1,13 +1,14 @@
 #include "stdafx.h"
 #include "AttackHitSphere.h"
 #include "AttackCollision.h"
+#include "CharacterBase.h"
 #include "Time.h"
 
 void AttackHitSphere::Init(
     float offset,
     float radius,
     int damage,
-    Object* owner
+    CharacterBase* owner
 )
 {
     forwardOffset = offset;

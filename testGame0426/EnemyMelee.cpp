@@ -10,6 +10,8 @@
 void EnemyMelee::Init()
 {
 	pos = VGet(0.0f, 0.0f, 10.0f);
+	MaxHP = param.HP;
+	HP = MaxHP;
 	maxMoveSpeed = param.maxMoveSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;

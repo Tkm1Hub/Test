@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "EnemyDeadState.h"
+#include "EnemyDamageState.h"
 
 void Enemy::SetPlayer(const std::weak_ptr<Player>& playerPtr)
 {
@@ -51,6 +53,20 @@ void Enemy::Chase()
 	if (!p) return;
 
 	MoveTo(p->GetPosition());
+}
+
+void Enemy::OnHit(const DamageInfo& info)
+{
+	// Šù‚ÉŽ€–S‚µ‚Ä‚½‚ç–³Ž‹
+	if (HP <= 0) return;
+
+	// ƒ_ƒ[ƒW•Û‘¶
+	lastDamageInfo = info;
+
+	// ”í’e
+	auto state = std::make_shared<EnemyDamageState>();
+	ChangeState(state);
+	return;
 }
 
 float Enemy::GetDistanceToPlayer() const

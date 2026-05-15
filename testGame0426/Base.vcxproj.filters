@@ -89,9 +89,6 @@
     <Filter Include="ソース ファイル\State\EnemyState\EnemyIdle">
       <UniqueIdentifier>{858d38da-5763-406d-9b1c-4231efb217db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Parameter\EnemyMelee">
-      <UniqueIdentifier>{bf906194-1a1d-440f-96ce-4fdf629151f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State\EnemyState\EnemyAttack">
       <UniqueIdentifier>{75713899-134c-4075-9df3-a9466f379369}</UniqueIdentifier>
     </Filter>
@@ -136,6 +133,21 @@
     </Filter>
     <Filter Include="ソース ファイル\Combat\AttackHitSphere">
       <UniqueIdentifier>{cc9bb849-3ee3-4f3e-a023-bd9cf6f3fb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character">
+      <UniqueIdentifier>{d4f0e9b8-499c-4351-88dc-2f8768719c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\EnemyState\EnemyDamage">
+      <UniqueIdentifier>{eaf7021d-379a-4222-a32f-a0ac6c12c377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\EnemyState\EnemyDeadState">
+      <UniqueIdentifier>{86aaa165-1c69-4f8a-9567-a2999b12b473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Parameter\Enemy">
+      <UniqueIdentifier>{f3f7e904-09fc-45fc-a88b-14b71a35b4cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Parameter\Enemy\EnemyMelee">
+      <UniqueIdentifier>{bf906194-1a1d-440f-96ce-4fdf629151f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +235,18 @@
     <ClCompile Include="HPBarUI.cpp">
       <Filter>ソース ファイル\UI\HPBarUI</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterBase.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDamageState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDamageState.cpp">
+      <Filter>ソース ファイル\State\EnemyState\EnemyDamage</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDeadState.cpp">
+      <Filter>ソース ファイル\State\EnemyState\EnemyDeadState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -301,7 +325,7 @@
       <Filter>ソース ファイル\State\EnemyState\EnemyChase</Filter>
     </ClInclude>
     <ClInclude Include="EnemyMeleeParameter.h">
-      <Filter>ソース ファイル\Parameter\EnemyMelee</Filter>
+      <Filter>ソース ファイル\Parameter\Enemy\EnemyMelee</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAttackState.h">
       <Filter>ソース ファイル\State\EnemyState\EnemyAttack</Filter>
@@ -335,6 +359,21 @@
     </ClInclude>
     <ClInclude Include="DamageInfo.h">
       <Filter>ソース ファイル\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBase.h">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDamageState.h">
+      <Filter>ソース ファイル\State\PlayerState\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDamageState.h">
+      <Filter>ソース ファイル\State\EnemyState\EnemyDamage</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDeadState.h">
+      <Filter>ソース ファイル\State\EnemyState\EnemyDeadState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyParameter.h">
+      <Filter>ソース ファイル\Parameter\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

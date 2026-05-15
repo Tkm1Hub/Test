@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include "DamageInfo.h"
 
+class CharacterBase;
 class AttackHitSphere :public Object
 {
 public:
@@ -10,14 +11,14 @@ public:
 		float offset,
 		float radius,
 		int damage,
-		Object* owner
+		CharacterBase* owner
 	);
 
 	void Update() override;
 	void Draw() override;
 
 	float GetRadius() const { return radius; }
-	Object* GetOwner() const { return owner; }
+	CharacterBase* GetOwner() const { return owner; }
 
 	bool HasHitObject(Object* obj) const;
 	void AddHitObject(Object* obj);
@@ -31,7 +32,7 @@ private:
 
 	float forwardOffset = 0.0f;
 
-	Object* owner = nullptr;
+	CharacterBase* owner = nullptr;
 	std::unordered_set<Object*> hitObjects;
 	DamageInfo damageInfo;
 };

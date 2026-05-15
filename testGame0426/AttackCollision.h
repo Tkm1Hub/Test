@@ -1,14 +1,14 @@
 #pragma once
 
-class Object;
+class CharacterBase;
 class AttackHitSphere;
 
 namespace AttackCollision
 {
-	// AttackHitSphere‚ÆObject‚Ì”»’è
+	// AttackHitSphere‚ÆCharacter‚Ì”»’è
 	bool CheckHit(
 		AttackHitSphere* hitSphere,
-		Object* target
+		CharacterBase* target
 	);
 
 	// UŒ‚ˆ—

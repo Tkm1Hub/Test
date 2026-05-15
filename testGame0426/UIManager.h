@@ -30,4 +30,5 @@ public:
 
 private:
     std::vector<std::shared_ptr<UIBase>>uiList;
+    std::vector<std::shared_ptr<UIBase>>pendingUiList;
 };

@@ -6,6 +6,7 @@
 #include "PlayerIdleState.h"
 #include "AttackHitSphere.h"
 #include "Time.h"
+#include "PlayerDamageState.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
 {
@@ -134,9 +135,9 @@ void Player::Attack(const AttackStep& step)
 
 void Player::OnHit(const DamageInfo& info)
 {
-	// ダメージ
-	TakeDamage(info.damage);
+	DamageableObject::OnHit(info);
 
-	// ノックバック
-	SetExternalVelocity(VScale(info.hitDir, info.knockBackPower));
+	auto state = std::make_shared<PlayerDamageState>();
+	ChangeState(state);
+	return;
 }

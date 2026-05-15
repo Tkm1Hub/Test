@@ -61,9 +61,22 @@ void TestScene::Update()
 {
 	Input::GetInput().Update();
 	Time::GetInstance().Update();
+
+	// デバッグ：敵スポーン
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_DPAD_UP))
+	{
+		auto enemy = std::make_shared<EnemyMelee>();
+
+		enemy->SetPlayer(player);
+
+		enemy->Init();
+
+		Objects::GetInstance().Add(enemy);
+	}
+
+	UIManager::GetInstance().Update();
 	Objects::GetInstance().Update();
 	camera->Update();
-	UIManager::GetInstance().Update();
 }
 
 void TestScene::Draw() const

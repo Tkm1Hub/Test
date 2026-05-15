@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "StateMachine.h"
-#include "DamageInfo.h"
 
 class StateMachine;
 class Object : public std::enable_shared_from_this<Object>
@@ -24,16 +23,6 @@ public:
 	VECTOR GetExternalVelocity() const { return externalVelocity; }
 	VECTOR GetMoveVelocity() const { return moveVelocity; }
 	const VECTOR& GetMoveDir() const { return moveDir; }
-	//カプセル
-	VECTOR GetCapsuleBottom() const;
-	VECTOR GetCapsuleTop() const;
-	VECTOR GetCapsuleCenter() const;
-	VECTOR GetFootPosition() const;
-	float GetBodyRadius() const { return bodyRadius; }
-	float GetBodyHeight() const { return bodyHeight; }
-
-	// 衝突
-	virtual void OnHit(const DamageInfo& info) {};
 
 	void SetMoveVelocity(const VECTOR& velocity) { moveVelocity = velocity; }
 	void SetExternalVelocity(const VECTOR& velocity) { externalVelocity = velocity; }
@@ -41,6 +30,8 @@ public:
 
 	void SetLookDir(const VECTOR& dir) { lookDir = dir; }
 	void SetIsGraund(bool flag) { isGround = flag; }
+	void SetIsCollisionEnabled(bool flag) { isCollisionEnabled = flag; }
+	void Destroy() { isDestroy = true; }
 
 protected:
 	float moveAccel = 0.14f;
@@ -62,8 +53,6 @@ protected:
 	float  verticalVelocity = 0.0f;						// 垂直速度
 
 	float maxMoveSpeed = 0.0f;				// 最大移動速度
-	float bodyRadius = 0.0f;				// 当たり判定半径
-	float bodyHeight = 0.0f;					// 当たり判定高さ
 
 	bool isActive = true;					// 有効フラグ
 	bool isDestroy = false;					// 削除フラグ

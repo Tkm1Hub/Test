@@ -3,7 +3,7 @@
 
 void UIManager::Add(std::shared_ptr<UIBase>ui)
 {
-	uiList.push_back(ui);
+	pendingUiList.push_back(ui);
 }
 
 void UIManager::Update()
@@ -12,6 +12,29 @@ void UIManager::Update()
 	{
 		ui->Update();
 	}
+
+	// íœ
+	uiList.erase(
+		std::remove_if(
+			uiList.begin(),
+			uiList.end(),
+			[](const std::shared_ptr<UIBase>& ui)
+			{
+				return ui->GetIsDestroy();
+			}
+		),
+		uiList.end()
+	);
+
+	// ’Ç‰Á—\–ñ‚ğ”½‰f
+	for (auto& ui : pendingUiList)
+	{
+		ui->Init();
+		uiList.push_back(ui);
+	}
+
+	pendingUiList.clear();
+
 }
 
 void UIManager::Draw()

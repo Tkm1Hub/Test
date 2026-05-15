@@ -14,13 +14,16 @@ struct PlayerParameter
 	float angleSpeed = 0.22f;
 
 	// ===== 攻撃 =====
-	float windupTime = 0.0f;       // 予備動作時間 
+	float windupTime = 0.0f;		// 予備動作時間 
 	float activeTime = 12.0f;       // 攻撃時間
-	float recoveryTime = 6.0f;     // 後隙時間
+	float recoveryTime = 6.0f;		// 後隙時間
 
-	float attackForwardOffset = 18.0f;   // 攻撃位置のオフセット
-	float attackMoveSpeed = 8.0f;       // 攻撃移動速度
-	float attackHitRadius = 20.0f;       // HitSphere半径
+	float attackForwardOffset = 18.0f;		// 攻撃位置のオフセット
+	float attackMoveSpeed = 8.0f;			// 攻撃移動速度
+	float attackHitRadius = 20.0f;			// HitSphere半径
+
+	// ===== ダメージ =====
+	float damageTime = 4.0f;		// 被ダメージ硬直時間
 	
 	// ===== 回避 =====
 	float dodgeSpeed = 15.0f;

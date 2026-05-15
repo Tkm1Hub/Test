@@ -1,12 +1,12 @@
 #pragma once
-#include "DamageableObject.h"
+#include "CharacterBase.h"
 #include "PlayerParameter.h"
 #include "AttackData.h"
 
 class Camera;
 class PlayerStateBase;
 class AttackHitSphere;
-class Player :	public DamageableObject
+class Player :	public CharacterBase
 {
 public:
 	void Init() override;

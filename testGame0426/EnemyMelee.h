@@ -12,9 +12,10 @@ public:
 
 	void Attack(const AttackStep& step) override;
 
-	float GetAttackRange() const { return param.attackRange; }
+	const EnemyParameter& GetParam() const override { return param; }
 
-	const EnemyMeleeParameter& GetParam() { return param; }
+	const EnemyMeleeParameter& GetEnemyMeleeParam() { return param; }
+
 private:
 	EnemyMeleeParameter param;
 };

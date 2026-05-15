@@ -1,10 +1,11 @@
 #pragma once
-#include "DamageableObject.h"
+#include "CharacterBase.h"
+#include "EnemyParameter.h"
 #include "EnemyStateBase.h"
 #include "AttackData.h"
 
 class Player;
-class Enemy : public DamageableObject
+class Enemy : public CharacterBase
 {
 public:
 	void SetPlayer(const std::weak_ptr<Player>& playerPtr);
@@ -16,6 +17,9 @@ public:
 
 	// 追跡
 	virtual void Chase();
+
+	// 被弾
+	void OnHit(const DamageInfo& info) override;
 
 	// 目標地点へ移動
 	void MoveTo(const VECTOR& targetPos);
@@ -30,9 +34,11 @@ public:
 	VECTOR GetDirectionToPlayer() const;
 
 	// 攻撃可能範囲を取得
-	virtual float GetAttackRange() const = 0;
+	float GetAttackRange() const { return GetParam().attackRange; }
 
 	const AttackData& GetAttackData() { return attackData; }
+
+	virtual const EnemyParameter& GetParam() const = 0;
 
 protected:
 	std::weak_ptr<Player> player;

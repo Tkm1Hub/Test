@@ -22,10 +22,13 @@
     <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="AttackHitSphere.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
+    <ClCompile Include="EnemyDamageState.cpp" />
+    <ClCompile Include="EnemyDeadState.cpp" />
     <ClCompile Include="EnemyMelee.cpp" />
     <ClCompile Include="EnemyStateBase.cpp" />
     <ClCompile Include="HPBarUI.cpp" />
@@ -34,6 +37,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerDodgeState.cpp" />
     <ClCompile Include="PlayerFallState.cpp" />
     <ClCompile Include="PlayerHPUI.cpp" />
@@ -52,11 +56,15 @@
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackHitSphere.h" />
+    <ClInclude Include="CharacterBase.h" />
     <ClInclude Include="DamageInfo.h" />
     <ClInclude Include="DamageableObject.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyChaseState.h" />
+    <ClInclude Include="EnemyDamageState.h" />
+    <ClInclude Include="EnemyDeadState.h" />
     <ClInclude Include="EnemyMeleeParameter.h" />
+    <ClInclude Include="EnemyParameter.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="PlayerAttackState.h" />
@@ -69,6 +77,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerDodgeState.h" />
     <ClInclude Include="PlayerFallState.h" />
     <ClInclude Include="PlayerHPUI.h" />
