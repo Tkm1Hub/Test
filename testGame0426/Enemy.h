@@ -2,10 +2,13 @@
 #include "CharacterBase.h"
 #include "EnemyParameter.h"
 #include "EnemyStateBase.h"
+#include "StunComponent.h"
 #include "AttackData.h"
 
 class Player;
-class Enemy : public CharacterBase
+class Enemy : 
+	public CharacterBase,
+	public StunComponent
 {
 public:
 	void SetPlayer(const std::weak_ptr<Player>& playerPtr);
@@ -24,6 +27,9 @@ public:
 
 	// 被弾
 	void OnHit(const DamageInfo& info) override;
+
+	// スタン
+	void OnStun()const override;
 
 	// 目標地点へ移動
 	void MoveTo(const VECTOR& targetPos);

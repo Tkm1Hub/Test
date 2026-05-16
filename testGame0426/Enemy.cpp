@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "EnemyDeadState.h"
 #include "EnemyDamageState.h"
+#include "EnemyStunState.h"
 
 void Enemy::SetPlayer(const std::weak_ptr<Player>& playerPtr)
 {
@@ -18,6 +19,7 @@ void Enemy::ChangeState(std::shared_ptr<EnemyStateBase> a_spState)
 void Enemy::Init()
 {
 	team = Team::Enemy;
+	maxStunGauge = GetParam().maxStunGauge;
 }
 
 void Enemy::Update()
@@ -62,15 +64,29 @@ void Enemy::Chase()
 void Enemy::OnHit(const DamageInfo& info)
 {
 	// 既に死亡してたら無視
-	if (HP <= 0) return;
+	if (IsDead()) return;
 
 	// ダメージ保存
 	lastDamageInfo = info;
+
+	AddStunGauge(info.stunPower);
+
+	// スタンなら終了
+	if (GetIsStun())
+		return;
 
 	// 被弾
 	auto state = std::make_shared<EnemyDamageState>();
 	ChangeState(state);
 	return;
+}
+
+void Enemy::OnStun() const
+{
+	auto self = const_cast<Enemy*>(this);
+
+	auto state = std::make_shared<EnemyStunState>();
+	self->ChangeState(state);
 }
 
 float Enemy::GetDistanceToPlayer() const

@@ -33,6 +33,7 @@
     <ClCompile Include="EnemyMelee.cpp" />
     <ClCompile Include="EnemyShooter.cpp" />
     <ClCompile Include="EnemyStateBase.cpp" />
+    <ClCompile Include="EnemyStunState.cpp" />
     <ClCompile Include="HPBarUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="EnemyParameter.h" />
     <ClInclude Include="EnemyShooter.h" />
     <ClInclude Include="EnemyShooterParameter.h" />
+    <ClInclude Include="EnemyStunState.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="PlayerAttackState.h" />
@@ -97,6 +99,7 @@
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StunComponent.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UIBase.h" />
