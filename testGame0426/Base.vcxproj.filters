@@ -107,9 +107,6 @@
     <Filter Include="ソース ファイル\UI">
       <UniqueIdentifier>{c0f91be4-7387-4437-bbc1-1a7e34794c76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\UIManager">
-      <UniqueIdentifier>{48d5da00-aff0-4dfe-babf-501c98ee4377}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\UI\PlayerHPUI">
       <UniqueIdentifier>{e37825ea-e4be-48d4-b65b-bfcb0c631a85}</UniqueIdentifier>
     </Filter>
@@ -148,6 +145,21 @@
     </Filter>
     <Filter Include="ソース ファイル\Parameter\Enemy\EnemyMelee">
       <UniqueIdentifier>{bf906194-1a1d-440f-96ce-4fdf629151f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UIContainer">
+      <UniqueIdentifier>{48d5da00-aff0-4dfe-babf-501c98ee4377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UIFactory">
+      <UniqueIdentifier>{130b706e-f0c7-4a10-ae53-0c71f4c0e920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision\CharacterCollision">
+      <UniqueIdentifier>{07d90f06-25ff-4cae-a1bc-5336116ef484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Enemy\EnemyShooter">
+      <UniqueIdentifier>{54a39b0c-32e0-4b4a-a981-c405b7801fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Parameter\Enemy\EnemyShooter">
+      <UniqueIdentifier>{24464fd9-120d-4a91-b13b-c2669bd692ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +223,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\object\Enemy\EnemyBase</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStateBase.cpp">
-      <Filter>ソース ファイル\State\EnemyState</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyChaseState.cpp">
       <Filter>ソース ファイル\State\EnemyState\EnemyChase</Filter>
     </ClCompile>
@@ -226,8 +235,8 @@
     <ClCompile Include="AttackCollision.cpp">
       <Filter>ソース ファイル\Collision\AttackCollision</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>ソース ファイル\UIManager</Filter>
+    <ClCompile Include="UIContainer.cpp">
+      <Filter>ソース ファイル\UIContainer</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHPUI.cpp">
       <Filter>ソース ファイル\UI\PlayerHPUI</Filter>
@@ -246,6 +255,18 @@
     </ClCompile>
     <ClCompile Include="EnemyDeadState.cpp">
       <Filter>ソース ファイル\State\EnemyState\EnemyDeadState</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>ソース ファイル\UIFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateBase.cpp">
+      <Filter>ソース ファイル\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterCollision.cpp">
+      <Filter>ソース ファイル\Collision\CharacterCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyShooter.cpp">
+      <Filter>ソース ファイル\object\Enemy\EnemyShooter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -339,8 +360,8 @@
     <ClInclude Include="UIBase.h">
       <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>ソース ファイル\UIManager</Filter>
+    <ClInclude Include="UIContainer.h">
+      <Filter>ソース ファイル\UIContainer</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHPUI.h">
       <Filter>ソース ファイル\UI\PlayerHPUI</Filter>
@@ -374,6 +395,18 @@
     </ClInclude>
     <ClInclude Include="EnemyParameter.h">
       <Filter>ソース ファイル\Parameter\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFactory.h">
+      <Filter>ソース ファイル\UIFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterCollision.h">
+      <Filter>ソース ファイル\Collision\CharacterCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShooter.h">
+      <Filter>ソース ファイル\object\Enemy\EnemyShooter</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShooterParameter.h">
+      <Filter>ソース ファイル\Parameter\Enemy\EnemyShooter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

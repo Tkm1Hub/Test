@@ -8,6 +8,10 @@ public:
 	void OnUpdate() override;
 	void OnExit() override;
 
+	const char* GetName() const override
+	{
+		return "Attack";
+	}
 private:
 	int currentStep = 0;
 	float timer = 0.0f;

@@ -25,22 +25,23 @@ void HPBarUI::Update()
 	hpRate = max(0.0f, min(hpRate, 1.0f));
 
 	// スクリーン座標に変換
-	ScreenPos = ConvWorldPosToScreenPos(t->GetPosition());
+	screenPos = ConvWorldPosToScreenPos(t->GetPosition());
+
 }
 
 void HPBarUI::Draw()
 {
 	int left =
-		static_cast<int>(ScreenPos.x - width * 0.5f);
+		static_cast<int>(screenPos.x - width * 0.5f);
 
 	int top =
-		static_cast<int>(ScreenPos.y - height * 0.5f);
+		static_cast<int>(screenPos.y - height * 0.5f);
 
 	int right =
-		static_cast<int>(ScreenPos.x + width * 0.5f);
+		static_cast<int>(screenPos.x + width * 0.5f);
 
 	int bottom =
-		static_cast<int>(ScreenPos.y + height * 0.5f);
+		static_cast<int>(screenPos.y + height * 0.5f);
 
 	// ゲージ枠
 	DrawBox(

@@ -7,6 +7,7 @@
 #include "AttackHitSphere.h"
 #include "Time.h"
 #include "PlayerDamageState.h"
+#include "Enemy.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
 {
@@ -30,6 +31,7 @@ void Player::Init()
 	maxMoveSpeed = param.maxMoveSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;
+	team = Team::Player;
 
 	// attackData初期化
 	attackData.combo =
@@ -108,26 +110,56 @@ void Player::MoveInput()
 
 void Player::Attack(const AttackStep& step)
 {
-	// 前方へ加速
-	VECTOR attackDir = moveDir;
+	VECTOR attackDir = VGet(0, 0, 0);
 
-	// 入力が無ければ前方向を使用
-	if (VSize(attackDir) <= 0.1f)
+	// ターゲット検索
+	SearchTarget();
+
+	auto targetPtr = target.lock();
+
+	// ターゲットがいる
+	if (targetPtr)
+	{
+		attackDir =
+			VSub(
+				targetPtr->GetPosition(),
+				pos
+			);
+
+		attackDir.y = 0.0f;
+
+		attackDir = VNorm(attackDir);
+	}
+	// 入力方向
+	else if (VSize(moveDir) > 0.1f)
+	{
+		attackDir = moveDir;
+	}
+	// 前方向
+	else
 	{
 		attackDir = forward;
 	}
 
-	SetExternalVelocity(VScale(attackDir, step.attackMoveSpeed));
+	// 向き更新
+	SetLookDir(attackDir);
+	// 前方へ加速
+	SetExternalVelocity(
+		VScale(
+			attackDir,
+			step.attackMoveSpeed
+		));
 
 	// 前方にHitSphereを生成
 	auto hitSphere = std::make_shared<AttackHitSphere>();
 
 	// HitSphere初期化
-	hitSphere->Init(
+	hitSphere->InitMelee(
 		param.attackForwardOffset,
 		step.attackHitRadius,
 		step.damage,
-		this
+		this,
+		attackDir
 	);
 
 	Objects::GetInstance().Add(hitSphere);
@@ -140,4 +172,58 @@ void Player::OnHit(const DamageInfo& info)
 	auto state = std::make_shared<PlayerDamageState>();
 	ChangeState(state);
 	return;
+}
+
+void Player::SearchTarget()
+{
+	float nearestDistance = FLT_MAX;
+
+	std::shared_ptr<Enemy> nearestEnemy = nullptr;
+
+	if (auto cam = camera.lock())
+	{
+		for (auto& obj : Objects::GetInstance().objects)
+		{
+			auto enemy =
+				std::dynamic_pointer_cast<Enemy>(obj);
+
+			if (!enemy)
+				continue;
+
+			if (!enemy->GetIsActive())
+				continue;
+
+			// 死亡除外
+			if (enemy->IsDead())
+				continue;
+
+			// カメラから敵の方向
+			VECTOR toEnemy =
+				VSub(
+					enemy->GetPosition(),
+					cam->GetPosition()
+				);
+
+			float distance = VSize(toEnemy);
+
+			// 正規化
+			VECTOR dir = VNorm(toEnemy);
+
+			// 前方向判定
+			float dot = VDot(cam->GetFoward(), dir);
+
+			// 前方のみ
+			if (dot < 0.5f)
+				continue;
+
+			// 一番近い敵
+			if (distance < nearestDistance)
+			{
+				nearestDistance = distance;
+				nearestEnemy = enemy;
+			}
+		}
+	}
+
+	target = nearestEnemy;
 }

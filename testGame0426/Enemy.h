@@ -10,6 +10,10 @@ class Enemy : public CharacterBase
 public:
 	void SetPlayer(const std::weak_ptr<Player>& playerPtr);
 
+	//‰Šú‰»
+	void Init() override;
+	
+	// XV
 	void Update() override;
 
 	// UŒ‚

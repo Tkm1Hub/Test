@@ -8,28 +8,34 @@ public:
 	void ChangeState(std::shared_ptr<StateBase> newState)
 	{
 		// すでにステートがセットされていたら終了
-		if (nowState != nullptr)
+		if (currentState != nullptr)
 		{
-			nowState->OnExit();
-			nowState = nullptr;
+			currentState->OnExit();
+			currentState = nullptr;
 		}
 
 		// 新しいステートをセットする
-		nowState = newState;
+		currentState = newState;
 
 		// 新しいステートを開始する
-		nowState->OnStart();
+		currentState->OnStart();
 	}
 
 	// 更新関数
 	void Update()
 	{
-		if (nowState != nullptr)
+		if (currentState != nullptr)
 		{
-			nowState->OnUpdate();
+			currentState->OnUpdate();
 		}
 	}
 
+	// 現在のステートを取得
+	StateBase* GetCurrentState() const
+	{
+		return currentState.get();
+	}
+
 private:
-	std::shared_ptr<StateBase> nowState = nullptr;
+	std::shared_ptr<StateBase> currentState = nullptr;
 };

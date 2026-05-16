@@ -1,23 +1,23 @@
 #pragma once
 #include "Enemy.h"
-#include "EnemyMeleeParameter.h"
+#include "EnemyShooterParameter.h"
 #include "AttackData.h"
 
-class EnemyMelee :public Enemy
+class EnemyShooter :public Enemy
 {
 public:
 	void Init() override;
 	void Update() override;
 	void Draw() override;
 
-	void Chase() override;
-
 	void Attack(const AttackStep& step) override;
+
+	void Chase() override;
 
 	const EnemyParameter& GetParam() const override { return param; }
 
-	const EnemyMeleeParameter& GetEnemyMeleeParam() { return param; }
+	const EnemyShooterParameter& GetEnemyMeleeParam() { return param; }
 
 private:
-	EnemyMeleeParameter param;
+	EnemyShooterParameter param;
 };

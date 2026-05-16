@@ -48,6 +48,8 @@ bool AttackCollision::CheckHit(
 
 void AttackCollision::ProcessHit(AttackHitSphere* hitSphere)
 {
+	auto owner = hitSphere->GetOwner();
+
 	for (auto& obj : Objects::GetInstance().objects)
 	{
 		// owner‚Í–³Ž‹
@@ -68,9 +70,17 @@ void AttackCollision::ProcessHit(AttackHitSphere* hitSphere)
 		if (!character)
 			continue;
 
+		// “¯ƒ`[ƒ€–³Ž‹
+		if (owner->GetTeam() ==
+			character->GetTeam())
+		{
+			continue;
+		}
+
 		// Šù‚ÉHitÏ‚Ý–³Ž‹
 		if (hitSphere->HasHitObject(obj.get()))
 			continue;
+
 
 		// “–‚½‚è”»’è
 		if (CheckHit(hitSphere, character))

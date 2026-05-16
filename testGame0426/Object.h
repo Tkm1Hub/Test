@@ -24,6 +24,7 @@ public:
 	VECTOR GetMoveVelocity() const { return moveVelocity; }
 	const VECTOR& GetMoveDir() const { return moveDir; }
 
+	void SetPosition(const VECTOR& newPos) { pos = newPos; }
 	void SetMoveVelocity(const VECTOR& velocity) { moveVelocity = velocity; }
 	void SetExternalVelocity(const VECTOR& velocity) { externalVelocity = velocity; }
 	void AddVerticalVelocity(float power);

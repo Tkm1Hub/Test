@@ -8,6 +8,10 @@ public:
 	void OnUpdate() override;
 	void OnExit() override;
 
+	const char* GetName() const override
+	{
+		return "Dead";
+	}
 private:
 	float timer = 0.0f;
 

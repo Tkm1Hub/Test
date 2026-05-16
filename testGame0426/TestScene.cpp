@@ -7,8 +7,9 @@
 #include "Camera.h"
 #include "Time.h"
 #include "EnemyMelee.h"
+#include "EnemyShooter.h"
 #include "PlayerHPUI.h"
-#include "UIManager.h"
+#include "UIContainer.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -21,27 +22,28 @@ void TestScene::Init()
 	debug = std::make_shared<Debug>();
 	player = std::make_shared<Player>();
 	camera = std::make_shared<Camera>();
-	enemyMelee = std::make_shared<EnemyMelee>();
+	auto enemyMelee = std::make_shared<EnemyMelee>();
+	auto enemyShooter = std::make_shared<EnemyShooter>();
 
 	camera->SetPlayer(player);
 	player->SetCamera(camera);
 	enemyMelee->SetPlayer(player);
+	enemyShooter->SetPlayer(player);
 
 	// オブジェクトリストに追加
 	Objects::GetInstance().Add(player);
 	Objects::GetInstance().Add(enemyMelee);
+	Objects::GetInstance().Add(enemyShooter);
 
 	// オブジェクト初期化
-	Objects::GetInstance().Init();
 	camera->Init();
-	enemyMelee->Init();
 
 	// UI生成
 	auto playerHPUI = std::make_shared<PlayerHPUI>();
 	playerHPUI->SetPlayer(player.get());
 
 	// UIリスト追加
-	UIManager::GetInstance().Add(playerHPUI);
+	UIContainer::GetInstance().Add(playerHPUI);
 
 	SetMaterialUseVertSpcColor(false);
 
@@ -62,26 +64,37 @@ void TestScene::Update()
 	Input::GetInput().Update();
 	Time::GetInstance().Update();
 
-	// デバッグ：敵スポーン
+	// デバッグ：Meleeスポーン
 	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_DPAD_UP))
 	{
 		auto enemy = std::make_shared<EnemyMelee>();
 
 		enemy->SetPlayer(player);
 
-		enemy->Init();
+		Objects::GetInstance().Add(enemy);
+	}
+
+	// デバッグ：Shooterスポーン
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_DPAD_RIGHT))
+	{
+		auto enemy = std::make_shared<EnemyShooter>();
+
+		enemy->SetPlayer(player);
 
 		Objects::GetInstance().Add(enemy);
 	}
 
-	UIManager::GetInstance().Update();
+
+	UIContainer::GetInstance().Update();
 	Objects::GetInstance().Update();
 	camera->Update();
 }
 
 void TestScene::Draw() const
 {
-	debug->Draw();
 	Objects::GetInstance().Draw();
-	UIManager::GetInstance().Draw();
+
+	debug->Draw();
+
+	UIContainer::GetInstance().Draw();
 }

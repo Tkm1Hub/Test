@@ -3,23 +3,23 @@
 #include <memory>
 
 class UIBase;
-class UIManager
+class UIContainer
 {
 private:
     //コンストラクタを非公開にする
-    UIManager() {}
+    UIContainer() {}
 
     // コピーコンストラクタと代入演算子を削除
-    UIManager(const UIManager&) = delete;
-    UIManager& operator=(const UIManager&) = delete;
+    UIContainer(const UIContainer&) = delete;
+    UIContainer& operator=(const UIContainer&) = delete;
 
     //プライベートデストラクタ
-    ~UIManager() {}
+    ~UIContainer() {}
 public:
     // インスタンスを取得するためのメソッド
-    static UIManager& GetInstance()
+    static UIContainer& GetInstance()
     {
-        static UIManager instance;      // 静的変数としてインスタンスを定義
+        static UIContainer instance;      // 静的変数としてインスタンスを定義
         return instance;
     }
 

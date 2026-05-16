@@ -23,6 +23,7 @@
     <ClCompile Include="AttackHitSphere.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
+    <ClCompile Include="CharacterCollision.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="EnemyDamageState.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
     <ClCompile Include="EnemyMelee.cpp" />
+    <ClCompile Include="EnemyShooter.cpp" />
     <ClCompile Include="EnemyStateBase.cpp" />
     <ClCompile Include="HPBarUI.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -50,13 +52,15 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
-    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIContainer.cpp" />
+    <ClCompile Include="UIFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackHitSphere.h" />
     <ClInclude Include="CharacterBase.h" />
+    <ClInclude Include="CharacterCollision.h" />
     <ClInclude Include="DamageInfo.h" />
     <ClInclude Include="DamageableObject.h" />
     <ClInclude Include="EnemyAttackState.h" />
@@ -65,6 +69,8 @@
     <ClInclude Include="EnemyDeadState.h" />
     <ClInclude Include="EnemyMeleeParameter.h" />
     <ClInclude Include="EnemyParameter.h" />
+    <ClInclude Include="EnemyShooter.h" />
+    <ClInclude Include="EnemyShooterParameter.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="PlayerAttackState.h" />
@@ -94,7 +100,8 @@
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIContainer.h" />
+    <ClInclude Include="UIFactory.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

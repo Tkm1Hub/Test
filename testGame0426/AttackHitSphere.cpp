@@ -4,28 +4,63 @@
 #include "CharacterBase.h"
 #include "Time.h"
 
-void AttackHitSphere::Init(
+void AttackHitSphere::InitMelee(
     float offset,
     float radius,
     int damage,
-    CharacterBase* owner
+    CharacterBase* owner,
+    const VECTOR& attackDir
 )
 {
+    isFollowOwner = true;
+
     forwardOffset = offset;
     this->radius = radius;
     this->damage = damage;
     this->owner = owner;
 
+    lifeTime = 0.1f;
+
     // ダメージ情報
     damageInfo.damage = damage;
     damageInfo.attacker = owner;
-    damageInfo.hitDir = owner->GetForward();
+    damageInfo.hitDir = VNorm(attackDir);
     damageInfo.knockBackPower = 15.0f;
 
     pos = VAdd(
         owner->GetCapsuleCenter(),
         VScale(owner->GetForward(), forwardOffset)
     );
+}
+
+void AttackHitSphere::InitProjectile(
+    const VECTOR& startPos,
+    float radius,
+    int damage,
+    CharacterBase* owner,
+    const VECTOR& dir,
+    float speed
+)
+{
+    isFollowOwner = false;
+
+    pos = startPos;
+    this->radius = radius;
+    this->damage = damage;
+    this->owner = owner;
+
+    lifeTime = 5.0f;
+
+    velocity =
+        VScale(
+            VNorm(dir),
+            speed
+        );
+
+    damageInfo.damage = damage;
+    damageInfo.attacker = owner;
+    damageInfo.hitDir = VNorm(dir);
+    damageInfo.knockBackPower = 15.0f;
 }
 
 void AttackHitSphere::Update()
@@ -38,11 +73,27 @@ void AttackHitSphere::Update()
         isDestroy = true;
     }
 
-    // owner前方へ配置
-    pos = VAdd(
-        owner->GetCapsuleCenter(),
-        VScale(owner->GetForward(), forwardOffset)
-    );
+    // 近接
+    if (isFollowOwner)
+    {
+        pos = VAdd(
+            owner->GetCapsuleCenter(),
+            VScale(
+                damageInfo.hitDir,
+                forwardOffset
+            )
+        );
+    }
+    // 飛び道具
+    else
+    {
+        pos = VAdd(
+            pos,
+            VScale(
+                velocity,
+                Time::GetInstance().GetDeltaTime() * 60.0f
+            ));
+    }
 
     // 攻撃判定
     AttackCollision::ProcessHit(this);

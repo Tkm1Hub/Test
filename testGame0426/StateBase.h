@@ -17,6 +17,9 @@ public:
 	// ステートが終了する際に一度だけ呼ばれる関数
 	virtual void OnExit() {}
 
+	// ステートの名前を取得
+	virtual const char* GetName() const = 0;
+
 protected:
 	Object* Owner = nullptr;
 };

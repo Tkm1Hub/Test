@@ -16,12 +16,6 @@ void EnemyChaseState::OnUpdate()
 	// ’ÇÕ
 	enemy->Chase();
 
-	// Player‚ªUŒ‚”ÍˆÍ“à‚É“ü‚é‚ÆAttackState
-	if (enemy->GetDistanceToPlayer() <= enemy->GetAttackRange())
-	{
-		auto state = std::make_shared<EnemyAttackState>();
-		enemy->ChangeState(state);
-	}
 }
 
 void EnemyChaseState::OnExit()

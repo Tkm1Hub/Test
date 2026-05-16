@@ -29,4 +29,8 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+
+private:
+    void UpdateObjects();
+    void DestroyObjects();
 };

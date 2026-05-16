@@ -8,7 +8,7 @@ void Object::Draw()
         VAdd(pos, VGet(0.0f, 2.5f, 0.0f)),
         VAdd(
             VAdd(pos, VGet(0.0f, 2.5f, 0.0f)),
-            VScale(forward, 10.0f)
+            VScale(forward, 50.0f)
         ),
         GetColor(255, 0, 0)
     );
@@ -18,7 +18,7 @@ void Object::Draw()
         VAdd(pos, VGet(0.0f, 2.0f, 0.0f)),
         VAdd(
             VAdd(pos, VGet(0.0f, 2.0f, 0.0f)),
-            VScale(moveDir, 8.0f)
+            VScale(moveDir, 40.0f)
         ),
         GetColor(0, 255, 0)
     );
@@ -26,7 +26,7 @@ void Object::Draw()
     // Velocity
     DrawLine3D(
         pos,
-        VAdd(pos, VScale(moveVelocity, 8.0f)),
+        VAdd(pos, VScale(moveVelocity, 30.0f)),
         GetColor(0, 0, 255)
     );
 }

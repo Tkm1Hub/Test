@@ -1,13 +1,14 @@
 #pragma once
+#pragma once
 #include "EnemyParameter.h"
 
-struct EnemyMeleeParameter : EnemyParameter
+struct EnemyShooterParameter : EnemyParameter
 {
-	EnemyMeleeParameter()
-	{
+    EnemyShooterParameter()
+    {
         // ===== 基本 =====
-        HP = 60;
-        attackPower = 15;
+        HP = 40;
+        attackPower = 10;
 
         // ===== 移動 =====
         maxMoveSpeed = 2.4f;
@@ -26,8 +27,8 @@ struct EnemyMeleeParameter : EnemyParameter
 
         damage = 10;                    // ダメージ
         attackForwardOffset = 18.0f;   // 攻撃位置のオフセット
-        attackMoveSpeed = 6.0f;       // 攻撃移動速度
-        attackHitRadius = 20.0f;       // HitSphere半径
+        attackMoveSpeed = 0.0f;       // 攻撃移動速度
+        attackHitRadius = 5.0f;       // HitSphere半径
 
         attackRange = 60.0f;        // 攻撃開始距離
 
@@ -38,12 +39,12 @@ struct EnemyMeleeParameter : EnemyParameter
         knockBackPower = 4.0f;
         weight = 1.0f;
 
-        // ===== ジャンプ =====
-        gravity = 0.03f;
-        maxFallSpeed = 1.0f;
-
         // ===== 当たり判定 =====
         bodyRadius = 8.0f;
-        bodyHeight = 24.0f;
-	}
+        bodyHeight = 8.0f;
+    }
+
+    float keepDistance = 300.0f;        // プレイヤーからとる距離
+    float toleranceDistance = 50.0f;    // 許容範囲
+    float bulletSpeed = 5.0f;           // 弾の速度
 };

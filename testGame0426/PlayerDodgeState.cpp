@@ -23,6 +23,8 @@ void PlayerDodgeState::OnStart()
 
 void PlayerDodgeState::OnUpdate()
 {
+	GetPlayer()->MoveInput();
+
 	dodgeTimer += Time::GetInstance().GetDeltaTime();
 
 	// 回避時間が経過したらステート変更

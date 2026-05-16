@@ -7,11 +7,21 @@ class CharacterBase;
 class AttackHitSphere :public Object
 {
 public:
-	void Init(
+	void InitMelee(
 		float offset,
 		float radius,
 		int damage,
-		CharacterBase* owner
+		CharacterBase* owner,
+		const VECTOR& attackDir
+	);
+
+	void InitProjectile(
+		const VECTOR& startPos,
+		float radius,
+		int damage,
+		CharacterBase* owner,
+		const VECTOR& dir,
+		float speed
 	);
 
 	void Update() override;
@@ -27,10 +37,14 @@ public:
 private:
 	float radius = 0.0f;
 	int damage = 0;
-	float lifeTime = 0.1f;
+	float lifeTime = 0.0f;
 	float timer = 0.0f;
 
 	float forwardOffset = 0.0f;
+
+	bool isFollowOwner = true;
+
+	VECTOR velocity = VGet(0.0f, 0.0f, 0.0f);
 
 	CharacterBase* owner = nullptr;
 	std::unordered_set<Object*> hitObjects;

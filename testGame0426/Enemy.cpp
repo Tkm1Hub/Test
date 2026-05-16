@@ -15,6 +15,10 @@ void Enemy::ChangeState(std::shared_ptr<EnemyStateBase> a_spState)
 	stateMachine.ChangeState(a_spState);
 }
 
+void Enemy::Init()
+{
+	team = Team::Enemy;
+}
 
 void Enemy::Update()
 {

@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+
 #include "IDamageable.h"
 #include "Object.h"
 #include "DamageInfo.h"
@@ -22,6 +24,11 @@ public:
 	virtual void OnHit(const DamageInfo& info)
 	{
 		lastDamageInfo = info;
+	}
+
+	virtual bool IsDead() const
+	{
+		return HP <= 0;
 	}
 
 	// ƒ_ƒ[ƒWî•ñ‚ðŽæ“¾

@@ -8,6 +8,10 @@ public:
 	void OnUpdate() override;
 	void OnExit() override;
 
+	const char* GetName() const override
+	{
+		return "Dodge";
+	}
 private:
 	float dodgeTimer = 0.0f;
 	float dodgeTime = 0.35f;

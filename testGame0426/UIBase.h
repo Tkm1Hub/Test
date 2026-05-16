@@ -11,9 +11,11 @@ public:
 	virtual void Draw(){}
 
 	bool GetIsDestroy() const { return isDestroy; }
+	bool GetIsActive() const { return isActive; }
 protected:
 	bool isDestroy = false;
+	bool isActive = false;
 
 	// Zç¿ïWÇÕégÇÌÇ»Ç¢
-	VECTOR ScreenPos = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR screenPos = VGet(0.0f, 0.0f, 0.0f);
 };

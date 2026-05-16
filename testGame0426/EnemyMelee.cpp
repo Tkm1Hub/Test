@@ -1,20 +1,31 @@
 #include "stdafx.h"
 #include "EnemyMelee.h"
 #include "EnemyChaseState.h"
+#include "EnemyAttackState.h"
 #include "AttackHitSphere.h"
 #include "Objects.h"
 #include "Player.h"
 #include "HPBarUI.h"
-#include "UIManager.h"
+#include "UIContainer.h"
+#include "UIFactory.h"
 
 void EnemyMelee::Init()
 {
-	pos = VGet(0.0f, 0.0f, 10.0f);
+	Enemy::Init();
+	pos = VGet(0.0f, 0.0f, 20.0f);
 	MaxHP = param.HP;
 	HP = MaxHP;
 	maxMoveSpeed = param.maxMoveSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;
+
+	// UI生成
+	auto ui = UIFactory::CreateHPBarUI(
+		std::static_pointer_cast<DamageableObject>(shared_from_this())
+	);
+
+	UIContainer::GetInstance().Add(ui);
+
 
 	// attackData初期化
 	attackData.combo =
@@ -25,13 +36,6 @@ void EnemyMelee::Init()
 			param.damage, param.attackMoveSpeed,param.attackHitRadius
 		}
 	};
-
-	// HPBar生成
-	auto HPBar = std::make_shared<HPBarUI>();
-	HPBar->SetTarget(std::dynamic_pointer_cast<DamageableObject>(shared_from_this()));
-
-	// UIリスト追加
-	UIManager::GetInstance().Add(HPBar);
 
 	// ステート初期化
 	auto state = std::make_shared<EnemyChaseState>();
@@ -58,6 +62,19 @@ void EnemyMelee::Draw()
 	Object::Draw();
 }
 
+void EnemyMelee::Chase()
+{
+	Enemy::Chase();
+
+	// Playerが攻撃範囲内に入るとAttackState
+	if (GetDistanceToPlayer() <= param.attackRange)
+	{
+		auto state = std::make_shared<EnemyAttackState>();
+		ChangeState(state);
+		return;
+	}
+}
+
 void EnemyMelee::Attack(const AttackStep& step)
 {
 	auto playerPtr = player.lock();
@@ -71,11 +88,12 @@ void EnemyMelee::Attack(const AttackStep& step)
 	auto hitSphere = std::make_shared<AttackHitSphere>();
 
 	// HitSphere初期化
-	hitSphere->Init(
+	hitSphere->InitMelee(
 		param.attackForwardOffset,
 		step.attackHitRadius,
 		step.damage,
-		this
+		this,
+		attackDir
 	);
 
 	Objects::GetInstance().Add(hitSphere);

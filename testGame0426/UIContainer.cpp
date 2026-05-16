@@ -1,12 +1,12 @@
-#include "UIManager.h"
+#include "UIContainer.h"
 #include "UIBase.h"
 
-void UIManager::Add(std::shared_ptr<UIBase>ui)
+void UIContainer::Add(std::shared_ptr<UIBase>ui)
 {
 	pendingUiList.push_back(ui);
 }
 
-void UIManager::Update()
+void UIContainer::Update()
 {
 	for (auto& ui : uiList)
 	{
@@ -37,7 +37,7 @@ void UIManager::Update()
 
 }
 
-void UIManager::Draw()
+void UIContainer::Draw()
 {
 	for (auto& ui : uiList)
 	{
