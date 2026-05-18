@@ -167,9 +167,6 @@
     <Filter Include="ソース ファイル\UI\DamageTextUI">
       <UniqueIdentifier>{ba154edb-1a9b-4359-a269-7da2764426b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\ComboLoader">
-      <UniqueIdentifier>{25980aea-5a14-4398-b200-e27f5a00e4fa}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -288,9 +285,6 @@
     </ClCompile>
     <ClCompile Include="DamageTextUI.cpp">
       <Filter>ソース ファイル\UI\DamageTextUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ComboLoader.cpp">
-      <Filter>ソース ファイル\ComboLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,12 +440,6 @@
     </ClInclude>
     <ClInclude Include="DamageTextUI.h">
       <Filter>ソース ファイル\UI\DamageTextUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ComboLoader.h">
-      <Filter>ソース ファイル\ComboLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="json.hpp">
-      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
