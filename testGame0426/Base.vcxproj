@@ -25,6 +25,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="CharacterCollision.cpp" />
+    <ClCompile Include="ComboLoader.cpp" />
     <ClCompile Include="DamageTextUI.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -66,6 +67,7 @@
     <ClInclude Include="AttackToken.h" />
     <ClInclude Include="CharacterBase.h" />
     <ClInclude Include="CharacterCollision.h" />
+    <ClInclude Include="ComboLoader.h" />
     <ClInclude Include="DamageInfo.h" />
     <ClInclude Include="DamageableObject.h" />
     <ClInclude Include="DamageTextUI.h" />
@@ -81,6 +83,7 @@
     <ClInclude Include="EnemyStunState.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
@@ -198,7 +201,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Dxlib_h;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Dxlib_h;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
