@@ -12,7 +12,9 @@ private:
 	std::weak_ptr<DamageableObject> target;
 
 	float width = 200.0f;
-	float height = 10.0f;
+	float hpHeight = 10.0f;
+	float stunHeight = 6.0f;
 
 	float hpRate = 0.0f;
+	float stunRate = 0.0f;
 };

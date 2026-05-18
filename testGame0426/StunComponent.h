@@ -20,48 +20,24 @@ public:
 		return isStun;
 	}
 
-	float GetStunTimer() const
-	{
-		return stunTimer;
-	}
-
-	//--------------------------------
 	// スタン加算
-	//--------------------------------
 	void AddStunGauge(float value)
 	{
-		if (isStun) return;
-		
+		// スタン中は加算しない
+		if (isStun)
+			return;
+
 		stunGauge += value;
 
 		if (stunGauge >= maxStunGauge)
 		{
 			stunGauge = maxStunGauge;
 
-			// まだスタンしていない時だけ
-			if (!isStun)
-			{
-				StartStun();
-			}
+			StartStun();
 		}
 	}
 
-	//--------------------------------
-	// スタン回復
-	//--------------------------------
-	void RecoverStun(float value)
-	{
-		stunGauge -= value;
-
-		if (stunGauge < 0.0f)
-		{
-			stunGauge = 0.0f;
-		}
-	}
-
-	//--------------------------------
 	// スタン開始
-	//--------------------------------
 	void StartStun()
 	{
 		isStun = true;
@@ -71,23 +47,33 @@ public:
 		OnStun();
 	}
 
-	//--------------------------------
 	// スタン更新
-	//--------------------------------
 	void UpdateStun(float deltaTime)
 	{
-		if (!isStun)
-			return;
-
-		stunTimer -= deltaTime;
-
-		if (stunTimer <= 0.0f)
+		// スタン中
+		if (isStun)
 		{
-			stunTimer = 0.0f;
+			stunTimer -= deltaTime;
 
-			isStun = false;
+			// タイマー割合
+			float rate =
+				stunTimer / stunTime;
 
-			stunGauge = 0.0f;
+			rate = max(0.0f, min(rate, 1.0f));
+
+			// 見た目ゲージ更新
+			stunGauge =
+				maxStunGauge * rate;
+
+			// 終了
+			if (stunTimer <= 0.0f)
+			{
+				stunTimer = 0.0f;
+
+				stunGauge = 0.0f;
+
+				isStun = false;
+			}
 		}
 	}
 
@@ -96,14 +82,11 @@ public:
 protected:
 
 	float stunGauge = 0.0f;
-
 	float maxStunGauge = 100.0f;
-
 	bool isStun = false;
-
 	float stunTimer = 0.0f;
-
-	float stunTime = 120.0f;
+	float stunTime = 180.0f;
+	float normalRecoverSpeed = 8.0f;
 
 	DamageInfo lastStunInfo;
 };

@@ -33,15 +33,8 @@ void Player::Init()
 	bodyHeight = param.bodyHeight;
 	team = Team::Player;
 
-	// attackData‰Šú‰»
-	attackData.combo =
-	{
-		// 1’i–Ú
-		{
-			param.windupTime, param.activeTime, param.recoveryTime,
-			param.attackPower, param.attackMoveSpeed,param.attackHitRadius
-		}
-	};
+	// ƒRƒ“ƒ{Ý’è
+	SetupCombo(param.combo);
 }
 
 void Player::Update()
@@ -163,9 +156,11 @@ void Player::Attack(const AttackStep& step)
 
 	// HitSphere‰Šú‰»
 	hitSphere->InitMelee(
-		param.attackForwardOffset,
-		step.attackHitRadius,
 		step.damage,
+		step.stunPower,
+		step.attackHitRadius,
+		step.attackForwardOffset,
+		step.knockBackPower,
 		this,
 		attackDir
 	);

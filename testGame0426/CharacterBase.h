@@ -1,6 +1,7 @@
 #pragma once
 #include "DamageableObject.h"
 #include "StateMachine.h"
+#include "AttackData.h"
 
 enum class Team
 {
@@ -37,9 +38,21 @@ public:
 		return team;
 	}
 
+	// ƒRƒ“ƒ{İ’è
+	virtual void SetupCombo(
+		const std::vector<AttackStep>& comboData
+	);
+
+	const AttackData& GetAttackData() const
+	{
+		return attackData;
+	}
+
 protected:
 	Team team = Team::Neutral;
 
     float bodyRadius = 0.0f;	// “–‚½‚è”»’è”¼Œa
 	float bodyHeight = 0.0f;	// “–‚½‚è”»’è‚‚³
+
+	AttackData attackData;
 };

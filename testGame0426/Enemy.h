@@ -57,6 +57,5 @@ public:
 
 protected:
 	std::weak_ptr<Player> player;
-	AttackData attackData;
 	float attackCooldown = 0.0f;
 };

@@ -26,8 +26,33 @@ void PlayerAttackState::OnUpdate()
 	// 現在段
 	const AttackStep& step = attackData.combo[currentStep];
 
+	//--------------------------------
+	// 次コンボ入力受付
+	//--------------------------------
+
+	if (phase == AttackPhase::Active ||
+		phase == AttackPhase::Recovery)
+	{
+		if (Input::GetInput().IsTrigger(XINPUT_BUTTON_X))
+		{
+			nextComboRequested = true;
+		}
+	}
+
 	switch (phase)
 	{
+		// ===== 準備 =====
+	case AttackPhase::Windup:
+
+		if (timer >= step.windupTime)
+		{
+			timer = 0.0f;
+
+			phase = AttackPhase::Active;
+		}
+
+		break;
+
 		// ===== 攻撃 =====
 	case AttackPhase::Active:
 		if (!hasHit)
@@ -45,35 +70,49 @@ void PlayerAttackState::OnUpdate()
 
 		// ===== 後隙 =====
 	case AttackPhase::Recovery:
+
 		if (timer >= step.recoveryTime)
 		{
 			timer = 0.0f;
-			currentStep++;
 
-			// コンボ終了
-			if (currentStep >= attackData.combo.size())
+			//--------------------------------
+			// 次コンボへ
+			//--------------------------------
+
+			if (nextComboRequested &&
+				currentStep + 1 < attackData.combo.size())
 			{
-				// スティック操作の有無で Walk or Idle
-				if (Input::GetInput().GetIsMoveLStick())
-				{
-					// Walk
-					auto state = std::make_shared<PlayerWalkState>();
-					GetPlayer()->ChangeState(state);
-					return;
-				}
-				else
-				{
-					// Idle
-					auto state = std::make_shared<PlayerIdleState>();
-					GetPlayer()->ChangeState(state);
-					return;
-				}
+				currentStep++;
+
+				phase = AttackPhase::Windup;
+
+				hasHit = false;
+
+				nextComboRequested = false;
+
+				return;
+			}
+
+			//--------------------------------
+			// コンボ終了
+			//--------------------------------
+
+			if (Input::GetInput().GetIsMoveLStick())
+			{
+				auto state =
+					std::make_shared<PlayerWalkState>();
+
+				player->ChangeState(state);
 			}
 			else
 			{
-				// 次段へ
-				phase = AttackPhase::Active;
+				auto state =
+					std::make_shared<PlayerIdleState>();
+
+				player->ChangeState(state);
 			}
+
+			return;
 		}
 		break;
 	}

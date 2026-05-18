@@ -22,3 +22,10 @@ VECTOR CharacterBase::GetCapsuleCenter()const
         )
     );
 }
+
+void CharacterBase::SetupCombo(
+    const std::vector<AttackStep>& comboData
+)
+{
+    attackData.combo = comboData;
+}

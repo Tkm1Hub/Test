@@ -26,15 +26,8 @@ void EnemyShooter::Init()
 
 	UIContainer::GetInstance().Add(ui);
 
-    // attackData初期化
-    attackData.combo =
-    {
-        // 1段目
-        {
-            param.windupTime, param.activeTime, param.recoveryTime,
-            param.damage, param.attackMoveSpeed,param.attackHitRadius
-        }
-    };
+    // コンボ設定
+    SetupCombo(param.combo);
 
     // ステート初期化
     auto state = std::make_shared<EnemyChaseState>();
@@ -107,20 +100,33 @@ void EnemyShooter::Chase()
 
 void EnemyShooter::Attack(const AttackStep& step)
 {
+
     auto playerPtr = player.lock();
     if (!playerPtr) return;
+
+    VECTOR attackDir =
+        GetDirectionToPlayer();
+
+    SetLookDir(attackDir);
 
     auto bullet =
         std::make_shared<AttackHitSphere>();
 
     bullet->InitProjectile(
-        GetCapsuleCenter(),
-        param.attackHitRadius,
-        param.damage,
+        VAdd(
+            GetCapsuleCenter(),
+            VScale(
+                attackDir,
+                step.attackForwardOffset
+            )
+        ),
+        step.attackHitRadius,
+        step.damage,
+        step.stunPower,
+        step.knockBackPower,
         this,
-        GetDirectionToPlayer(),
+        attackDir,
         param.bulletSpeed
     );
-
     Objects::GetInstance().Add(bullet);
 }

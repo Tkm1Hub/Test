@@ -8,8 +8,16 @@ struct AttackStep
 	float recoveryTime;
 
 	int damage;
+
+	float stunPower;
+
 	float attackMoveSpeed;
+
 	float attackHitRadius;
+
+	float attackForwardOffset;
+
+	float knockBackPower;
 };
 
 struct AttackData

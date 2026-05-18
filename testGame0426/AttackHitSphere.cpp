@@ -5,118 +5,126 @@
 #include "Time.h"
 
 void AttackHitSphere::InitMelee(
-    float offset,
-    float radius,
-    int damage,
-    CharacterBase* owner,
-    const VECTOR& attackDir
+	int damage,
+	float stunPower,
+	float radius,
+	float offset,
+	float knockBackPower,
+	CharacterBase* owner,
+	const VECTOR& attackDir
 )
 {
-    isFollowOwner = true;
+	isFollowOwner = true;
 
-    forwardOffset = offset;
-    this->radius = radius;
-    this->damage = damage;
-    this->owner = owner;
+	this->radius = radius;
+	this->forwardOffset = offset;
+	this->owner = owner;
 
-    lifeTime = 0.1f;
+	lifeTime = 0.1f;
 
-    // É_ÉÅÅ[ÉWèÓïÒ
-    damageInfo.damage = damage;
-    damageInfo.attacker = owner;
-    damageInfo.hitDir = VNorm(attackDir);
-    damageInfo.knockBackPower = 15.0f;
+	damageInfo.damage = damage;
+	damageInfo.stunPower = stunPower;
+	damageInfo.knockBackPower = knockBackPower;
+	damageInfo.attacker = owner;
+	damageInfo.hitDir = VNorm(attackDir);
 
-    pos = VAdd(
-        owner->GetCapsuleCenter(),
-        VScale(owner->GetForward(), forwardOffset)
-    );
+	pos = VAdd(
+		owner->GetCapsuleCenter(),
+		VScale(
+			damageInfo.hitDir,
+			forwardOffset
+		)
+	);
 }
 
 void AttackHitSphere::InitProjectile(
-    const VECTOR& startPos,
-    float radius,
-    int damage,
-    CharacterBase* owner,
-    const VECTOR& dir,
-    float speed
+	const VECTOR& startPos,
+	float radius,
+	int damage,
+	float stunPower,
+	float knockBackPower,
+	CharacterBase* owner,
+	const VECTOR& dir,
+	float speed
 )
 {
-    isFollowOwner = false;
+	isFollowOwner = false;
 
-    pos = startPos;
-    this->radius = radius;
-    this->damage = damage;
-    this->owner = owner;
+	pos = startPos;
 
-    lifeTime = 5.0f;
+	this->radius = radius;
+	this->owner = owner;
 
-    velocity =
-        VScale(
-            VNorm(dir),
-            speed
-        );
+	lifeTime = 5.0f;
 
-    damageInfo.damage = damage;
-    damageInfo.attacker = owner;
-    damageInfo.hitDir = VNorm(dir);
-    damageInfo.knockBackPower = 15.0f;
+	velocity =
+		VScale(
+			VNorm(dir),
+			speed
+		);
+
+	damageInfo.damage = damage;
+	damageInfo.stunPower = stunPower;
+	damageInfo.attacker = owner;
+	damageInfo.hitDir = VNorm(dir);
+	damageInfo.knockBackPower =
+		knockBackPower;
 }
 
 void AttackHitSphere::Update()
 {
-    timer +=
-        Time::GetInstance().GetDeltaTime();
+	timer +=
+		Time::GetInstance().GetDeltaTime();
 
-    if (timer >= lifeTime)
-    {
-        isDestroy = true;
-    }
+	if (timer >= lifeTime)
+	{
+		isDestroy = true;
+	}
 
-    // ãﬂê⁄
-    if (isFollowOwner)
-    {
-        pos = VAdd(
-            owner->GetCapsuleCenter(),
-            VScale(
-                damageInfo.hitDir,
-                forwardOffset
-            )
-        );
-    }
-    // îÚÇ—ìπãÔ
-    else
-    {
-        pos = VAdd(
-            pos,
-            VScale(
-                velocity,
-                Time::GetInstance().GetDeltaTime() * 60.0f
-            ));
-    }
+	// ãﬂê⁄
+	if (isFollowOwner)
+	{
+		pos = VAdd(
+			owner->GetCapsuleCenter(),
+			VScale(
+				damageInfo.hitDir,
+				forwardOffset
+			)
+		);
+	}
+	// îÚÇ—ìπãÔ
+	else
+	{
+		pos = VAdd(
+			pos,
+			VScale(
+				velocity,
+				Time::GetInstance().GetDeltaTime() * 60.0f
+			)
+		);
+	}
 
-    // çUåÇîªíË
-    AttackCollision::ProcessHit(this);
+	AttackCollision::ProcessHit(this);
 }
 
 void AttackHitSphere::Draw()
 {
-    DrawSphere3D(
-        pos,
-        radius,
-        16,
-        GetColor(255, 0, 0),
-        GetColor(255, 255, 255),
-        FALSE
-    );
+	DrawSphere3D(
+		pos,
+		radius,
+		16,
+		GetColor(255, 0, 0),
+		GetColor(255, 255, 255),
+		FALSE
+	);
 }
 
-bool AttackHitSphere::HasHitObject(Object* obj)const
+bool AttackHitSphere::HasHitObject(Object* obj) const
 {
-    return hitObjects.contains(obj);
+	return hitObjects.contains(obj);
 }
 
 void AttackHitSphere::AddHitObject(Object* obj)
 {
-    hitObjects.insert(obj);
+	hitObjects.insert(obj);
 }

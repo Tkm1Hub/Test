@@ -76,12 +76,6 @@ void Enemy::OnHit(const DamageInfo& info)
 	// ダメージ保存
 	lastDamageInfo = info;
 
-	AddStunGauge(info.stunPower);
-
-	// スタンなら終了
-	if (GetIsStun())
-		return;
-
 	// 被弾
 	auto state = std::make_shared<EnemyDamageState>();
 	ChangeState(state);

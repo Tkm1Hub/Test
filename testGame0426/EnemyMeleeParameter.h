@@ -45,5 +45,24 @@ struct EnemyMeleeParameter : EnemyParameter
         // ===== “–‚½‚è”»’è =====
         bodyRadius = 8.0f;
         bodyHeight = 24.0f;
-	}
+
+        // ===== ƒRƒ“ƒ{ =====
+        combo =
+        {
+            {
+                .windupTime = 35.0f,
+                .activeTime = 10.0f,
+                .recoveryTime = 45.0f,
+
+                .damage = 12,
+                .stunPower = 0.0f,
+
+                .attackMoveSpeed = 5.0f,
+                .attackHitRadius = 18.0f,
+                .attackForwardOffset = 18.0f,
+
+                .knockBackPower = 8.0f
+            }
+        };
+    }
 };

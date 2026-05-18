@@ -5,6 +5,8 @@
 #include "EnemyStunState.h"
 #include "Enemy.h"
 #include "Time.h"
+#include "DamageTextUI.h"
+#include "UIContainer.h"
 
 void EnemyDamageState::OnStart()
 {
@@ -14,6 +16,17 @@ void EnemyDamageState::OnStart()
     // 被弾情報取得
     const DamageInfo& info =
         enemy->GetLastDamageInfo();
+
+    // ダメージUI
+    auto damageUI =
+        std::make_shared<DamageTextUI>();
+
+    damageUI->Init(
+        enemy->GetCapsuleTop(),
+        info.damage
+    );
+
+    UIContainer::GetInstance().Add(damageUI);
 
     // ダメージ
     enemy->TakeDamage(info.damage);

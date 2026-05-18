@@ -17,4 +17,5 @@ private:
 	float timer = 0.0f;
 	AttackPhase phase = AttackPhase::Active;
 	bool hasHit = false;
+	bool nextComboRequested = false;
 };

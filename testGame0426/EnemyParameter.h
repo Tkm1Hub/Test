@@ -1,4 +1,6 @@
 #pragma once
+#include<vector>
+#include "AttackData.h"
 
 struct EnemyParameter
 {
@@ -35,7 +37,7 @@ struct EnemyParameter
 
     // ===== スタン =====
     float maxStunGauge = 100.0f;      // 最大スタン値
-    float stunTime = 120.0f;          // スタン硬直時間
+    float stunTime = 300.0f;          // スタン硬直時間
 
     // ===== 回避/ノックバック =====
     float knockBackPower = 4.0f;
@@ -49,4 +51,6 @@ struct EnemyParameter
     float bodyRadius = 8.0f;
     float bodyHeight = 24.0f;
 
+    // ===== コンボ =====
+    std::vector<AttackStep>combo;
 };

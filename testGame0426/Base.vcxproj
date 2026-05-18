@@ -25,6 +25,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="CharacterCollision.cpp" />
+    <ClCompile Include="DamageTextUI.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="CharacterCollision.h" />
     <ClInclude Include="DamageInfo.h" />
     <ClInclude Include="DamageableObject.h" />
+    <ClInclude Include="DamageTextUI.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyCombatIdleState.h" />

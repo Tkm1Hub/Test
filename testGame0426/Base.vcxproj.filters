@@ -92,9 +92,6 @@
     <Filter Include="ソース ファイル\State\EnemyState\EnemyAttack">
       <UniqueIdentifier>{75713899-134c-4075-9df3-a9466f379369}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\State\EnemyState\EnemyCoolDown">
-      <UniqueIdentifier>{66bd6c8b-843f-4cb3-8764-94c74df20643}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State\EnemyState\EnemyStun">
       <UniqueIdentifier>{a1911ce3-00a6-4421-a21f-e8262ee972cf}</UniqueIdentifier>
     </Filter>
@@ -166,6 +163,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Combat\AttackToken">
       <UniqueIdentifier>{d1996da1-ffa6-415c-aebf-760240493a8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\DamageTextUI">
+      <UniqueIdentifier>{ba154edb-1a9b-4359-a269-7da2764426b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +282,9 @@
     </ClCompile>
     <ClCompile Include="AttackToken.cpp">
       <Filter>ソース ファイル\Combat\AttackToken</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageTextUI.cpp">
+      <Filter>ソース ファイル\UI\DamageTextUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -423,9 +426,6 @@
     <ClInclude Include="EnemyShooterParameter.h">
       <Filter>ソース ファイル\Parameter\Enemy\EnemyShooter</Filter>
     </ClInclude>
-    <ClInclude Include="StunComponent.h">
-      <Filter>ソース ファイル\object</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyStunState.h">
       <Filter>ソース ファイル\State\EnemyState\EnemyStun</Filter>
     </ClInclude>
@@ -434,6 +434,12 @@
     </ClInclude>
     <ClInclude Include="AttackToken.h">
       <Filter>ソース ファイル\Combat\AttackToken</Filter>
+    </ClInclude>
+    <ClInclude Include="StunComponent.h">
+      <Filter>ソース ファイル\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageTextUI.h">
+      <Filter>ソース ファイル\UI\DamageTextUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

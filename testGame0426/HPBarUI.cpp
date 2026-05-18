@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "HPBarUI.h"
 #include "DamageableObject.h"
+#include "StunComponent.h"
 
-void HPBarUI::SetTarget(std::weak_ptr<DamageableObject> target)
+void HPBarUI::SetTarget(
+	std::weak_ptr<DamageableObject> target
+)
 {
 	this->target = target;
 }
@@ -10,56 +13,123 @@ void HPBarUI::SetTarget(std::weak_ptr<DamageableObject> target)
 void HPBarUI::Update()
 {
 	auto t = target.lock();
+
 	if (!t)
 	{
 		isDestroy = true;
 		return;
 	}
 
-	// HP割合を取得
+	//--------------------------------
+	// HP割合
+	//--------------------------------
+
 	hpRate =
 		static_cast<float>(t->GetHP()) /
 		static_cast<float>(t->GetMaxHP());
 
-	// 0～1に制限
-	hpRate = max(0.0f, min(hpRate, 1.0f));
+	hpRate =
+		max(0.0f, min(hpRate, 1.0f));
 
-	// スクリーン座標に変換
-	screenPos = ConvWorldPosToScreenPos(t->GetPosition());
+	//--------------------------------
+	// スタン割合
+	//--------------------------------
 
+	auto stun =
+		dynamic_cast<StunComponent*>(
+			t.get()
+			);
+
+	if (stun)
+	{
+		stunRate =
+			stun->GetStunGauge() /
+			stun->GetMaxStunGauge();
+
+		stunRate =
+			max(0.0f, min(stunRate, 1.0f));
+	}
+
+	//--------------------------------
+	// スクリーン座標
+	//--------------------------------
+
+	screenPos =
+		ConvWorldPosToScreenPos(
+			t->GetPosition()
+		);
 }
 
 void HPBarUI::Draw()
 {
 	int left =
-		static_cast<int>(screenPos.x - width * 0.5f);
+		static_cast<int>(
+			screenPos.x - width * 0.5f
+			);
 
-	int top =
-		static_cast<int>(screenPos.y - height * 0.5f);
+	//--------------------------------
+	// HPバー
+	//--------------------------------
 
-	int right =
-		static_cast<int>(screenPos.x + width * 0.5f);
+	int hpTop =
+		static_cast<int>(
+			screenPos.y
+			);
 
-	int bottom =
-		static_cast<int>(screenPos.y + height * 0.5f);
+	int hpBottom =
+		static_cast<int>(
+			hpTop + hpHeight
+			);
 
-	// ゲージ枠
+	// 枠
 	DrawBox(
 		left,
-		top,
-		right,
-		bottom,
+		hpTop,
+		left + static_cast<int>(width),
+		hpBottom,
 		GetColor(50, 50, 50),
 		FALSE
 	);
 
-	// ゲージ中身
+	// 中身
 	DrawBox(
 		left,
-		top,
+		hpTop,
 		left + static_cast<int>(width * hpRate),
-		bottom,
-		GetColor(100, 0, 0),
+		hpBottom,
+		GetColor(180, 40, 40),
+		TRUE
+	);
+
+	//--------------------------------
+	// スタンバー
+	//--------------------------------
+
+	int stunTop =
+		hpBottom + 4;
+
+	int stunBottom =
+		static_cast<int>(
+			stunTop + stunHeight
+			);
+
+	// 枠
+	DrawBox(
+		left,
+		stunTop,
+		left + static_cast<int>(width),
+		stunBottom,
+		GetColor(50, 50, 50),
+		FALSE
+	);
+
+	// 中身
+	DrawBox(
+		left,
+		stunTop,
+		left + static_cast<int>(width * stunRate),
+		stunBottom,
+		GetColor(255, 220, 40),
 		TRUE
 	);
 }

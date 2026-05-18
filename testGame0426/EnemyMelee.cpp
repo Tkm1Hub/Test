@@ -26,16 +26,8 @@ void EnemyMelee::Init()
 
 	UIContainer::GetInstance().Add(ui);
 
-
-	// attackData初期化
-	attackData.combo =
-	{
-		// 1段目
-		{
-			param.windupTime, param.activeTime, param.recoveryTime,
-			param.damage, param.attackMoveSpeed,param.attackHitRadius
-		}
-	};
+	// コンボ設定
+	SetupCombo(param.combo);
 
 	// ステート初期化
 	auto state = std::make_shared<EnemyCombatIdleState>();
@@ -89,9 +81,11 @@ void EnemyMelee::Attack(const AttackStep& step)
 
 	// HitSphere初期化
 	hitSphere->InitMelee(
-		param.attackForwardOffset,
-		step.attackHitRadius,
 		step.damage,
+		step.stunPower,
+		step.attackHitRadius,
+		step.attackForwardOffset,
+		step.knockBackPower,
 		this,
 		attackDir
 	);

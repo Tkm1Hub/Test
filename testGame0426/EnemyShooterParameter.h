@@ -42,6 +42,39 @@ struct EnemyShooterParameter : EnemyParameter
         // ===== 当たり判定 =====
         bodyRadius = 8.0f;
         bodyHeight = 8.0f;
+
+        // ===== コンボ =====
+        combo =
+        {
+            {
+                // windup
+                50.0f,
+
+                // active
+                6.0f,
+
+                // recovery
+                55.0f,
+
+                // damage
+                10,
+
+                // stunPower
+                12.0f,
+
+                // attackMoveSpeed
+                0.0f,
+
+                // attackHitRadius
+                5.0f,
+
+                // attackForwardOffset
+                16.0f,
+
+                // knockBackPower
+                4.0f
+            }
+        };
     }
 
     float keepDistance = 300.0f;        // プレイヤーからとる距離

@@ -33,7 +33,6 @@ private:
 	PlayerParameter param;				// パラメーター
 	std::weak_ptr<Camera> camera;
 	std::weak_ptr<Enemy> target;
-	AttackData attackData;
 
 	void SearchTarget();
 	VECTOR GetInputDir()const;
