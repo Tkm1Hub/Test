@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EnemyMelee.h"
-#include "EnemyChaseState.h"
+#include "EnemyCombatIdleState.h"
 #include "EnemyAttackState.h"
 #include "AttackHitSphere.h"
 #include "Objects.h"
@@ -15,7 +15,7 @@ void EnemyMelee::Init()
 	pos = VGet(0.0f, 0.0f, 20.0f);
 	MaxHP = param.HP;
 	HP = MaxHP;
-	maxMoveSpeed = param.maxMoveSpeed;
+	maxMoveSpeed = param.chaseSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;
 
@@ -38,7 +38,7 @@ void EnemyMelee::Init()
 	};
 
 	// ステート初期化
-	auto state = std::make_shared<EnemyChaseState>();
+	auto state = std::make_shared<EnemyCombatIdleState>();
 	ChangeState(state);
 }
 

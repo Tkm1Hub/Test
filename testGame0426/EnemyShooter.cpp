@@ -15,7 +15,7 @@ void EnemyShooter::Init()
 	pos = VGet(20.0f, 0.0f, 0.0f);
 	MaxHP = param.HP;
 	HP = MaxHP;
-	maxMoveSpeed = param.maxMoveSpeed;
+	maxMoveSpeed = param.chaseSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;
 

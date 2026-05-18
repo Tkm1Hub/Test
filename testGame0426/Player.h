@@ -27,6 +27,8 @@ public:
 	const AttackData& GetAttackData() { return attackData; }
 
 	PlayerParameter& GetParam() { return param; }
+
+	std::weak_ptr<Enemy> GetTarget() const { return target; }
 private:
 	PlayerParameter param;				// パラメーター
 	std::weak_ptr<Camera> camera;
@@ -34,4 +36,5 @@ private:
 	AttackData attackData;
 
 	void SearchTarget();
+	VECTOR GetInputDir()const;
 };

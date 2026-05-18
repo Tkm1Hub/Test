@@ -59,7 +59,7 @@ void HPBarUI::Draw()
 		top,
 		left + static_cast<int>(width * hpRate),
 		bottom,
-		GetColor(255, 0, 0),
+		GetColor(100, 0, 0),
 		TRUE
 	);
 }

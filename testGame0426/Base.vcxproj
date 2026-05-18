@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="AttackHitSphere.cpp" />
+    <ClCompile Include="AttackToken.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="CharacterCollision.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
+    <ClCompile Include="EnemyCombatIdleState.cpp" />
     <ClCompile Include="EnemyDamageState.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
     <ClCompile Include="EnemyMelee.cpp" />
@@ -60,12 +62,14 @@
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackHitSphere.h" />
+    <ClInclude Include="AttackToken.h" />
     <ClInclude Include="CharacterBase.h" />
     <ClInclude Include="CharacterCollision.h" />
     <ClInclude Include="DamageInfo.h" />
     <ClInclude Include="DamageableObject.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyChaseState.h" />
+    <ClInclude Include="EnemyCombatIdleState.h" />
     <ClInclude Include="EnemyDamageState.h" />
     <ClInclude Include="EnemyDeadState.h" />
     <ClInclude Include="EnemyMeleeParameter.h" />

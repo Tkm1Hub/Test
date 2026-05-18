@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "EnemyDamageState.h"
 #include "EnemyDeadState.h"
-#include "EnemyChaseState.h"
+#include "EnemyCombatIdleState.h"
+#include "EnemyStunState.h"
 #include "Enemy.h"
 #include "Time.h"
 
@@ -16,6 +17,7 @@ void EnemyDamageState::OnStart()
 
     // ダメージ
     enemy->TakeDamage(info.damage);
+    enemy->AddStunGauge(info.stunPower);
 
     // ノックバック
     enemy->SetExternalVelocity(
@@ -55,8 +57,27 @@ void EnemyDamageState::OnUpdate()
     // 被弾終了
     if (timer >= enemy->GetParam().damageTime)
     {
-        auto state = std::make_shared<EnemyChaseState>();
+        //--------------------------------
+                // まだスタン中
+                //--------------------------------
+        if (enemy->GetIsStun())
+        {
+            auto state =
+                std::make_shared<EnemyStunState>();
+
+            enemy->ChangeState(state);
+
+            return;
+        }
+
+        //--------------------------------
+        // 通常復帰
+        //--------------------------------
+        auto state =
+            std::make_shared<EnemyCombatIdleState>();
+
         enemy->ChangeState(state);
+
         return;
     }
 }

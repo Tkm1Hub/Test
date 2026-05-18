@@ -23,17 +23,14 @@ void TestScene::Init()
 	player = std::make_shared<Player>();
 	camera = std::make_shared<Camera>();
 	auto enemyMelee = std::make_shared<EnemyMelee>();
-	auto enemyShooter = std::make_shared<EnemyShooter>();
 
 	camera->SetPlayer(player);
 	player->SetCamera(camera);
 	enemyMelee->SetPlayer(player);
-	enemyShooter->SetPlayer(player);
 
 	// オブジェクトリストに追加
 	Objects::GetInstance().Add(player);
 	Objects::GetInstance().Add(enemyMelee);
-	Objects::GetInstance().Add(enemyShooter);
 
 	// オブジェクト初期化
 	camera->Init();

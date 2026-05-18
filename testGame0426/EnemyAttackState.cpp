@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "EnemyAttackState.h"
-#include "EnemyChaseState.h"
+#include "EnemyCombatIdleState.h"
 #include "Enemy.h"
 #include "Time.h"
+#include "AttackToken.h"
 
 void EnemyAttackState::OnStart()
 {
-
+	
 }
 
 void EnemyAttackState::OnUpdate()
@@ -68,9 +69,10 @@ void EnemyAttackState::OnUpdate()
 			// コンボ終了
 			if (currentStep >= attackData.combo.size())
 			{
-				// 追跡に戻る
-				auto state = std::make_shared<EnemyChaseState>();
+				// CombatIdleに戻る
+				auto state = std::make_shared<EnemyCombatIdleState>();
 				enemy->ChangeState(state);
+				return;
 			}
 			else
 			{
@@ -85,5 +87,13 @@ void EnemyAttackState::OnUpdate()
 
 void EnemyAttackState::OnExit()
 {
+	// enemy取得
+	auto enemy = GetEnemy();
+	if (!enemy) return;
 
+	// 攻撃権を棄権
+	AttackToken::GetInstance().ReleaseToken(enemy);
+
+	// クールダウン設定
+	enemy->SetAttackCooldown(enemy->GetParam().attackCooldown);
 }

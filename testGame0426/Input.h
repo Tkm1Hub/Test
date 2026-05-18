@@ -1,5 +1,5 @@
 #pragma once
-#pragma once
+#include "DxLib.h"
 
 //一人プレイのみのためシングルトンで作成
 class Input
@@ -35,6 +35,8 @@ public:
     // スティック
     bool GetIsMoveLStick() const { return isMoveLStick; }
     bool GetIsMoveRStick() const { return isMoveRStick; }
+
+    VECTOR GetLeftStickDir() const;
 
     float GetLeftStickX() const { return leftStickX; }
     float GetLeftStickY() const { return leftStickY; }

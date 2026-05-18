@@ -29,7 +29,7 @@ public:
 	void OnHit(const DamageInfo& info) override;
 
 	// スタン
-	void OnStun()const override;
+	void OnStun() override;
 
 	// 目標地点へ移動
 	void MoveTo(const VECTOR& targetPos);
@@ -46,6 +46,11 @@ public:
 	// 攻撃可能範囲を取得
 	float GetAttackRange() const { return GetParam().attackRange; }
 
+	// 攻撃クールダウン
+	float GetAttackCoolDown()const { return attackCooldown; }
+	void SetAttackCooldown(float value) { attackCooldown = value; }
+	void UpdateAttackCoolDown();
+
 	const AttackData& GetAttackData() { return attackData; }
 
 	virtual const EnemyParameter& GetParam() const = 0;
@@ -53,4 +58,5 @@ public:
 protected:
 	std::weak_ptr<Player> player;
 	AttackData attackData;
+	float attackCooldown = 0.0f;
 };

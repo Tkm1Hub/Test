@@ -7,7 +7,8 @@ struct EnemyParameter
     int attackPower = 12;
 
     // ===== 移動 =====
-    float maxMoveSpeed = 2.4f;
+    float walkSpeed = 0.5f;
+    float chaseSpeed = 2.4f;
     float accel = 0.1f;
     float decel = 0.88f;
     float rotateSpeed = 0.12f;
@@ -19,7 +20,8 @@ struct EnemyParameter
     // ===== 攻撃 =====
     float windupTime = 45.0f;       // 予備動作時間 
     float activeTime = 12.0f;       // 攻撃時間
-    float recoveryTime = 70.0f;     // 後隙時間
+    float recoveryTime = 40.0f;     // 後隙時間
+    float attackCooldown = 300.0f;  // 攻撃クールダウン
 
     int damage = 10;                    // ダメージ
     float attackForwardOffset = 18.0f;   // 攻撃位置のオフセット

@@ -24,7 +24,15 @@ bool Input::IsTrigger(int button) const
         oldState.Buttons[button] == 0;
 }
 
-
+VECTOR Input::GetLeftStickDir() const
+{
+    return VNorm(
+        VGet(
+        leftStickX,
+        0.0f,
+        -leftStickY
+    ));
+}
 
 /// @brief スティックの数値を計算
 void Input::CalcStickInput()

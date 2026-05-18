@@ -4,6 +4,7 @@
 #include "EnemyDeadState.h"
 #include "EnemyDamageState.h"
 #include "EnemyStunState.h"
+#include "Time.h"
 
 void Enemy::SetPlayer(const std::weak_ptr<Player>& playerPtr)
 {
@@ -24,6 +25,12 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
+	// 攻撃クールダウン
+	UpdateAttackCoolDown();
+
+	// スタン更新
+	UpdateStun(Time::GetInstance().GetScaledDeltaTime() * 60.0f);
+
 	moveDir = VGet(0.0f, 0.0f, 0.0f);		// 毎フレーム移動入力をリセット
 
 	// ステート更新
@@ -81,12 +88,12 @@ void Enemy::OnHit(const DamageInfo& info)
 	return;
 }
 
-void Enemy::OnStun() const
+void Enemy::OnStun()
 {
-	auto self = const_cast<Enemy*>(this);
+	auto state =
+		std::make_shared<EnemyStunState>();
 
-	auto state = std::make_shared<EnemyStunState>();
-	self->ChangeState(state);
+	ChangeState(state);
 }
 
 float Enemy::GetDistanceToPlayer() const
@@ -109,4 +116,18 @@ VECTOR Enemy::GetDirectionToPlayer()const
 	dir.y = 0.0f;
 
 	return VNorm(dir);
+}
+
+void Enemy::UpdateAttackCoolDown()
+{
+	if (attackCooldown > 0.0f)
+	{
+		attackCooldown -=
+			Time::GetInstance().GetDeltaTime() * 60.0f;
+
+		if (attackCooldown < 0.0f)
+		{
+			attackCooldown = 0.0f;
+		}
+	}
 }

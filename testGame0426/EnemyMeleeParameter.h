@@ -10,7 +10,7 @@ struct EnemyMeleeParameter : EnemyParameter
         attackPower = 15;
 
         // ===== 移動 =====
-        maxMoveSpeed = 2.4f;
+        chaseSpeed = 2.4f;
         accel = 0.1f;
         decel = 0.88f;
         rotateSpeed = 0.12f;
@@ -22,7 +22,7 @@ struct EnemyMeleeParameter : EnemyParameter
         // ===== 攻撃 =====
         windupTime = 45.0f;       // 予備動作時間 
         activeTime = 12.0f;       // 攻撃時間
-        recoveryTime = 70.0f;     // 後隙時間
+        recoveryTime = 40.0f;     // 後隙時間
 
         damage = 10;                    // ダメージ
         attackForwardOffset = 18.0f;   // 攻撃位置のオフセット

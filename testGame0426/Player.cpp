@@ -78,9 +78,10 @@ void Player::Draw()
 	Object::Draw();
 }
 
-
-void Player::MoveInput()
+VECTOR Player::GetInputDir() const
 {
+	VECTOR inputDir = VGet(0.0f, 0.0f, 0.0f);
+
 	if (auto cam = camera.lock())
 	{
 		// スティック入力
@@ -97,15 +98,22 @@ void Player::MoveInput()
 
 			camRight = VNorm(camRight);
 
-			moveDir = VAdd(
-					VScale(camRight, stickX),
-					VScale(camForward, stickY)
-				);
+			inputDir = VAdd(
+				VScale(camRight, stickX),
+				VScale(camForward, stickY)
+			);
 
-			moveDir = VNorm(moveDir);
-			lookDir = moveDir;
+			inputDir = VNorm(inputDir);
+
 		}
 	}
+	return inputDir;
+}
+
+void Player::MoveInput()
+{
+	moveDir = GetInputDir();
+	lookDir = moveDir;
 }
 
 void Player::Attack(const AttackStep& step)
@@ -176,12 +184,39 @@ void Player::OnHit(const DamageInfo& info)
 
 void Player::SearchTarget()
 {
+	//--------------------------------
+	// 現在target維持
+	//--------------------------------
+
+	auto currentTarget = target.lock();
+
+	if (!Input::GetInput().GetIsMoveLStick())
+	{
+		if (currentTarget &&
+			!currentTarget->IsDead())
+		{
+			return;
+		}
+	}
+
+	//--------------------------------
+	// 新規検索
+	//--------------------------------
+
 	float nearestDistance = FLT_MAX;
 
 	std::shared_ptr<Enemy> nearestEnemy = nullptr;
 
 	if (auto cam = camera.lock())
 	{
+		VECTOR inputDir = GetInputDir();
+
+		VECTOR camForward =
+			cam->GetFoward();
+
+		camForward.y = 0.0f;
+		camForward = VNorm(camForward);
+
 		for (auto& obj : Objects::GetInstance().objects)
 		{
 			auto enemy =
@@ -193,30 +228,71 @@ void Player::SearchTarget()
 			if (!enemy->GetIsActive())
 				continue;
 
-			// 死亡除外
 			if (enemy->IsDead())
 				continue;
 
-			// カメラから敵の方向
+			//--------------------------------
+			// プレイヤー→敵
+			//--------------------------------
+
 			VECTOR toEnemy =
+				VSub(
+					enemy->GetPosition(),
+					pos
+				);
+
+			toEnemy.y = 0.0f;
+
+			float distance =
+				VSize(toEnemy);
+
+			VECTOR enemyDir =
+				VNorm(toEnemy);
+
+			//--------------------------------
+			// カメラ前方
+			//--------------------------------
+
+			VECTOR cameraToEnemy =
 				VSub(
 					enemy->GetPosition(),
 					cam->GetPosition()
 				);
 
-			float distance = VSize(toEnemy);
+			cameraToEnemy.y = 0.0f;
 
-			// 正規化
-			VECTOR dir = VNorm(toEnemy);
+			VECTOR camEnemyDir =
+				VNorm(cameraToEnemy);
 
-			// 前方向判定
-			float dot = VDot(cam->GetFoward(), dir);
+			float camDot =
+				VDot(
+					camForward,
+					camEnemyDir
+				);
 
-			// 前方のみ
-			if (dot < 0.5f)
+			if (camDot < 0.3f)
 				continue;
 
+			//--------------------------------
+			// 入力方向
+			//--------------------------------
+
+			if (VSize(inputDir) > 0.1f)
+			{
+				float inputDot =
+					VDot(
+						inputDir,
+						enemyDir
+					);
+
+				if (inputDot < 0.5f)
+					continue;
+			}
+
+			//--------------------------------
 			// 一番近い敵
+			//--------------------------------
+
 			if (distance < nearestDistance)
 			{
 				nearestDistance = distance;

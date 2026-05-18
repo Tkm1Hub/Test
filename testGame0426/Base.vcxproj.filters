@@ -161,6 +161,12 @@
     <Filter Include="ソース ファイル\Parameter\Enemy\EnemyShooter">
       <UniqueIdentifier>{24464fd9-120d-4a91-b13b-c2669bd692ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\State\EnemyState\EnemyCombatIdleState">
+      <UniqueIdentifier>{3ee756b2-438e-44f3-9302-19522b66fa7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Combat\AttackToken">
+      <UniqueIdentifier>{d1996da1-ffa6-415c-aebf-760240493a8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -270,6 +276,12 @@
     </ClCompile>
     <ClCompile Include="EnemyStunState.cpp">
       <Filter>ソース ファイル\State\EnemyState\EnemyStun</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyCombatIdleState.cpp">
+      <Filter>ソース ファイル\State\EnemyState\EnemyCombatIdleState</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackToken.cpp">
+      <Filter>ソース ファイル\Combat\AttackToken</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +428,12 @@
     </ClInclude>
     <ClInclude Include="EnemyStunState.h">
       <Filter>ソース ファイル\State\EnemyState\EnemyStun</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyCombatIdleState.h">
+      <Filter>ソース ファイル\State\EnemyState\EnemyCombatIdleState</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackToken.h">
+      <Filter>ソース ファイル\Combat\AttackToken</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

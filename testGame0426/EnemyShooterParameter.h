@@ -11,7 +11,7 @@ struct EnemyShooterParameter : EnemyParameter
         attackPower = 10;
 
         // ===== ˆÚ“® =====
-        maxMoveSpeed = 2.4f;
+        chaseSpeed = 2.4f;
         accel = 0.1f;
         decel = 0.88f;
         rotateSpeed = 0.12f;
