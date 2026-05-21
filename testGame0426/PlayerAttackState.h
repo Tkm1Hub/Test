@@ -15,7 +15,7 @@ public:
 private:
 	int currentStep = 0;
 	float timer = 0.0f;
-	AttackPhase phase = AttackPhase::Active;
+	AttackPhase phase = AttackPhase::Windup;
 	bool hasHit = false;
 	bool nextComboRequested = false;
 };

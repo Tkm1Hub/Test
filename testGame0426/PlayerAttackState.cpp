@@ -4,11 +4,11 @@
 #include "PlayerIdleState.h"
 #include "PlayerWalkState.h"
 #include "PlayerAttackState.h"
+#include "PlayerDodgeState.h"
 #include "Time.h"
 
 void PlayerAttackState::OnStart()
 {
-
 }
 
 void PlayerAttackState::OnUpdate()
@@ -18,7 +18,7 @@ void PlayerAttackState::OnUpdate()
 	if (!player) return;
 
 	// タイマー
-	timer += Time::GetInstance().GetDeltaTime() * 60;
+	timer += Time::GetInstance().GetScaledDeltaTime() * 60;
 
 	// 攻撃データ取得
 	const AttackData& attackData = player->GetAttackData();
@@ -30,13 +30,17 @@ void PlayerAttackState::OnUpdate()
 	// 次コンボ入力受付
 	//--------------------------------
 
-	if (phase == AttackPhase::Active ||
-		phase == AttackPhase::Recovery)
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_X))
 	{
-		if (Input::GetInput().IsTrigger(XINPUT_BUTTON_X))
-		{
-			nextComboRequested = true;
-		}
+		nextComboRequested = true;
+	}
+
+	// 回避
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_RIGHT_SHOULDER))
+	{
+		auto state = std::make_shared<PlayerDodgeState>();
+		player->ChangeState(state);
+		return;
 	}
 
 	switch (phase)
@@ -55,12 +59,12 @@ void PlayerAttackState::OnUpdate()
 
 		// ===== 攻撃 =====
 	case AttackPhase::Active:
+
 		if (!hasHit)
 		{
 			player->Attack(step);
 			hasHit = true;
 		}
-
 		if (timer >= step.activeTime)
 		{
 			timer = 0.0f;
@@ -71,27 +75,28 @@ void PlayerAttackState::OnUpdate()
 		// ===== 後隙 =====
 	case AttackPhase::Recovery:
 
+		//--------------------------------
+		// 次コンボへ
+		//--------------------------------
+
+		if (nextComboRequested &&
+			currentStep + 1 < attackData.combo.size())
+		{
+			currentStep++;
+
+			phase = AttackPhase::Windup;
+
+			hasHit = false;
+
+			nextComboRequested = false;
+
+			return;
+		}
+
 		if (timer >= step.recoveryTime)
 		{
 			timer = 0.0f;
 
-			//--------------------------------
-			// 次コンボへ
-			//--------------------------------
-
-			if (nextComboRequested &&
-				currentStep + 1 < attackData.combo.size())
-			{
-				currentStep++;
-
-				phase = AttackPhase::Windup;
-
-				hasHit = false;
-
-				nextComboRequested = false;
-
-				return;
-			}
 
 			//--------------------------------
 			// コンボ終了

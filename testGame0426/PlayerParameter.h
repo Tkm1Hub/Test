@@ -37,80 +37,80 @@ struct PlayerParameter
 	// ===== コンボ =====
 	std::vector<AttackStep> combo =
 	{
-		// 1段目
+		// 1段目：出が早い（発生最速、隙も小さく牽制に最適）
 		{
-			.windupTime = 2.0f,
-			.activeTime = 20.0f,
-			.recoveryTime = 20.0f,
+			.windupTime = 5.0f,         // 発生を最速に
+			.activeTime = 15.0f,         // サッと振る
+			.recoveryTime = 8.0f,       // 次の段へコンボ移行しやすいよう後隙は短め
 
-			.damage = 8,
-			.stunPower = 12.0f,
+			.damage = 6,                // 低
+			.stunPower = 15.0f,         // 中（しっかり怯ませてコンボを繋ぐ）
 
-			.attackMoveSpeed = 7.0f,
-			.attackHitRadius = 18.0f,
-			.attackForwardOffset = 18.0f,
+			.attackMoveSpeed = 5.0f,
+			.attackHitRadius = 16.0f,
+			.attackForwardOffset = 14.0f,
 
-			.knockBackPower = 6.0f
+			.knockBackPower = 4.0f      // 敵が離れすぎないように低め
 		},
-		// 2段目
+		// 2段目：繋ぎ（1段目の勢いを維持しつつ、流れるように繋ぐ）
 		{
-			.windupTime = 2.0f,
-			.activeTime = 5.0f,
-			.recoveryTime = 6.0f,
+			.windupTime = 15.0f,
+			.activeTime = 15.0f,
+			.recoveryTime = 8.0f,
 
-			.damage = 10,
-			.stunPower = 14.0f,
+			.damage = 10,               // 中
+			.stunPower = 15.0f,         // 中
 
-			.attackMoveSpeed = 7.5f,
-			.attackHitRadius = 20.0f,
-			.attackForwardOffset = 18.0f,
+			.attackMoveSpeed = 6.0f,
+			.attackHitRadius = 18.0f,
+			.attackForwardOffset = 16.0f,
+
+			.knockBackPower = 5.0f
+		},
+		// 3段目：前進強い（大きく踏み込んで間合いを詰める、または敵を押し込む）
+		{
+			.windupTime = 12.0f,
+			.activeTime = 15.0f,
+			.recoveryTime = 12.0f,
+
+			.damage = 14,               // 中
+			.stunPower = 25.0f,         // 高（相手の強靭を削るイメージ）
+
+			.attackMoveSpeed = 16.0f,   // ★前進力を大幅強化（グッと踏み込む）
+			.attackHitRadius = 22.0f,   // 踏み込む分、判定も少し広めに
+			.attackForwardOffset = 24.0f, // 前方に判定を突き出す
 
 			.knockBackPower = 8.0f
 		},
-		// 3段目
+		// 4段目：隙大きめ（5段目への大振りの溜め。威力・疲労が高いが外すと危険）
 		{
-			.windupTime = 3.0f,
-			.activeTime = 6.0f,
-			.recoveryTime = 8.0f,
+			.windupTime = 15.0f,         // ★前振りを長くして「大振り感」を演出
+			.activeTime = 15.0f,
+			.recoveryTime = 18.0f,      // ★後隙を大きく（コンボを止めると隙だらけ）
 
-			.damage = 14,
-			.stunPower = 18.0f,
+			.damage = 22,               // 高
+			.stunPower = 30.0f,         // 高
 
 			.attackMoveSpeed = 8.0f,
-			.attackHitRadius = 22.0f,
-			.attackForwardOffset = 20.0f,
-
-			.knockBackPower = 10.0f
-		},
-		// 4段目
-		{
-			.windupTime = 4.0f,
-			.activeTime = 6.0f,
-			.recoveryTime = 10.0f,
-
-			.damage = 18,
-			.stunPower = 24.0f,
-
-			.attackMoveSpeed = 9.0f,
-			.attackHitRadius = 24.0f,
+			.attackHitRadius = 26.0f,
 			.attackForwardOffset = 24.0f,
 
-			.knockBackPower = 14.0f
+			.knockBackPower = 12.0f
 		},
-		// 5段目
+		// 5段目：フィニッシュ（一撃必殺。4段目の大きな隙から放たれる超ド級の一撃）
 		{
-			.windupTime = 6.0f,
-			.activeTime = 8.0f,
-			.recoveryTime = 16.0f,
+			.windupTime = 20.0f,        // ★最大級のタメ（ヒットストップやエフェクトが映える時間）
+			.activeTime = 15.0f,
+			.recoveryTime = 25.0f,      // 全力を出し切った後の大きな戻りモーション
 
-			.damage = 28,
-			.stunPower = 40.0f,
+			.damage = 45,               // 超高
+			.stunPower = 55.0f,         // 超高（確定でダウンを奪えるレベル）
 
-			.attackMoveSpeed = 30.0f,
-			.attackHitRadius = 30.0f,
-			.attackForwardOffset = 32.0f,
+			.attackMoveSpeed = 20.0f,   // 最後の押し込み
+			.attackHitRadius = 35.0f,   // 巻き込みを広く（超広範囲）
+			.attackForwardOffset = 30.0f,
 
-			.knockBackPower = 24.0f
+			.knockBackPower = 35.0f     // ★超強力な吹き飛ばし
 		}
 	};
 };

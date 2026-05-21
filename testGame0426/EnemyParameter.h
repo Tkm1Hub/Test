@@ -37,7 +37,7 @@ struct EnemyParameter
 
     // ===== スタン =====
     float maxStunGauge = 100.0f;      // 最大スタン値
-    float stunTime = 300.0f;          // スタン硬直時間
+    float stunTime = 600.0f;          // スタン硬直時間
 
     // ===== 回避/ノックバック =====
     float knockBackPower = 4.0f;

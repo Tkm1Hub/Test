@@ -118,6 +118,8 @@ void Player::Attack(const AttackStep& step)
 
 	auto targetPtr = target.lock();
 
+	float distance = 0.0f;
+
 	// ターゲットがいる
 	if (targetPtr)
 	{
@@ -128,6 +130,8 @@ void Player::Attack(const AttackStep& step)
 			);
 
 		attackDir.y = 0.0f;
+
+		distance = VSize(attackDir);
 
 		attackDir = VNorm(attackDir);
 	}
