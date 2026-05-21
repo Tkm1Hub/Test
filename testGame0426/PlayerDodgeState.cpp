@@ -19,11 +19,12 @@ void PlayerDodgeState::OnStart()
 	GetPlayer()->SetExternalVelocity(
 		VScale(dodgeDir, GetPlayer()->GetParam().dodgeSpeed)
 	);
+
+	GetPlayer()->SetExtraHitRadius(GetPlayer()->GetParam().extraHitRadius);
 }
 
 void PlayerDodgeState::OnUpdate()
 {
-	GetPlayer()->MoveInput();
 
 	dodgeTimer += Time::GetInstance().GetDeltaTime();
 
@@ -53,5 +54,5 @@ void PlayerDodgeState::OnUpdate()
 
 void PlayerDodgeState::OnExit()
 {
-
+	GetPlayer()->SetExtraHitRadius(0.0f);
 }

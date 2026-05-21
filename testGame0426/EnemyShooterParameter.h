@@ -54,7 +54,7 @@ struct EnemyShooterParameter : EnemyParameter
                 6.0f,
 
                 // recovery
-                55.0f,
+                15.0f,
 
                 // damage
                 10,
@@ -66,7 +66,7 @@ struct EnemyShooterParameter : EnemyParameter
                 0.0f,
 
                 // attackHitRadius
-                5.0f,
+                10.0f,
 
                 // attackForwardOffset
                 16.0f,
@@ -74,10 +74,11 @@ struct EnemyShooterParameter : EnemyParameter
                 // knockBackPower
                 4.0f
             }
+
         };
     }
 
     float keepDistance = 300.0f;        // プレイヤーからとる距離
     float toleranceDistance = 50.0f;    // 許容範囲
-    float bulletSpeed = 5.0f;           // 弾の速度
+    float bulletSpeed = 7.0f;           // 弾の速度
 };

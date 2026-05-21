@@ -167,6 +167,12 @@
     <Filter Include="ソース ファイル\UI\DamageTextUI">
       <UniqueIdentifier>{ba154edb-1a9b-4359-a269-7da2764426b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\JustDodgeState">
+      <UniqueIdentifier>{6cba9082-7a6e-49f2-969e-d6725fc7a952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Aim">
+      <UniqueIdentifier>{e3c595c5-6aea-4cb4-8131-de0fb3a26616}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -285,6 +291,12 @@
     </ClCompile>
     <ClCompile Include="DamageTextUI.cpp">
       <Filter>ソース ファイル\UI\DamageTextUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJustDodgeState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\JustDodgeState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAimState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Aim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,6 +452,12 @@
     </ClInclude>
     <ClInclude Include="DamageTextUI.h">
       <Filter>ソース ファイル\UI\DamageTextUI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJustDodgeState.h">
+      <Filter>ソース ファイル\State\PlayerState\JustDodgeState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAimState.h">
+      <Filter>ソース ファイル\State\PlayerState\Aim</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

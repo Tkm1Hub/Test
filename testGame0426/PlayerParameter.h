@@ -14,6 +14,9 @@ struct PlayerParameter
 	float jumpPower = 8.0f;
 	float angleSpeed = 0.22f;
 
+	// エイム
+	float aimTriggerDeadZone = 0.3f;
+
 	// ===== 攻撃 =====
 	float windupTime = 0.0f;		// 予備動作時間 
 	float activeTime = 12.0f;       // 攻撃時間
@@ -22,6 +25,8 @@ struct PlayerParameter
 	float attackForwardOffset = 18.0f;		// 攻撃位置のオフセット
 	float attackMoveSpeed = 8.0f;			// 攻撃移動速度
 	float attackHitRadius = 20.0f;			// HitSphere半径
+
+	float attackSupportDistance = 180.0f;	// 攻撃アシスト距離
 
 	// ===== ダメージ =====
 	float damageTime = 4.0f;		// 被ダメージ硬直時間
@@ -33,6 +38,7 @@ struct PlayerParameter
 	// ===== 当たり判定 =====
 	float bodyRadius = 8.0f;
 	float bodyHeight = 32.0f;
+	float extraHitRadius = 32.0f;
 
 	// ===== コンボ =====
 	std::vector<AttackStep> combo =
@@ -41,7 +47,7 @@ struct PlayerParameter
 		{
 			.windupTime = 5.0f,         // 発生を最速に
 			.activeTime = 15.0f,         // サッと振る
-			.recoveryTime = 8.0f,       // 次の段へコンボ移行しやすいよう後隙は短め
+			.recoveryTime = 5.0f,       // 次の段へコンボ移行しやすいよう後隙は短め
 
 			.damage = 6,                // 低
 			.stunPower = 15.0f,         // 中（しっかり怯ませてコンボを繋ぐ）
@@ -50,11 +56,11 @@ struct PlayerParameter
 			.attackHitRadius = 16.0f,
 			.attackForwardOffset = 14.0f,
 
-			.knockBackPower = 4.0f      // 敵が離れすぎないように低め
+			.knockBackPower = 12.0f      // 敵が離れすぎないように低め
 		},
 		// 2段目：繋ぎ（1段目の勢いを維持しつつ、流れるように繋ぐ）
 		{
-			.windupTime = 15.0f,
+			.windupTime = 8.0f,
 			.activeTime = 15.0f,
 			.recoveryTime = 8.0f,
 
@@ -65,7 +71,7 @@ struct PlayerParameter
 			.attackHitRadius = 18.0f,
 			.attackForwardOffset = 16.0f,
 
-			.knockBackPower = 5.0f
+			.knockBackPower = 12.0f
 		},
 		// 3段目：前進強い（大きく踏み込んで間合いを詰める、または敵を押し込む）
 		{
@@ -80,7 +86,7 @@ struct PlayerParameter
 			.attackHitRadius = 22.0f,   // 踏み込む分、判定も少し広めに
 			.attackForwardOffset = 24.0f, // 前方に判定を突き出す
 
-			.knockBackPower = 8.0f
+			.knockBackPower = 12.0f
 		},
 		// 4段目：隙大きめ（5段目への大振りの溜め。威力・疲労が高いが外すと危険）
 		{

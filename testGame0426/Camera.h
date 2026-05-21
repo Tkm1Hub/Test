@@ -1,43 +1,116 @@
 #pragma once
 #include "Object.h"
+
+enum class CameraMode
+{
+	Normal,
+	LockOn,
+	Aim
+};
+
 class Player;
-class Camera :public Object
+
+class Camera : public Object
 {
 public:
 	void Init() override;
-
 	void Update() override;
 
 	void SetPlayer(const std::weak_ptr<Player>& playerPtr);
 
-	VECTOR GetFoward() { return forward; }
+	VECTOR GetFoward() const { return forward; }
+
 private:
 	std::weak_ptr<Player> player;
 
+	//==============================
 	// 定数
+	//==============================
+
 	static constexpr float CAMERA_NEAR = 10.0f;
 	static constexpr float CAMERA_FAR = 3000.0f;
 
-	static constexpr float SMOOTHING = 0.1f;
-	static constexpr float SHAKE_INTARVAL = 0.02f;
+	static constexpr float LOOK_OFFSET_Y = 50.0f;
 
-	static constexpr float MAX_ANGLE_SPEED = 0.045f;
-	static constexpr float ANGLESPEED = 0.035f;
+	// 通常カメラ
+	static constexpr float DISTANCE_OFFSET = 130.0f;
 
-	static constexpr float ACCEL = 0.012f;
-	static constexpr float DECEL = 0.006f;
+	// ロックオン
+	static constexpr float LOCKON_BASE_DISTANCE = 100.0f;
+	static constexpr float LOCKON_MAX_DISTANCE = 350.0f;
+	static constexpr float LOCKON_HEIGHT = 45.0f;
 
-	static constexpr float LOOK_OFFSET_Y = 36.0f;
-	static constexpr float DISTANCE_OFFSET = 150.0f;
+	// エイム
+	static constexpr float AIM_BASE_DISTANCE = 30.0f;
+	static constexpr float AIM_HEIGHT = 8.0f;
 
-	VECTOR target = VGet(0.0f, 0.0f, 0.0f);				// 注視点
-	VECTOR forward = VGet(0.0f, 0.0f, 0.0f);			// カメラ方向ベクトル
-	float angleV = 0.0f;								// 垂直角度
-	float angleH = 0.0f;								// 水平角度
-	float currentAngleSpeed = 0.0f;						// 現在のカメラ旋回速度
-	bool isMove = false;								// カメラ移動フラグ
+	// 横ずらし
+	static constexpr float SIDE_OFFSET = 60.0f;
+	static constexpr float SIDE_AIM_OFFSET = 30.0f;
+
+	// 補間
+	static constexpr float SMOOTH_SPEED = 0.12f;
+
+	// 切り替え補間
+	static constexpr float TRANSITION_TIME = 0.18f;
+
+	//==============================
+	// カメラ状態
+	//==============================
+
+	VECTOR target = VGet(0, 0, 0);
+	VECTOR forward = VGet(0, 0, 0);
+
+	float angleV = 0.0f;
+	float angleH = 0.0f;
+
+	// ロックオン状態保存
+	bool prevLockOn = false;
+
+	// 横方向
+	int sideSign = 1;
+
+	// モード
+	CameraMode cameraMode = CameraMode::Normal;
+
+	//==============================
+	// 補間
+	//==============================
+
+	bool isTransition = false;
+
+	float transitionTimer = 0.0f;
+
+	VECTOR transitionStartPos;
+	VECTOR transitionStartTarget;
+
+	VECTOR transitionGoalPos;
+	VECTOR transitionGoalTarget;
+
+	//==============================
+	// 関数
+	//==============================
+
+	void UpdateNormalCamera();
+	void UpdateLockOnCamera();
+	void UpdateAimCamera();
 
 	void InputAngle();
-	float CalcAngleSpeed();
+
 	void FixCameraPosition();
+
+	void StartTransition(
+		const VECTOR& goalPos,
+		const VECTOR& goalTarget
+	);
+
+	void UpdateTransition();
+
+	float Lerp(float a, float b, float t);
+
+	VECTOR LerpVec(
+		const VECTOR& a,
+		const VECTOR& b,
+		float t
+	);
 };

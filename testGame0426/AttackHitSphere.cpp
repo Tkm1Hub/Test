@@ -99,7 +99,7 @@ void AttackHitSphere::Update()
 			pos,
 			VScale(
 				velocity,
-				Time::GetInstance().GetDeltaTime() * 60.0f
+				Time::GetInstance().GetScaledDeltaTime() * 60.0f
 			)
 		);
 	}

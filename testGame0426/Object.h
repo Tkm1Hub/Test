@@ -37,6 +37,7 @@ public:
 protected:
 	float moveAccel = 0.14f;
 	float moveDecel = 0.8f;
+	float extDecel = 0.83f;
 	float angleSpeed = 0.5f;
 	float gravity = 0.5;
 

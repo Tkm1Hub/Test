@@ -46,6 +46,11 @@ public:
 
     float GetRightStickPower() const { return rightStickPower; }
     float GetLeftStickPower() const { return leftStickPower; }
+
+    // トリガー
+    float GetRightTrigger() const { return rightTrigger; }
+    float GetLeftTrigger() const { return leftTrigger; }
+
 private:
     static constexpr float DEADZONE = 0.15f;     // スティックを倒してもすぐ反応しない領域
 

@@ -43,12 +43,14 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAimState.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerDodgeState.cpp" />
     <ClCompile Include="PlayerFallState.cpp" />
     <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
+    <ClCompile Include="PlayerJustDodgeState.cpp" />
     <ClCompile Include="PlayerWalkState.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -81,6 +83,7 @@
     <ClInclude Include="EnemyStunState.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="PlayerAimState.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
@@ -97,6 +100,7 @@
     <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpState.h" />
+    <ClInclude Include="PlayerJustDodgeState.h" />
     <ClInclude Include="PlayerParameter.h" />
     <ClInclude Include="PlayerStateBase.h" />
     <ClInclude Include="PlayerWalkState.h" />

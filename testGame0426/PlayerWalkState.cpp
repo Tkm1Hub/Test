@@ -7,6 +7,7 @@
 #include "PlayerDodgeState.h"
 #include "PlayerAttackState.h"
 #include "PlayerFallState.h"
+#include "PlayerAimState.h"
 
 void PlayerWalkState::OnStart()
 {
@@ -47,6 +48,18 @@ void PlayerWalkState::OnUpdate()
 		auto state = std::make_shared<PlayerAttackState>();
 		GetPlayer()->ChangeState(state);
 		return;
+	}
+
+	// LƒgƒŠƒK[‚ÅƒGƒCƒ€
+	auto target = GetPlayer()->GetTarget().lock();
+	if (target)
+	{
+		if (Input::GetInput().GetLeftTrigger() >= GetPlayer()->GetParam().aimTriggerDeadZone)
+		{
+			auto state = std::make_shared<PlayerAimState>();
+			GetPlayer()->ChangeState(state);
+			return;
+		}
 	}
 
 	// verticalVelocity‚ª‚OˆÈ‰º‚È‚çFall

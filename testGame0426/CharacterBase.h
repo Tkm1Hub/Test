@@ -18,8 +18,9 @@ public:
 	VECTOR GetCapsuleBottom() const;
 	VECTOR GetCapsuleTop() const;
 	VECTOR GetCapsuleCenter() const;
-	float GetBodyRadius() const { return bodyRadius; }
+	float GetBodyRadius() const { return bodyRadius + extraHitRadius; }
 	float GetBodyHeight() const { return bodyHeight; }
+	void SetExtraHitRadius(float radius) { extraHitRadius = radius; }
 
 	// ステート名取得
 	const char* GetStateName() const
@@ -53,6 +54,7 @@ protected:
 
     float bodyRadius = 0.0f;	// 当たり判定半径
 	float bodyHeight = 0.0f;	// 当たり判定高さ
+	float extraHitRadius = 0.0f;	// 特殊当たり判定半径
 
 	AttackData attackData;
 };

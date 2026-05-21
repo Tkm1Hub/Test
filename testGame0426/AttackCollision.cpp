@@ -4,6 +4,7 @@
 #include "DamageableObject.h"
 #include "CharacterBase.h"
 #include "Objects.h"
+#include "Time.h"
 
 bool AttackCollision::CheckHit(
 	AttackHitSphere* hitSphere,
@@ -87,6 +88,12 @@ void AttackCollision::ProcessHit(AttackHitSphere* hitSphere)
 		{
 			// Hit記録
 			hitSphere->AddHitObject(obj.get());
+
+			// プレイヤーの攻撃のみヒットストップ
+			if (hitSphere->GetOwner()->GetTeam() == Team::Player)
+			{
+				Time::GetInstance().StartHitStop(0.05f);
+			}
 
 			// 被弾通知
 			character->OnHit(hitSphere->GetDamageInfo());

@@ -7,6 +7,8 @@
 #include "AttackHitSphere.h"
 #include "Time.h"
 #include "PlayerDamageState.h"
+#include "PlayerJustDodgeState.h"
+#include "PlayerDodgeState.h"
 #include "Enemy.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
@@ -43,6 +45,15 @@ void Player::Update()
 
 	// ステート更新
 	stateMachine.Update();
+
+	// ターゲット検索
+	SearchTarget();
+
+	// ロックオン切り替え
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_LEFT_THUMB))
+	{
+		ToggleLockOn();
+	}
 
 	// 方向更新
 	RotateAngle();
@@ -113,8 +124,8 @@ void Player::Attack(const AttackStep& step)
 {
 	VECTOR attackDir = VGet(0, 0, 0);
 
-	// ターゲット検索
-	SearchTarget();
+	// 攻撃速度設定
+	float atkSpeed = GetAttackMoveSpeed(step);
 
 	auto targetPtr = target.lock();
 
@@ -152,7 +163,7 @@ void Player::Attack(const AttackStep& step)
 	SetExternalVelocity(
 		VScale(
 			attackDir,
-			step.attackMoveSpeed
+			atkSpeed
 		));
 
 	// 前方にHitSphereを生成
@@ -172,9 +183,116 @@ void Player::Attack(const AttackStep& step)
 	Objects::GetInstance().Add(hitSphere);
 }
 
+VECTOR Player::GetAttackDirection()
+{
+
+	auto targetPtr = target.lock();
+
+	VECTOR attackDir = VGet(0, 0, 0);
+
+	if (targetPtr)
+	{
+		attackDir =
+			VSub(
+				targetPtr->GetPosition(),
+				pos
+			);
+
+		attackDir.y = 0.0f;
+
+		attackDir = VNorm(attackDir);
+	}
+	else if (VSize(moveDir) > 0.1f)
+	{
+		attackDir = moveDir;
+	}
+	else
+	{
+		attackDir = forward;
+	}
+
+	return attackDir;
+}
+
+float Player::GetAttackMoveSpeed(const AttackStep& step)
+{
+
+	auto targetPtr = target.lock();
+
+	// ターゲットいないなら通常速度
+	if (!targetPtr)
+	{
+		return step.attackMoveSpeed;
+	}
+
+	VECTOR toEnemy =
+		VSub(
+			targetPtr->GetPosition(),
+			pos
+		);
+
+	toEnemy.y = 0.0f;
+
+	float distance = VSize(toEnemy);
+
+	//--------------------------------
+	// 加速開始距離
+	//--------------------------------
+
+	float assistDistance = 30.0f;
+
+	//--------------------------------
+	// 基本速度
+	//--------------------------------
+
+	float moveSpeed =
+		step.attackMoveSpeed;
+
+	//--------------------------------
+	// 遠い分だけ加速
+	//--------------------------------
+
+	if (distance > assistDistance)
+	{
+		float extraDistance =
+			distance - assistDistance;
+
+		moveSpeed +=
+			extraDistance * 0.15f;
+	}
+
+	//--------------------------------
+	// 上限
+	//--------------------------------
+
+	float maxSpeed =
+		step.attackMoveSpeed * 3.0f;
+
+	if (moveSpeed > maxSpeed)
+	{
+		moveSpeed = maxSpeed;
+	}
+
+	return moveSpeed;
+}
+// 敵の攻撃接触
 void Player::OnHit(const DamageInfo& info)
 {
 	DamageableObject::OnHit(info);
+
+	auto currentState = stateMachine.GetCurrentState();
+
+	// 回避中だと
+	if (currentState->GetName() == "Dodge")
+	{
+		auto state = std::make_shared<PlayerJustDodgeState>();
+		ChangeState(state);
+		return;
+	}
+	else if (currentState->GetName() == "JustDodge")
+	{
+		return;
+	}
 
 	auto state = std::make_shared<PlayerDamageState>();
 	ChangeState(state);
@@ -245,6 +363,9 @@ void Player::SearchTarget()
 			float distance =
 				VSize(toEnemy);
 
+			if (distance > param.attackSupportDistance)
+				continue;
+
 			VECTOR enemyDir =
 				VNorm(toEnemy);
 
@@ -301,4 +422,22 @@ void Player::SearchTarget()
 	}
 
 	target = nearestEnemy;
+}
+
+void Player::ToggleLockOn()
+{
+	if (isLockOn)
+	{
+		isLockOn = false;
+		lockOnTarget.reset();
+		return;
+	}
+
+	SearchTarget();
+
+	if (auto targetPtr = target.lock())
+	{
+		lockOnTarget = targetPtr;
+		isLockOn = true;
+	}
 }

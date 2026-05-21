@@ -1,133 +1,574 @@
-#include "Camera.h"
 #include "stdafx.h"
+#include "Camera.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Input.h"
 #include "Time.h"
 
-void Camera::SetPlayer(const std::weak_ptr<Player>& playerPtr)
+void Camera::SetPlayer(
+	const std::weak_ptr<Player>& playerPtr
+)
 {
 	player = playerPtr;
 }
 
 void Camera::Init()
 {
-	angleV = 0.0f; // 上下角度リセット
-	angleH = 0.0f; // 水平角度リセット
+	angleV = 0.0f;
+	angleH = 0.0f;
 
-	if (auto p = player.lock())
-	{
-		VECTOR playerPos = p->GetPosition();
-		VECTOR forward = p->GetForward(); // プレイヤーの前方向
-
-		// 注視点はプレイヤーの頭上
-		target = VAdd(playerPos, VGet(0.0f, LOOK_OFFSET_Y, 0.0f));
-
-		// カメラはプレイヤーの後ろにDISTANCE_OFFSETだけ離す
-		pos = VSub(target, VScale(forward, DISTANCE_OFFSET));
-	}
-
-	// カメラ設定
-	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 5.0f, -10.0f), VGet(0.0f, 5.0f, 1.0f));
-	SetCameraNearFar(CAMERA_NEAR, CAMERA_FAR);
+	SetCameraNearFar(
+		CAMERA_NEAR,
+		CAMERA_FAR
+	);
 }
 
 void Camera::Update()
 {
-	if (auto p = player.lock())
+	auto p = player.lock();
+
+	if (!p)
+		return;
+
+	//--------------------------------
+	// ロックオン切り替え検知
+	//--------------------------------
+
+	bool isLockOn =
+		p->GetIsLockOn();
+
+	if (isLockOn != prevLockOn)
 	{
-		VECTOR playerPos = p->GetPosition();
+		isTransition = true;
 
-		// カメラの旋回速度を計算
-		//currentAngleSpeed = CalcAngleSpeed();
+		transitionTimer = 0.0f;
 
-		// 入力
-		InputAngle();
+		transitionStartPos = pos;
+		transitionStartTarget = target;
 
-		//カメラの注視点はプレイヤー座標から規定値分高い座標
-		target = VAdd(playerPos, VGet(0.0f, LOOK_OFFSET_Y, 0.0f));
-
-		// カメラの方向を保存
-		forward = VSub(target, pos);
-		forward.y = 0.0f;
-		forward = VNorm(forward);
-
-		// カメラの座標を補正する
-		FixCameraPosition();
-
-		// 位置と注視点の設定
-		SetCameraPositionAndTarget_UpVecY(pos, target);
+		prevLockOn = isLockOn;
 	}
-}
 
-float Camera::CalcAngleSpeed()
-{
-	float stickAngle = Input::GetInput().GetRightStickPower();
-	float stickPower = abs(stickAngle) / 1000.0f;
+	//--------------------------------
+	// カメラ更新
+	//--------------------------------
 
-	// 傾きに応じた最大速度を計算
-	float maxSpeed = MAX_ANGLE_SPEED * stickPower;
-
-	// 加速 or 減速
-	if (Input::GetInput().GetIsMoveRStick())
+	if (isLockOn)
 	{
-		currentAngleSpeed += ACCEL; // 加速量
-		currentAngleSpeed = min(currentAngleSpeed, maxSpeed); // maxSpeedで制限
+		if (p->GetStateName() == "Aim")
+		{
+			UpdateAimCamera();
+		}
+		else
+		{
+			UpdateLockOnCamera();
+		}
 	}
 	else
 	{
-		currentAngleSpeed -= DECEL; // 減速は固定
-		currentAngleSpeed = max(currentAngleSpeed, 0.0f); // マイナスにならないように
+		UpdateNormalCamera();
 	}
 
-	// フラグ
-	isMove = (currentAngleSpeed > 0.0f);
+	//--------------------------------
+	// 補間更新
+	//--------------------------------
 
-	return currentAngleSpeed;
+	if (isTransition)
+	{
+		UpdateTransition();
+	}
+
+	//--------------------------------
+	// forward更新
+	//--------------------------------
+
+	forward =
+		VSub(target, pos);
+
+	forward.y = 0.0f;
+
+	forward = VNorm(forward);
+
+	//--------------------------------
+	// カメラ反映
+	//--------------------------------
+
+	SetCameraPositionAndTarget_UpVecY(
+		pos,
+		target
+	);
+}
+
+void Camera::UpdateNormalCamera()
+{
+	auto p = player.lock();
+
+	if (!p)
+		return;
+
+	//--------------------------------
+	// 回転入力
+	//--------------------------------
+
+	InputAngle();
+
+	VECTOR playerPos =
+		p->GetPosition();
+
+	//--------------------------------
+	// 注視点
+	//--------------------------------
+
+	target =
+		VAdd(
+			playerPos,
+			VGet(
+				0,
+				LOOK_OFFSET_Y,
+				0
+			)
+		);
+
+	//--------------------------------
+	// カメラ位置
+	//--------------------------------
+
+	FixCameraPosition();
+
+	//--------------------------------
+	// 遷移先保存
+	//--------------------------------
+
+	transitionGoalPos = pos;
+	transitionGoalTarget = target;
+}
+
+void Camera::UpdateLockOnCamera()
+{
+	auto p = player.lock();
+
+	if (!p)
+		return;
+
+	auto enemy =
+		p->GetLockOnTarget().lock();
+
+	//--------------------------------
+	// ターゲット消失
+	//--------------------------------
+
+	if (!enemy ||
+		enemy->IsDead())
+	{
+		p->SetIsLockOn(false);
+		return;
+	}
+
+	//--------------------------------
+	// 座標取得
+	//--------------------------------
+
+	VECTOR playerPos =
+		p->GetPosition();
+
+	VECTOR enemyPos =
+		enemy->GetPosition();
+
+	playerPos.y += LOOK_OFFSET_Y;
+	enemyPos.y += 20.0f;
+
+	//--------------------------------
+	// 中間点
+	//--------------------------------
+
+	VECTOR center =
+		VScale(
+			VAdd(playerPos, enemyPos),
+			0.5f
+		);
+
+	target = center;
+
+	//--------------------------------
+	// プレイヤー→敵
+	//--------------------------------
+
+	VECTOR toEnemy =
+		VSub(
+			enemyPos,
+			playerPos
+		);
+
+	float distance =
+		VSize(toEnemy);
+
+	toEnemy.y = 0.0f;
+
+	VECTOR dir =
+		VNorm(toEnemy);
+
+	//--------------------------------
+	// 横ベクトル
+	//--------------------------------
+
+	VECTOR right =
+		VCross(
+			VGet(0, 1, 0),
+			dir
+		);
+
+	right = VNorm(right);
+
+	//--------------------------------
+	// 左右切り替え
+	//--------------------------------
+
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_RIGHT_SHOULDER))
+	{
+		sideSign *= -1;
+	}
+
+	//--------------------------------
+	// 距離に応じて引く
+	//--------------------------------
+
+	float cameraDistance =
+		LOCKON_BASE_DISTANCE +
+		distance * 0.7f;
+
+	cameraDistance =
+		std::clamp(
+			cameraDistance,
+			LOCKON_BASE_DISTANCE,
+			LOCKON_MAX_DISTANCE
+		);
+
+	//--------------------------------
+	// 後方位置
+	//--------------------------------
+
+	VECTOR backPos =
+		VSub(
+			center,
+			VScale(dir, cameraDistance)
+		);
+
+	//--------------------------------
+	// 横にずらす
+	//--------------------------------
+
+	backPos =
+		VAdd(
+			backPos,
+			VScale(
+				right,
+				SIDE_OFFSET * sideSign
+			)
+		);
+
+	//--------------------------------
+	// 高さ
+	//--------------------------------
+
+	backPos.y += LOCKON_HEIGHT;
+
+	//--------------------------------
+	// 補間
+	//--------------------------------
+
+	pos =
+		VAdd(
+			pos,
+			VScale(
+				VSub(backPos, pos),
+				SMOOTH_SPEED
+			)
+		);
+
+	target =
+		VAdd(
+			target,
+			VScale(
+				VSub(center, target),
+				SMOOTH_SPEED
+			)
+		);
+
+	//--------------------------------
+	// ロックオン角度同期
+	//--------------------------------
+
+	VECTOR cameraForward =
+		VSub(target, pos);
+
+	cameraForward.y = 0.0f;
+
+	cameraForward =
+		VNorm(cameraForward);
+
+	angleH =
+		atan2f(
+			cameraForward.x,
+			cameraForward.z
+		);
+
+	//--------------------------------
+	// 遷移先保存
+	//--------------------------------
+
+	transitionGoalPos = pos;
+	transitionGoalTarget = target;
+}
+
+void Camera::UpdateAimCamera()
+{
+	auto p = player.lock();
+
+	if (!p)
+		return;
+
+	auto enemy =
+		p->GetLockOnTarget().lock();
+
+	//--------------------------------
+	// ターゲット消失
+	//--------------------------------
+
+	if (!enemy ||
+		enemy->IsDead())
+	{
+		p->SetIsLockOn(false);
+		return;
+	}
+
+	//--------------------------------
+	// 座標取得
+	//--------------------------------
+
+	VECTOR playerPos =
+		p->GetPosition();
+
+	VECTOR enemyPos =
+		enemy->GetCapsuleCenter();
+
+	playerPos.y += LOOK_OFFSET_Y;
+
+	//--------------------------------
+	// プレイヤー→敵
+	//--------------------------------
+
+	VECTOR toEnemy =
+		VSub(
+			enemyPos,
+			playerPos
+		);
+
+	float distance =
+		VSize(toEnemy);
+
+	toEnemy.y = 0.0f;
+
+	VECTOR dir =
+		VNorm(toEnemy);
+
+	//--------------------------------
+	// 横ベクトル
+	//--------------------------------
+
+	VECTOR right =
+		VCross(
+			VGet(0, 1, 0),
+			dir
+		);
+
+	right = VNorm(right);
+
+	//--------------------------------
+	// 横にずらす
+	//--------------------------------
+
+	VECTOR backPos =
+		VAdd(
+			backPos,
+			VScale(
+				right,
+				SIDE_AIM_OFFSET
+			)
+		);
+
+	//--------------------------------
+	// 高さ
+	//--------------------------------
+
+	backPos.y += AIM_HEIGHT;
+
+	//--------------------------------
+	// 補間
+	//--------------------------------
+
+	pos =
+		VAdd(
+			pos,
+			VScale(
+				VSub(backPos, pos),
+				SMOOTH_SPEED
+			)
+		);
+
+	target = enemyPos;
+
+	//--------------------------------
+	// ロックオン角度同期
+	//--------------------------------
+
+	VECTOR cameraForward =
+		VSub(target, pos);
+
+	cameraForward.y = 0.0f;
+
+	cameraForward =
+		VNorm(cameraForward);
+
+	angleH =
+		atan2f(
+			cameraForward.x,
+			cameraForward.z
+		);
+
+	//--------------------------------
+	// 遷移先保存
+	//--------------------------------
+
+	transitionGoalPos = pos;
+	transitionGoalTarget = target;
 
 }
 
-void Camera::InputAngle()
-{
-	float dt =
-		Time::GetInstance().GetScaledDeltaTime()
-		* 60.0f;
+void Camera::InputAngle() {
+
+	float dt = Time::GetInstance().GetScaledDeltaTime() * 60.0f;
 
 	float stickX = Input::GetInput().GetRightStickX();
 	float stickY = Input::GetInput().GetRightStickY();
-
-	// 感度
 	float sensitivity = 0.03f;
 
-	// 横回転
+	//-------------------------------- 
+	// 横回転 
+	//--------------------------------
+
 	angleH += stickX * sensitivity * dt;
-
-	// 縦回転
-	angleV += stickY * sensitivity * dt;
-
-	// 縦角度制限
+	
+	//-------------------------------- 
+	// 縦回転 
+	//--------------------------------
+	
+	angleV -= stickY * sensitivity * dt;
+	
+	//-------------------------------- 
+	// 縦制限 
+	//--------------------------------
+	
 	float limit = DX_PI_F / 2.0f - 0.2f;
+	
+	if (angleV > limit) { angleV = limit; }
+	if (angleV < -limit) { angleV = -limit; }
 
-	if (angleV > limit)
-		angleV = limit;
-
-	if (angleV < -limit)
-		angleV = -limit;
 }
-
 void Camera::FixCameraPosition()
 {
-	// 水平方向の回転はＹ軸回転
-	auto rotY = MGetRotY(angleH);
+	MATRIX rotY =
+		MGetRotY(angleH);
 
-	// 垂直方向の回転はＺ軸回転 )
-	auto rotZ = MGetRotZ(angleV);
+	MATRIX rotX =
+		MGetRotX(angleV);
 
-	// カメラからプレイヤーまでの初期距離をセット
-	float cameraPlayerLength = DISTANCE_OFFSET;
+	VECTOR offset =
+		VTransform(
+			VTransform(
+				VGet(
+					0,
+					0,
+					-DISTANCE_OFFSET
+				),
+				rotX
+			),
+			rotY
+		);
 
-	// カメラの座標を算出
-	// Ｘ軸にカメラとプレイヤーとの距離分だけ伸びたベクトルを
-	// 垂直方向回転( Ｚ軸回転 )させたあと水平方向回転( Ｙ軸回転 )して更に
-	// 注視点の座標を足したものがカメラの座標
-	pos = VAdd(VTransform(VTransform(VGet(-cameraPlayerLength, 0.0f, 0.0f), rotZ), rotY), target);
+	pos =
+		VAdd(
+			target,
+			offset
+		);
+}
+
+void Camera::StartTransition(
+	const VECTOR& goalPos,
+	const VECTOR& goalTarget
+)
+{
+	isTransition = true;
+
+	transitionTimer = 0.0f;
+
+	transitionStartPos = pos;
+	transitionStartTarget = target;
+
+	transitionGoalPos = goalPos;
+	transitionGoalTarget = goalTarget;
+}
+
+void Camera::UpdateTransition()
+{
+	float dt =
+		Time::GetInstance().GetScaledDeltaTime();
+
+	transitionTimer += dt;
+
+	float t =
+		transitionTimer /
+		TRANSITION_TIME;
+
+	t = std::clamp(t, 0.0f, 1.0f);
+
+	pos =
+		LerpVec(
+			transitionStartPos,
+			transitionGoalPos,
+			t
+		);
+
+	target =
+		LerpVec(
+			transitionStartTarget,
+			transitionGoalTarget,
+			t
+		);
+
+	if (t >= 1.0f)
+	{
+		isTransition = false;
+	}
+}
+
+float Camera::Lerp(
+	float a,
+	float b,
+	float t
+)
+{
+	return a + (b - a) * t;
+}
+
+VECTOR Camera::LerpVec(
+	const VECTOR& a,
+	const VECTOR& b,
+	float t
+)
+{
+	return VGet(
+		Lerp(a.x, b.x, t),
+		Lerp(a.y, b.y, t),
+		Lerp(a.z, b.z, t)
+	);
 }

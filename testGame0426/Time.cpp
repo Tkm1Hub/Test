@@ -13,5 +13,15 @@ void Time::Update()
     if (realDelta < 0.000001) realDelta = 0.000001;
 
     deltaTime = realDelta;
+
+    if (hitStopTimer > 0.0f)
+    {
+        hitStopTimer -= deltaTime;
+
+        scaledDeltaTime = 0.0f;
+
+        return;
+    }
+
     scaledDeltaTime = deltaTime * timeScale;
 }

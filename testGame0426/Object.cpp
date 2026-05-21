@@ -119,11 +119,10 @@ void Object::CalcMoveSpeed()
             moveVelocity.z = 0.0f;
     }
 
-    float decel = powf(moveDecel, dt);
-    float extDecel = powf(decel, dt);
+    float decel = powf(extDecel, dt);
 
-    externalVelocity.x *= extDecel;
-    externalVelocity.z *= extDecel;
+    externalVelocity.x *= decel;
+    externalVelocity.z *= decel;
 
     if (fabs(externalVelocity.x) < 0.001f)
         externalVelocity.x = 0.0f;
