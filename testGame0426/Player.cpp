@@ -421,7 +421,10 @@ void Player::SearchTarget()
 		}
 	}
 
-	target = nearestEnemy;
+	if (nearestEnemy)
+	{
+		target = nearestEnemy;
+	}
 }
 
 void Player::ToggleLockOn()

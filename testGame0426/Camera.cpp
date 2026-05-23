@@ -53,16 +53,13 @@ void Camera::Update()
 	// カメラ更新
 	//--------------------------------
 
-	if (isLockOn)
+	if (p->GetStateName() == "Aim")
 	{
-		if (p->GetStateName() == "Aim")
-		{
-			UpdateAimCamera();
-		}
-		else
-		{
-			UpdateLockOnCamera();
-		}
+		UpdateAimCamera();
+	}
+	else if (isLockOn)
+	{
+		UpdateLockOnCamera();
 	}
 	else
 	{
@@ -328,7 +325,7 @@ void Camera::UpdateAimCamera()
 		return;
 
 	auto enemy =
-		p->GetLockOnTarget().lock();
+		p->GetTarget().lock();
 
 	//--------------------------------
 	// ターゲット消失
@@ -342,29 +339,23 @@ void Camera::UpdateAimCamera()
 	}
 
 	//--------------------------------
-	// 座標取得
+	// 座標
 	//--------------------------------
 
 	VECTOR playerPos =
 		p->GetPosition();
 
+	playerPos.y += LOOK_OFFSET_Y;
+
 	VECTOR enemyPos =
 		enemy->GetCapsuleCenter();
-
-	playerPos.y += LOOK_OFFSET_Y;
 
 	//--------------------------------
 	// プレイヤー→敵
 	//--------------------------------
 
 	VECTOR toEnemy =
-		VSub(
-			enemyPos,
-			playerPos
-		);
-
-	float distance =
-		VSize(toEnemy);
+		VSub(enemyPos, playerPos);
 
 	toEnemy.y = 0.0f;
 
@@ -372,7 +363,7 @@ void Camera::UpdateAimCamera()
 		VNorm(toEnemy);
 
 	//--------------------------------
-	// 横ベクトル
+	// 横方向
 	//--------------------------------
 
 	VECTOR right =
@@ -384,16 +375,20 @@ void Camera::UpdateAimCamera()
 	right = VNorm(right);
 
 	//--------------------------------
-	// 横にずらす
+	// TPS肩越し位置
 	//--------------------------------
 
 	VECTOR backPos =
+		VSub(
+			playerPos,
+			VScale(dir, AIM_BASE_DISTANCE)
+		);
+
+	// 肩越し
+	backPos =
 		VAdd(
 			backPos,
-			VScale(
-				right,
-				SIDE_AIM_OFFSET
-			)
+			VScale(right, SIDE_AIM_OFFSET)
 		);
 
 	//--------------------------------
@@ -415,33 +410,37 @@ void Camera::UpdateAimCamera()
 			)
 		);
 
+	//--------------------------------
+	// target
+	//--------------------------------
+
 	target = enemyPos;
 
 	//--------------------------------
-	// ロックオン角度同期
+	// カメラforward
 	//--------------------------------
 
-	VECTOR cameraForward =
-		VSub(target, pos);
-
-	cameraForward.y = 0.0f;
-
-	cameraForward =
-		VNorm(cameraForward);
-
-	angleH =
-		atan2f(
-			cameraForward.x,
-			cameraForward.z
+	forward =
+		VNorm(
+			VSub(target, pos)
 		);
 
 	//--------------------------------
-	// 遷移先保存
+	// カメラ角度
+	//--------------------------------
+
+	angleH =
+		atan2f(
+			forward.x,
+			forward.z
+		);
+
+	//--------------------------------
+	// 保存
 	//--------------------------------
 
 	transitionGoalPos = pos;
 	transitionGoalTarget = target;
-
 }
 
 void Camera::InputAngle() {
@@ -474,6 +473,7 @@ void Camera::InputAngle() {
 	if (angleV < -limit) { angleV = -limit; }
 
 }
+
 void Camera::FixCameraPosition()
 {
 	MATRIX rotY =

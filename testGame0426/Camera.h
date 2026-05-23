@@ -41,8 +41,8 @@ private:
 	static constexpr float LOCKON_HEIGHT = 45.0f;
 
 	// ÉGÉCÉÄ
-	static constexpr float AIM_BASE_DISTANCE = 30.0f;
-	static constexpr float AIM_HEIGHT = 8.0f;
+	static constexpr float AIM_BASE_DISTANCE = 60.0f;
+	static constexpr float AIM_HEIGHT = 0.0f;
 
 	// â°Ç∏ÇÁÇµ
 	static constexpr float SIDE_OFFSET = 60.0f;
