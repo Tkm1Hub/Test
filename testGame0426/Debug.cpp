@@ -37,7 +37,7 @@ void Debug::Draw()
 
 		DrawCylinder(
 			player->GetPosition(),
-			player->GetParam().attackSupportDistance,
+			player->GetParam().SearchEnemyDistance,
 			0.2f,
 			24,
 			GetColor(0, 180, 255)
@@ -128,6 +128,47 @@ void Debug::DrawTargetMarker()
 		if (!player)
 			continue;
 
+		//--------------------------------
+		// ロックオン中
+		//--------------------------------
+
+		if (player->GetIsLockOn())
+		{
+			auto lockOnTarget =
+				player->GetTarget().lock();
+
+			if (!lockOnTarget)
+				continue;
+
+			VECTOR worldPos =
+				lockOnTarget->GetCapsuleTop();
+
+			VECTOR screenPos =
+				ConvWorldPosToScreenPos(worldPos);
+
+			// ロックオン専用表示
+			DrawString(
+				(int)screenPos.x,
+				(int)screenPos.y - 60,
+				"LOCK ON",
+				GetColor(255, 0, 0)
+			);
+
+			DrawCircle(
+				(int)screenPos.x,
+				(int)screenPos.y,
+				28,
+				GetColor(255, 0, 0),
+				FALSE
+			);
+
+			continue;
+		}
+
+		//--------------------------------
+		// 通常ターゲット
+		//--------------------------------
+
 		auto target =
 			player->GetTarget().lock();
 
@@ -135,32 +176,27 @@ void Debug::DrawTargetMarker()
 			continue;
 
 		VECTOR worldPos =
-			VAdd(
-				target->GetCapsuleTop(),
-				VGet(0.0f, 0.0f, 0.0f)
-			);
+			target->GetCapsuleTop();
 
 		VECTOR screenPos =
 			ConvWorldPosToScreenPos(worldPos);
 
 		DrawString(
-			static_cast<int>(screenPos.x),
-			static_cast<int>(screenPos.y -50),
+			(int)screenPos.x,
+			(int)screenPos.y - 50,
 			"▼ TARGET",
 			GetColor(180, 180, 0)
 		);
 
-		// 円表示
 		DrawCircle(
-			static_cast<int>(screenPos.x),
-			static_cast<int>(screenPos.y),
+			(int)screenPos.x,
+			(int)screenPos.y,
 			20,
 			GetColor(180, 180, 0),
 			FALSE
 		);
 	}
 }
-
 //
 // グリッド描画
 //

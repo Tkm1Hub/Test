@@ -35,6 +35,12 @@ struct EnemyParameter
     // ===== ダメージ =====
     float damageTime = 20.0f;           // 被弾硬直時間
 
+    // ===== 耐性 =====
+    float meleeDamageRate = 1.0f;               // 物理ダメージ耐性
+    float meleeStunRate = 1.0f;                 // 物理スタン耐性
+    float projectileDamageRate = 1.0f;          // 射撃ダメージ耐性
+    float prijectileStunRate = 1.0f;            // 射撃スタン耐性
+
     // ===== スタン =====
     float maxStunGauge = 100.0f;      // 最大スタン値
     float stunTime = 600.0f;          // スタン硬直時間

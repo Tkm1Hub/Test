@@ -167,11 +167,17 @@
     <Filter Include="ソース ファイル\UI\DamageTextUI">
       <UniqueIdentifier>{ba154edb-1a9b-4359-a269-7da2764426b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\State\PlayerState\JustDodgeState">
-      <UniqueIdentifier>{6cba9082-7a6e-49f2-969e-d6725fc7a952}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State\PlayerState\Aim">
       <UniqueIdentifier>{e3c595c5-6aea-4cb4-8131-de0fb3a26616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Fire">
+      <UniqueIdentifier>{4c166e42-1854-4291-9299-d52c7002d870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\JustDodge">
+      <UniqueIdentifier>{6cba9082-7a6e-49f2-969e-d6725fc7a952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\EffectContainer">
+      <UniqueIdentifier>{a11f9a81-9597-4941-be36-1dcf1ccf44b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -293,10 +299,16 @@
       <Filter>ソース ファイル\UI\DamageTextUI</Filter>
     </ClCompile>
     <ClCompile Include="PlayerJustDodgeState.cpp">
-      <Filter>ソース ファイル\State\PlayerState\JustDodgeState</Filter>
+      <Filter>ソース ファイル\State\PlayerState\JustDodge</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAimState.cpp">
       <Filter>ソース ファイル\State\PlayerState\Aim</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFireState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectContainer.cpp">
+      <Filter>ソース ファイル\EffectContainer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -454,10 +466,16 @@
       <Filter>ソース ファイル\UI\DamageTextUI</Filter>
     </ClInclude>
     <ClInclude Include="PlayerJustDodgeState.h">
-      <Filter>ソース ファイル\State\PlayerState\JustDodgeState</Filter>
+      <Filter>ソース ファイル\State\PlayerState\JustDodge</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAimState.h">
       <Filter>ソース ファイル\State\PlayerState\Aim</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFireState.h">
+      <Filter>ソース ファイル\State\PlayerState\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectContainer.h">
+      <Filter>ソース ファイル\EffectContainer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

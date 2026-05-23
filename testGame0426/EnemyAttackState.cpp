@@ -4,10 +4,10 @@
 #include "Enemy.h"
 #include "Time.h"
 #include "AttackToken.h"
+#include "EffectContainer.h"
 
 void EnemyAttackState::OnStart()
 {
-	
 }
 
 void EnemyAttackState::OnUpdate()

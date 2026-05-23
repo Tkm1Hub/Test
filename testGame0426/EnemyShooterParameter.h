@@ -7,7 +7,7 @@ struct EnemyShooterParameter : EnemyParameter
     EnemyShooterParameter()
     {
         // ===== 基本 =====
-        HP = 40;
+        HP = 80;
         attackPower = 10;
 
         // ===== 移動 =====
@@ -34,6 +34,16 @@ struct EnemyShooterParameter : EnemyParameter
 
         // ===== ダメージ =====
         damageTime = 20.0f;           // 被弾硬直時間
+
+        // ===== 耐性 =====
+        meleeDamageRate = 1.5f;             // 物理耐性
+        meleeStunRate = 1.0f;               // 物理スタン耐性
+        projectileDamageRate = 0.6f;        // 射撃耐性
+        prijectileStunRate = 1.8f;          // 射撃スタン耐性
+
+        // ===== スタン =====
+        maxStunGauge = 100.0f;      // 最大スタン値
+        stunTime = 600.0f;          // スタン硬直時間
 
         // ===== 回避/ノックバック =====
         knockBackPower = 4.0f;

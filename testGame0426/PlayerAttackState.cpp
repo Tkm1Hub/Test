@@ -6,9 +6,11 @@
 #include "PlayerAttackState.h"
 #include "PlayerDodgeState.h"
 #include "Time.h"
+#include "EffectContainer.h"
 
 void PlayerAttackState::OnStart()
 {
+	EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", GetPlayer()->GetPosition());
 }
 
 void PlayerAttackState::OnUpdate()

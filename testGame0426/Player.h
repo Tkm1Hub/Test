@@ -22,27 +22,36 @@ public:
 
 	void Attack(const AttackStep& step);	// 近接攻撃
 
+	void Fire(const AttackStep& step);		// 射撃
+
 	void OnHit(const DamageInfo& info) override;
 
 	const AttackData& GetAttackData() { return attackData; }
+	const AttackStep& GetFireData() { return fireData; }
 
 	PlayerParameter& GetParam() { return param; }
 
 	float GetAttackMoveSpeed(const AttackStep& step);
 	VECTOR GetAttackDirection();
+	VECTOR GetInputDir()const;
 
 	std::weak_ptr<Enemy> GetTarget() const { return target; }
-	std::weak_ptr<Enemy> GetLockOnTarget() const { return lockOnTarget; }
 	bool GetIsLockOn()const { return isLockOn; }
 	void SetIsLockOn(bool flag) { isLockOn = flag; }
+
+	bool GetIsAim() const { return isAim; }
+	void SetIsAim(bool flag) { isAim = flag; }
 private:
 	PlayerParameter param;				// パラメーター
+	AttackStep fireData;				// 射撃データ
 	std::weak_ptr<Camera> camera;
 	std::weak_ptr<Enemy> target;
-	std::weak_ptr<Enemy> lockOnTarget;
 
 	bool isLockOn = false;
+	bool isAim = false;
+	bool canSwitchTarget = false;
+
+	int currentBulletNum = 0;
 	void SearchTarget();
 	void ToggleLockOn();
-	VECTOR GetInputDir()const;
 };

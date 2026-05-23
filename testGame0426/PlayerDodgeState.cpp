@@ -4,23 +4,39 @@
 #include "PlayerIdleState.h"
 #include "PlayerWalkState.h"
 #include "PlayerDodgeState.h"
+#include "Enemy.h"
 #include "Time.h"
 
 void PlayerDodgeState::OnStart()
 {
-	VECTOR dodgeDir = GetPlayer()->GetMoveDir();
+	VECTOR dodgeDir = GetPlayer()->GetInputDir();
+
+	auto player = GetPlayer();
+
+	auto target = player->GetTarget().lock();
 
 	// “ü—Í‚ª–³‚¯‚ê‚Î‘O•ûŒü‚ðŽg—p
 	if (VSize(dodgeDir) <= 0.1f)
 	{
-		dodgeDir = GetPlayer()->GetForward();
+		dodgeDir = player->GetForward();
+
+		if (target)
+		{
+			VECTOR targetDir =
+				VSub(
+					target->GetPosition(),
+					player->GetPosition()
+				);
+			targetDir = VNorm(targetDir);
+			dodgeDir = VScale(targetDir, -1);
+		}
 	}
 
-	GetPlayer()->SetExternalVelocity(
-		VScale(dodgeDir, GetPlayer()->GetParam().dodgeSpeed)
+	player->SetExternalVelocity(
+		VScale(dodgeDir, player->GetParam().dodgeSpeed)
 	);
 
-	GetPlayer()->SetExtraHitRadius(GetPlayer()->GetParam().extraHitRadius);
+	player->SetExtraHitRadius(player->GetParam().extraHitRadius);
 }
 
 void PlayerDodgeState::OnUpdate()

@@ -34,6 +34,8 @@ private:
 
 	// 通常カメラ
 	static constexpr float DISTANCE_OFFSET = 130.0f;
+	static constexpr float SENSITIVITY_H = 0.04f;
+	static constexpr float SENSITIVITY_V = 0.02f;
 
 	// ロックオン
 	static constexpr float LOCKON_BASE_DISTANCE = 100.0f;
@@ -45,14 +47,14 @@ private:
 	static constexpr float AIM_HEIGHT = 0.0f;
 
 	// 横ずらし
-	static constexpr float SIDE_OFFSET = 60.0f;
+	static constexpr float SIDE_OFFSET = 80.0f;
 	static constexpr float SIDE_AIM_OFFSET = 30.0f;
 
 	// 補間
-	static constexpr float SMOOTH_SPEED = 0.12f;
+	static constexpr float SMOOTH_SPEED = 0.1f;
 
 	// 切り替え補間
-	static constexpr float TRANSITION_TIME = 0.18f;
+	static constexpr float TRANSITION_TIME = 0.3f;
 
 	//==============================
 	// カメラ状態
@@ -63,6 +65,9 @@ private:
 
 	float angleV = 0.0f;
 	float angleH = 0.0f;
+
+	float currentAngleV = 0.0f;
+	float currentAngleH = 0.0f;
 
 	// ロックオン状態保存
 	bool prevLockOn = false;
@@ -99,10 +104,7 @@ private:
 
 	void FixCameraPosition();
 
-	void StartTransition(
-		const VECTOR& goalPos,
-		const VECTOR& goalTarget
-	);
+	void StartTransition();
 
 	void UpdateTransition();
 
@@ -112,5 +114,11 @@ private:
 		const VECTOR& a,
 		const VECTOR& b,
 		float t
+	);
+
+	VECTOR SmoothTarget(
+		const VECTOR& current,
+		const VECTOR& destination,
+		float speed
 	);
 };

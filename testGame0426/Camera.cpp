@@ -31,39 +31,52 @@ void Camera::Update()
 		return;
 
 	//--------------------------------
-	// ロックオン切り替え検知
+	// カメラモード
 	//--------------------------------
 
-	bool isLockOn =
-		p->GetIsLockOn();
-
-	if (isLockOn != prevLockOn)
+	CameraMode newMode;
+	
+	if (p->GetIsAim())
 	{
-		isTransition = true;
+		newMode = CameraMode::Aim;
+	}
+	else if (p->GetIsLockOn())
+	{
+		newMode = CameraMode::LockOn;
+	}
+	else
+	{
+		newMode = CameraMode::Normal;
+	}
 
-		transitionTimer = 0.0f;
+	//--------------------------------
+	// モード切り替え検知
+	//--------------------------------
 
-		transitionStartPos = pos;
-		transitionStartTarget = target;
+	if (newMode != cameraMode)
+	{
+		StartTransition();
 
-		prevLockOn = isLockOn;
+		cameraMode = newMode;
 	}
 
 	//--------------------------------
 	// カメラ更新
 	//--------------------------------
 
-	if (p->GetStateName() == "Aim")
+	switch (cameraMode)
 	{
+	case CameraMode::Aim:
 		UpdateAimCamera();
-	}
-	else if (isLockOn)
-	{
+		break;
+		
+	case CameraMode::LockOn:
 		UpdateLockOnCamera();
-	}
-	else
-	{
+		break;
+
+	case CameraMode::Normal:
 		UpdateNormalCamera();
+		break;
 	}
 
 	//--------------------------------
@@ -148,7 +161,7 @@ void Camera::UpdateLockOnCamera()
 		return;
 
 	auto enemy =
-		p->GetLockOnTarget().lock();
+		p->GetTarget().lock();
 
 	//--------------------------------
 	// ターゲット消失
@@ -184,7 +197,6 @@ void Camera::UpdateLockOnCamera()
 			0.5f
 		);
 
-	target = center;
 
 	//--------------------------------
 	// プレイヤー→敵
@@ -216,14 +228,6 @@ void Camera::UpdateLockOnCamera()
 
 	right = VNorm(right);
 
-	//--------------------------------
-	// 左右切り替え
-	//--------------------------------
-
-	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_RIGHT_SHOULDER))
-	{
-		sideSign *= -1;
-	}
 
 	//--------------------------------
 	// 距離に応じて引く
@@ -241,33 +245,47 @@ void Camera::UpdateLockOnCamera()
 		);
 
 	//--------------------------------
-	// 後方位置
+	// 基準後方位置
 	//--------------------------------
 
-	VECTOR backPos =
+	VECTOR basePos =
 		VSub(
 			center,
 			VScale(dir, cameraDistance)
 		);
 
+	basePos.y += LOCKON_HEIGHT;
+
 	//--------------------------------
-	// 横にずらす
+	// 現在カメラの横ズレ量
 	//--------------------------------
 
-	backPos =
-		VAdd(
-			backPos,
-			VScale(
-				right,
-				SIDE_OFFSET * sideSign
-			)
+	VECTOR toCamera =
+		VSub(pos, basePos);
+
+	float side =
+		VDot(toCamera, right);
+
+	//--------------------------------
+	// 横ズレ制限
+	//--------------------------------
+
+	float clampedSide =
+		std::clamp(
+			side,
+			-SIDE_OFFSET,
+			SIDE_OFFSET
 		);
 
 	//--------------------------------
-	// 高さ
+	// 最終位置
 	//--------------------------------
 
-	backPos.y += LOCKON_HEIGHT;
+	VECTOR backPos =
+		VAdd(
+			basePos,
+			VScale(right, clampedSide)
+		);
 
 	//--------------------------------
 	// 補間
@@ -283,14 +301,11 @@ void Camera::UpdateLockOnCamera()
 		);
 
 	target =
-		VAdd(
+		SmoothTarget(
 			target,
-			VScale(
-				VSub(center, target),
-				SMOOTH_SPEED
-			)
+			center,
+			0.15f
 		);
-
 	//--------------------------------
 	// ロックオン角度同期
 	//--------------------------------
@@ -401,20 +416,22 @@ void Camera::UpdateAimCamera()
 	// 補間
 	//--------------------------------
 
-	pos =
-		VAdd(
-			pos,
-			VScale(
-				VSub(backPos, pos),
-				SMOOTH_SPEED
-			)
-		);
+	pos = SmoothTarget(
+		pos,
+		backPos,
+		TRANSITION_TIME
+	);
 
 	//--------------------------------
 	// target
 	//--------------------------------
 
-	target = enemyPos;
+	target =
+		SmoothTarget(
+			target,
+			enemyPos,
+			0.2f
+		);
 
 	//--------------------------------
 	// カメラforward
@@ -443,44 +460,74 @@ void Camera::UpdateAimCamera()
 	transitionGoalTarget = target;
 }
 
-void Camera::InputAngle() {
-
+void Camera::InputAngle()
+{
 	float dt = Time::GetInstance().GetScaledDeltaTime() * 60.0f;
 
 	float stickX = Input::GetInput().GetRightStickX();
+
 	float stickY = Input::GetInput().GetRightStickY();
-	float sensitivity = 0.03f;
+
+	//--------------------------------
+	// 感度
+	//--------------------------------
+
+	float horizontalSensitivity = SENSITIVITY_H;
+
+	float verticalSensitivity = SENSITIVITY_V;
 
 	//-------------------------------- 
 	// 横回転 
 	//--------------------------------
 
-	angleH += stickX * sensitivity * dt;
-	
+	angleH += stickX * horizontalSensitivity * dt;
+
 	//-------------------------------- 
 	// 縦回転 
 	//--------------------------------
-	
-	angleV -= stickY * sensitivity * dt;
-	
+
+	angleV -= stickY * verticalSensitivity * dt;
+
 	//-------------------------------- 
 	// 縦制限 
 	//--------------------------------
-	
-	float limit = DX_PI_F / 2.0f - 0.2f;
-	
-	if (angleV > limit) { angleV = limit; }
-	if (angleV < -limit) { angleV = -limit; }
 
+	float limit = DX_PI_F / 2.0f - 0.2f;
+
+	if (angleV > limit)
+	{
+		angleV = limit;
+	}
+
+	if (angleV < -limit)
+	{
+		angleV = -limit;
+	}
 }
 
 void Camera::FixCameraPosition()
 {
-	MATRIX rotY =
-		MGetRotY(angleH);
+	//--------------------------------
+	// 回転だけ補間
+	//--------------------------------
 
-	MATRIX rotX =
-		MGetRotX(angleV);
+	float rotateSpeed = 0.15f;
+
+	currentAngleH += (angleH - currentAngleH) * rotateSpeed;
+
+	currentAngleV += (angleV - currentAngleV) * rotateSpeed;
+
+	//--------------------------------
+	// 回転行列
+	//--------------------------------
+
+	MATRIX rotY = MGetRotY(currentAngleH);
+
+	MATRIX rotX = MGetRotX(currentAngleV);
+
+	//--------------------------------
+	// オフセット計算
+	//--------------------------------
 
 	VECTOR offset =
 		VTransform(
@@ -495,6 +542,10 @@ void Camera::FixCameraPosition()
 			rotY
 		);
 
+	//--------------------------------
+	// 距離は即反映
+	//--------------------------------
+
 	pos =
 		VAdd(
 			target,
@@ -502,10 +553,8 @@ void Camera::FixCameraPosition()
 		);
 }
 
-void Camera::StartTransition(
-	const VECTOR& goalPos,
-	const VECTOR& goalTarget
-)
+
+void Camera::StartTransition()
 {
 	isTransition = true;
 
@@ -513,9 +562,6 @@ void Camera::StartTransition(
 
 	transitionStartPos = pos;
 	transitionStartTarget = target;
-
-	transitionGoalPos = goalPos;
-	transitionGoalTarget = goalTarget;
 }
 
 void Camera::UpdateTransition()
@@ -530,6 +576,18 @@ void Camera::UpdateTransition()
 		TRANSITION_TIME;
 
 	t = std::clamp(t, 0.0f, 1.0f);
+
+	//--------------------------------
+	// EaseOutCubic
+	//--------------------------------
+
+	t =
+		1.0f -
+		powf(1.0f - t, 3.0f);
+
+	//--------------------------------
+	// 補間
+	//--------------------------------
 
 	pos =
 		LerpVec(
@@ -570,5 +628,20 @@ VECTOR Camera::LerpVec(
 		Lerp(a.x, b.x, t),
 		Lerp(a.y, b.y, t),
 		Lerp(a.z, b.z, t)
+	);
+}
+
+VECTOR Camera::SmoothTarget(
+	const VECTOR& current,
+	const VECTOR& destination,
+	float speed
+)
+{
+	return VAdd(
+		current,
+		VScale(
+			VSub(destination, current),
+			speed
+		)
 	);
 }

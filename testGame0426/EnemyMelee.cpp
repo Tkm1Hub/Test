@@ -17,6 +17,7 @@ void EnemyMelee::Init()
 	HP = MaxHP;
 	maxMoveSpeed = param.chaseSpeed;
 	bodyRadius = param.bodyRadius;
+	stunTime = param.stunTime;
 	bodyHeight = param.bodyHeight;
 
 	// UIê∂ê¨

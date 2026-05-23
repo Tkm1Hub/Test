@@ -12,12 +12,13 @@
 void EnemyShooter::Init()
 {
 	Enemy::Init();
-	pos = VGet(20.0f, 0.0f, 0.0f);
+	pos = VGet(20.0f, 30.0f, 0.0f);
 	MaxHP = param.HP;
 	HP = MaxHP;
 	maxMoveSpeed = param.chaseSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;
+    stunTime = param.stunTime;
 
 	// UIê∂ê¨
 	auto ui = UIFactory::CreateHPBarUI(

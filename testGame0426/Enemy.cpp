@@ -73,8 +73,50 @@ void Enemy::OnHit(const DamageInfo& info)
 	// 既に死亡してたら無視
 	if (IsDead()) return;
 
-	// ダメージ保存
+	//-------------------------------
+	// ダメージ計算
+	//-------------------------------
+	float damageRate = 1.0f;
+	float stunRate = 1.0f;
+
+	switch (info.damageType)
+	{
+	case DamageType::Melee:
+		damageRate = GetParam().meleeDamageRate;
+		stunRate = GetParam().meleeStunRate;
+		break;
+
+	case DamageType::Projectile:
+		damageRate = GetParam().projectileDamageRate;
+		stunRate = GetParam().prijectileStunRate;
+		break;
+	}
+
+	int finalDamage = static_cast<int>(info.damage * damageRate);
+	int finalStunPower = static_cast<int>(info.stunPower * stunRate);
+
+	// 保存（UI用）
 	lastDamageInfo = info;
+	lastDamageInfo.damage = finalDamage;
+	lastDamageInfo.stunPower = finalStunPower;
+
+	// HP減算
+	TakeDamage(finalDamage);
+
+	// スタン蓄積
+	AddStunGauge(finalStunPower);
+
+	// ノックバック
+	SetExternalVelocity(
+		VScale(info.hitDir, info.knockBackPower)
+	);
+
+	// 死亡判定
+	if (IsDead())
+	{
+		ChangeState(std::make_shared<EnemyDeadState>());
+		return;
+	}
 
 	// 被弾
 	auto state = std::make_shared<EnemyDamageState>();

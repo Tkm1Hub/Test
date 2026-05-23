@@ -28,34 +28,6 @@ void EnemyDamageState::OnStart()
 
     UIContainer::GetInstance().Add(damageUI);
 
-    // ダメージ
-    enemy->TakeDamage(info.damage);
-    enemy->AddStunGauge(info.stunPower);
-
-    // ノックバック
-    enemy->SetExternalVelocity(
-        VScale(
-            info.hitDir,
-            info.knockBackPower
-        )
-    );
-
-    // 死亡
-    if (enemy->GetHP() <= 0)
-    {
-        auto state = std::make_shared<EnemyDeadState>();
-        enemy->ChangeState(state);
-        return;
-    }
-
-
-    // 地面解除
-    enemy->SetIsGraund(false);
-
-    // 移動停止
-    enemy->SetMoveVelocity(
-        VGet(0, 0, 0)
-    );
 }
 
 void EnemyDamageState::OnUpdate()

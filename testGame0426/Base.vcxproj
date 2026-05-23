@@ -27,6 +27,7 @@
     <ClCompile Include="CharacterCollision.cpp" />
     <ClCompile Include="DamageTextUI.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="EffectContainer.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerDodgeState.cpp" />
     <ClCompile Include="PlayerFallState.cpp" />
+    <ClCompile Include="PlayerFireState.cpp" />
     <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
@@ -71,6 +73,7 @@
     <ClInclude Include="DamageInfo.h" />
     <ClInclude Include="DamageableObject.h" />
     <ClInclude Include="DamageTextUI.h" />
+    <ClInclude Include="EffectContainer.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyCombatIdleState.h" />
@@ -97,6 +100,7 @@
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerDodgeState.h" />
     <ClInclude Include="PlayerFallState.h" />
+    <ClInclude Include="PlayerFireState.h" />
     <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpState.h" />
@@ -142,6 +146,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -202,15 +207,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Dxlib_h;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../EffekseerForDXLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <SupportJustMyCode>true</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../Dxlib_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../EffekseerForDXLib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

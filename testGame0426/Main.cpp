@@ -1,4 +1,3 @@
-#include"Dxlib.h"
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "TestScene.h"
@@ -24,8 +23,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//DXライブラリの初期化
 	if (DxLib_Init() == -1)return -1;
 
-	//描画先を裏画面にセット
-	SetDrawScreen(DX_SCREEN_BACK);
+	// DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
+	// Effekseerを使用するには必ず設定する。
+	SetUseDirect3DVersion(DX_DIRECT3D_11);
+
+	// Effekseerを初期化する。
+	// 引数には画面に表示する最大パーティクル数を設定する。
+	if (Effekseer_Init(8000) == -1)
+	{
+		DxLib_End();
+		return -1;
+	}
+
+	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
+	// Effekseerを使用する場合は必ず設定する。
+	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
+
+	// DXライブラリのデバイスロストした時のコールバックを設定する。
+	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
+	// ただし、DirectX11を使用する場合は実行する必要はない。
+	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
 	// Ｚバッファを有効にする
 	SetUseZBuffer3D(TRUE);
@@ -61,6 +78,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			afterTime = GetNowHiPerformanceCount();
 		}
 	}
+
+	// Effekseerを終了する。
+	Effkseer_End();
 
 	//Dxライブラリの後始末
 	DxLib_End();

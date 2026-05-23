@@ -30,6 +30,7 @@ void Player::Init()
 
 	MaxHP = param.HP;
 	HP = MaxHP;
+	currentBulletNum = 0;
 	maxMoveSpeed = param.maxMoveSpeed;
 	bodyRadius = param.bodyRadius;
 	bodyHeight = param.bodyHeight;
@@ -37,6 +38,7 @@ void Player::Init()
 
 	// コンボ設定
 	SetupCombo(param.combo);
+	fireData = param.bullet;
 }
 
 void Player::Update()
@@ -117,7 +119,36 @@ VECTOR Player::GetInputDir() const
 void Player::MoveInput()
 {
 	moveDir = GetInputDir();
-	lookDir = moveDir;
+
+	//---------------------------------
+	// Aim中はtarget方向を見る
+	//---------------------------------
+
+	if (isAim)
+	{
+		auto targetPtr = target.lock();
+
+		if (targetPtr)
+		{
+			lookDir =
+				VSub(
+					targetPtr->GetCapsuleCenter(),
+					pos
+				);
+
+			lookDir.y = 0;
+
+			lookDir = VNorm(lookDir);
+		}
+	}
+	else
+	{
+		//---------------------------------
+		// 通常時は入力方向を見る
+		//---------------------------------
+
+		lookDir = moveDir;
+	}
 }
 
 void Player::Attack(const AttackStep& step)
@@ -181,6 +212,39 @@ void Player::Attack(const AttackStep& step)
 	);
 
 	Objects::GetInstance().Add(hitSphere);
+}
+
+void Player::Fire(const AttackStep& step)
+{
+	auto targetPtr = target.lock();
+
+	VECTOR fireDir = VSub(targetPtr->GetPosition(), pos);
+	fireDir = VNorm(fireDir);
+
+	// ノックバック
+	VECTOR KnockBackDir = VScale(forward, -1);
+
+	SetExternalVelocity(
+		VScale(
+			KnockBackDir,
+			param.fireKnockBackPower
+		));
+
+	// 前方にHitSphereを生成
+	auto bullet = std::make_shared<AttackHitSphere>();
+
+	// HitSphere初期化
+	bullet->InitProjectile(
+		GetCapsuleCenter(),
+		step.attackHitRadius,
+		step.damage,
+		step.stunPower,
+		step.knockBackPower,
+		this,
+		fireDir,
+		param.bulletSpeed
+	);
+	Objects::GetInstance().Add(bullet);
 }
 
 VECTOR Player::GetAttackDirection()
@@ -275,6 +339,7 @@ float Player::GetAttackMoveSpeed(const AttackStep& step)
 
 	return moveSpeed;
 }
+
 // 敵の攻撃接触
 void Player::OnHit(const DamageInfo& info)
 {
@@ -301,38 +366,91 @@ void Player::OnHit(const DamageInfo& info)
 
 void Player::SearchTarget()
 {
-	//--------------------------------
-	// 現在target維持
-	//--------------------------------
-
 	auto currentTarget = target.lock();
 
-	if (!Input::GetInput().GetIsMoveLStick())
+	//--------------------------------
+	// ターゲット死亡
+	//--------------------------------
+
+	if (currentTarget &&
+		currentTarget->IsDead())
 	{
-		if (currentTarget &&
-			!currentTarget->IsDead())
-		{
-			return;
-		}
+		target.reset();
+		isLockOn = false;
+		currentTarget = nullptr;
 	}
 
 	//--------------------------------
-	// 新規検索
+	// LockOnまたはAim中
 	//--------------------------------
 
-	float nearestDistance = FLT_MAX;
-
-	std::shared_ptr<Enemy> nearestEnemy = nullptr;
-
-	if (auto cam = camera.lock())
+	if (isLockOn || isAim)
 	{
-		VECTOR inputDir = GetInputDir();
+		//--------------------------------
+		// ターゲット無し
+		//--------------------------------
 
-		VECTOR camForward =
-			cam->GetFoward();
+		if (!currentTarget)
+		{
+			isLockOn = false;
+			return;
+		}
 
-		camForward.y = 0.0f;
-		camForward = VNorm(camForward);
+		float stickX =
+			Input::GetInput().GetRightStickX();
+
+		//--------------------------------
+		// スティック戻したら再切替可能
+		//--------------------------------
+
+		if (fabs(stickX) < 0.3f)
+		{
+			canSwitchTarget = true;
+			return;
+		}
+
+		//--------------------------------
+		// 既に切替済み
+		//--------------------------------
+
+		if (!canSwitchTarget)
+		{
+			return;
+		}
+
+		//--------------------------------
+		// 倒し切ってない
+		//--------------------------------
+
+		if (fabs(stickX) < 0.8f)
+		{
+			return;
+		}
+
+		canSwitchTarget = false;
+
+		//--------------------------------
+		// 現在ターゲット方向
+		//--------------------------------
+
+		VECTOR currentDir =
+			VSub(
+				currentTarget->GetPosition(),
+				pos
+			);
+
+		currentDir.y = 0.0f;
+
+		currentDir =
+			VNorm(currentDir);
+
+		std::shared_ptr<Enemy> nextTarget = nullptr;
+
+		float bestDot = -1.0f;
+
+		//--------------------------------
+		// 敵探索
+		//--------------------------------
 
 		for (auto& obj : Objects::GetInstance().objects)
 		{
@@ -346,6 +464,9 @@ void Player::SearchTarget()
 				continue;
 
 			if (enemy->IsDead())
+				continue;
+
+			if (enemy == currentTarget)
 				continue;
 
 			//--------------------------------
@@ -363,55 +484,138 @@ void Player::SearchTarget()
 			float distance =
 				VSize(toEnemy);
 
-			if (distance > param.attackSupportDistance)
+			if (distance >
+				param.SearchEnemyDistance)
+			{
 				continue;
+			}
 
 			VECTOR enemyDir =
 				VNorm(toEnemy);
 
 			//--------------------------------
-			// カメラ前方
+			// 左右判定
 			//--------------------------------
 
-			VECTOR cameraToEnemy =
-				VSub(
-					enemy->GetPosition(),
-					cam->GetPosition()
+			VECTOR cross =
+				VCross(
+					currentDir,
+					enemyDir
 				);
 
-			cameraToEnemy.y = 0.0f;
-
-			VECTOR camEnemyDir =
-				VNorm(cameraToEnemy);
-
-			float camDot =
-				VDot(
-					camForward,
-					camEnemyDir
-				);
-
-			if (camDot < 0.3f)
-				continue;
-
 			//--------------------------------
-			// 入力方向
+			// 右切替
 			//--------------------------------
 
-			if (VSize(inputDir) > 0.1f)
+			if (stickX > 0.0f)
 			{
-				float inputDot =
-					VDot(
-						inputDir,
-						enemyDir
-					);
-
-				if (inputDot < 0.5f)
+				if (cross.y <= 0.0f)
+					continue;
+			}
+			//--------------------------------
+			// 左切替
+			//--------------------------------
+			else
+			{
+				if (cross.y >= 0.0f)
 					continue;
 			}
 
 			//--------------------------------
-			// 一番近い敵
+			// 正面寄り優先
 			//--------------------------------
+
+			float dot =
+				VDot(
+					currentDir,
+					enemyDir
+				);
+
+			if (dot > bestDot)
+			{
+				bestDot = dot;
+				nextTarget = enemy;
+			}
+		}
+
+		//--------------------------------
+		// ターゲット更新
+		//--------------------------------
+
+		if (nextTarget)
+		{
+			target = nextTarget;
+		}
+
+		return;
+	}
+
+	//--------------------------------
+	// 通常ターゲット維持
+	//--------------------------------
+
+	if (!Input::GetInput().GetIsMoveLStick())
+	{
+		if (currentTarget)
+		{
+			return;
+		}
+	}
+
+	//--------------------------------
+	// 通常ターゲット検索
+	//--------------------------------
+
+	float nearestDistance = FLT_MAX;
+
+	std::shared_ptr<Enemy> nearestEnemy = nullptr;
+
+	if (auto cam = camera.lock())
+	{
+		VECTOR inputDir = GetInputDir();
+
+		for (auto& obj : Objects::GetInstance().objects)
+		{
+			auto enemy =
+				std::dynamic_pointer_cast<Enemy>(obj);
+
+			if (!enemy)
+				continue;
+
+			if (!enemy->GetIsActive())
+				continue;
+
+			if (enemy->IsDead())
+				continue;
+
+			VECTOR toEnemy =
+				VSub(
+					enemy->GetPosition(),
+					pos
+				);
+
+			toEnemy.y = 0.0f;
+
+			float distance =
+				VSize(toEnemy);
+
+			if (distance >
+				param.SearchEnemyDistance)
+			{
+				continue;
+			}
+
+			VECTOR enemyDir =
+				VNorm(toEnemy);
+
+			float dot =
+				VDot(
+					inputDir,
+					enemyDir
+				);
+
+			if (dot < 0.5f)
+				continue;
 
 			if (distance < nearestDistance)
 			{
@@ -432,15 +636,14 @@ void Player::ToggleLockOn()
 	if (isLockOn)
 	{
 		isLockOn = false;
-		lockOnTarget.reset();
 		return;
 	}
 
-	SearchTarget();
+	auto targetPtr = target.lock();
 
-	if (auto targetPtr = target.lock())
+	if (targetPtr &&
+		!targetPtr->IsDead())
 	{
-		lockOnTarget = targetPtr;
 		isLockOn = true;
 	}
 }

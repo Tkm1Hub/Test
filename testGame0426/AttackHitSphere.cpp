@@ -27,6 +27,7 @@ void AttackHitSphere::InitMelee(
 	damageInfo.knockBackPower = knockBackPower;
 	damageInfo.attacker = owner;
 	damageInfo.hitDir = VNorm(attackDir);
+	damageInfo.damageType = DamageType::Melee;
 
 	pos = VAdd(
 		owner->GetCapsuleCenter(),
@@ -55,7 +56,7 @@ void AttackHitSphere::InitProjectile(
 	this->radius = radius;
 	this->owner = owner;
 
-	lifeTime = 5.0f;
+	lifeTime = 1.0f;
 
 	velocity =
 		VScale(
@@ -69,6 +70,8 @@ void AttackHitSphere::InitProjectile(
 	damageInfo.hitDir = VNorm(dir);
 	damageInfo.knockBackPower =
 		knockBackPower;
+	damageInfo.damageType = DamageType::Projectile;
+
 }
 
 void AttackHitSphere::Update()

@@ -1,6 +1,12 @@
 #pragma once
 #include <vector>
 
+enum class DamageType
+{
+	Melee,
+	Projectile
+};
+
 struct AttackStep
 {
 	float windupTime;
@@ -18,6 +24,8 @@ struct AttackStep
 	float attackForwardOffset;
 
 	float knockBackPower;
+
+	DamageType type;
 };
 
 struct AttackData

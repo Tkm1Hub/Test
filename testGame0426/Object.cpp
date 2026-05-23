@@ -95,7 +95,7 @@ void Object::CalcMoveSpeed()
     if (isMove)
     {
         VECTOR targetVelocity =
-            VScale(forward, maxMoveSpeed);
+            VScale(moveDir, maxMoveSpeed);
 
         moveVelocity = VAdd(
             moveVelocity,

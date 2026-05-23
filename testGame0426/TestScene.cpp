@@ -10,6 +10,7 @@
 #include "EnemyShooter.h"
 #include "PlayerHPUI.h"
 #include "UIContainer.h"
+#include "EffectContainer.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -34,6 +35,8 @@ void TestScene::Init()
 
 	// オブジェクト初期化
 	camera->Init();
+
+	EffectContainer::GetInstance().Init();
 
 	// UI生成
 	auto playerHPUI = std::make_shared<PlayerHPUI>();
@@ -85,6 +88,9 @@ void TestScene::Update()
 	UIContainer::GetInstance().Update();
 	Objects::GetInstance().Update();
 	camera->Update();
+
+	EffectContainer::GetInstance().Update();
+
 }
 
 void TestScene::Draw() const
@@ -92,6 +98,8 @@ void TestScene::Draw() const
 	Objects::GetInstance().Draw();
 
 	debug->Draw();
+
+	EffectContainer::GetInstance().Draw();
 
 	UIContainer::GetInstance().Draw();
 }
