@@ -10,7 +10,6 @@
 
 void PlayerAttackState::OnStart()
 {
-	EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", GetPlayer()->GetPosition());
 }
 
 void PlayerAttackState::OnUpdate()

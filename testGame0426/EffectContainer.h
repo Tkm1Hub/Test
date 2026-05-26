@@ -44,7 +44,7 @@ public:
     void SetSpeed(float speed);
     void SetPosition(const std::string& name, const VECTOR setPosition);
     void SetRotation(const std::string& name, VECTOR setPosition);
-    void PlayEffect(const std::string& name, const VECTOR& position);
+    int PlayEffect(const std::string& name, const VECTOR& position);
     void StopEffect();
 };
 

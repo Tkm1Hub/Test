@@ -8,6 +8,7 @@
 
 void EnemyAttackState::OnStart()
 {
+	effectHandle = EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", GetEnemy()->GetCapsuleCenter());
 }
 
 void EnemyAttackState::OnUpdate()
@@ -25,6 +26,20 @@ void EnemyAttackState::OnUpdate()
 
 	// 現在段
 	const AttackStep& step = attackData.combo[currentStep];
+
+	// エフェクト位置更新
+	if (effectHandle != -1)
+	{
+		VECTOR pos =
+			enemy->GetCapsuleCenter();
+
+		SetPosPlayingEffekseer3DEffect(
+			effectHandle,
+			pos.x,
+			pos.y,
+			pos.z
+		);
+	}
 
 	switch (phase)
 	{

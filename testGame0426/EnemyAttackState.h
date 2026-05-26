@@ -15,6 +15,7 @@ public:
 	}
 private:
 	int currentStep = 0;
+	int effectHandle = -1;
 	float timer = 0.0f;
 	AttackPhase phase = AttackPhase::Windup;
 	bool hasHit = false;

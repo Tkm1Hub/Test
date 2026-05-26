@@ -4,7 +4,7 @@
 
 void EffectContainer::Init()
 {
-    LoadEffect("AttackReady_yellow", "data/effect/ShockWave_Player.efkefc", 30.0f);
+    LoadEffect("AttackReady_yellow", "data/effect/AttackReady_yellow.efkefc", 7.0f);
 }
 
 /// <summary>
@@ -91,11 +91,11 @@ void EffectContainer::SetScale(VECTOR scale)
 /// <summary>
 ///  エフェクトを再生
 /// </summary>
-void EffectContainer::PlayEffect(const std::string& name, const VECTOR& position)
+int EffectContainer::PlayEffect(const std::string& name, const VECTOR& position)
 {
     // エフェクトを再生する。
     auto it = effectHandles.find(name);
-    if (it == effectHandles.end()) return;
+    if (it == effectHandles.end()) return -1;
 
     int handle = PlayEffekseer3DEffect(it->second);
     SetPosPlayingEffekseer3DEffect(handle, position.x, position.y, position.z);
@@ -104,6 +104,8 @@ void EffectContainer::PlayEffect(const std::string& name, const VECTOR& position
     SetSpeedPlayingEffekseer3DEffect(handle, timeScale);
 
     activeEffects.push_back({ name, handle, position, true });
+
+    return handle;
 }
 
 /// <summary>
