@@ -1,4 +1,5 @@
 #pragma once
+#include "DxLib.h"
 
 struct PlayerParameter
 {
@@ -7,6 +8,7 @@ struct PlayerParameter
 	int BulletNum = 3;
 	int attackPower = 12;
 	int stunPower = 30;
+	VECTOR scale = { 0.5f,0.5f,0.5f };
 
 	//Å@===== à⁄ìÆ =====
 	float moveAccel = 0.14f;

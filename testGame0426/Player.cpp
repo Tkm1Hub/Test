@@ -36,6 +36,9 @@ void Player::Init()
 	bodyHeight = param.bodyHeight;
 	team = Team::Player;
 
+	modelHandle = MV1LoadModel("data/model/Player.mv1");
+	MV1SetScale(modelHandle, param.scale);
+
 	// ÉRÉìÉ{ê›íË
 	SetupCombo(param.combo);
 	fireData = param.bullet;
@@ -76,7 +79,7 @@ void Player::Draw()
 		8,
 		GetColor(18, 105, 204),
 		GetColor(0, 0, 0),
-		TRUE
+		false
 	);
 
 	printfDx("[Player.moveVelocity : %f, %f, %f ]", moveVelocity.x, moveVelocity.y, moveVelocity.z);

@@ -29,6 +29,8 @@ void Object::Draw()
         VAdd(pos, VScale(moveVelocity, 30.0f)),
         GetColor(0, 0, 255)
     );
+
+    MV1DrawModel(modelHandle);
 }
 
 void Object::AddVerticalVelocity(float power)
@@ -84,6 +86,8 @@ void Object::ApplyVelocity()
         verticalVelocity = 0.0f;
         isGround = true;
     }
+
+    MV1SetPosition(modelHandle, pos);
 }
 
 void Object::CalcMoveSpeed()
@@ -149,10 +153,23 @@ void Object::RotateAngle()
 {
     if (VSize(lookDir) <= 0.01f) return;
 
-    forward = VNorm(
+    forward = 
         VAdd(
             VScale(forward, 1.0f - angleSpeed),
             VScale(lookDir, angleSpeed)
-        )
+    );
+
+    forward.y = 0;
+    
+    forward = VNorm(forward);
+
+    // forward ‚©‚ç Y‰ñ“]Šp“x‚ðì‚é
+    float rotY = atan2f(forward.x, forward.z);
+
+    rotY += DX_PI_F;
+
+    MV1SetRotationXYZ(
+        modelHandle,
+        VGet(0.0f, rotY, 0.0f)
     );
 }
