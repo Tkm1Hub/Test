@@ -72,6 +72,8 @@ void TestScene::Update()
 		enemy->SetPlayer(player);
 
 		Objects::GetInstance().Add(enemy);
+
+		EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", VGet(0.0f,0.0f,0.0f));
 	}
 
 	// デバッグ：Shooterスポーン

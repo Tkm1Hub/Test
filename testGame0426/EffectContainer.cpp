@@ -4,7 +4,7 @@
 
 void EffectContainer::Init()
 {
-    LoadEffect("AttackReady_yellow", "data/effect/AttackReady_yellow.efkefc", 30.0f);
+    LoadEffect("AttackReady_yellow", "data/effect/ShockWave_Player.efkefc", 30.0f);
 }
 
 /// <summary>
@@ -35,16 +35,18 @@ void EffectContainer::Update()
 {
     float timeScale = Time::GetInstance().GetTimeScale();
 
-    // 再生中のエフェクト全てにスピードを反映
-    for (auto& e : activeEffects)
+    for (auto it = activeEffects.begin(); it != activeEffects.end(); )
     {
-        if (e.isActive)
+        if (!IsEffekseer3DEffectPlaying(it->handle))
         {
-            SetSpeedPlayingEffekseer3DEffect(e.handle, timeScale);
+            it = activeEffects.erase(it);
+            continue;
         }
+
+        SetSpeedPlayingEffekseer3DEffect(it->handle, timeScale);
+        ++it;
     }
 
-    // Effekseerにより再生中のエフェクトを更新する。
     UpdateEffekseer3D();
 }
 
@@ -101,7 +103,7 @@ void EffectContainer::PlayEffect(const std::string& name, const VECTOR& position
     float timeScale = Time::GetInstance().GetTimeScale();
     SetSpeedPlayingEffekseer3DEffect(handle, timeScale);
 
-    activeEffects.push_back(EffectInstance{ name,handle, position, true });
+    activeEffects.push_back({ name, handle, position, true });
 }
 
 /// <summary>
