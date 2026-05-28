@@ -3,6 +3,13 @@
 #include "PlayerParameter.h"
 #include "AttackData.h"
 
+enum class PlayerAnimState :int
+{
+	None = -1,			// ‚È‚µ
+	Idle = 0,			// ƒAƒCƒhƒ‹
+	Walk = 1,			// •à‚«
+};
+
 class Camera;
 class Enemy;
 class PlayerStateBase;

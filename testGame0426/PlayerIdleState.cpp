@@ -11,7 +11,7 @@
 
 void PlayerIdleState::OnStart()
 {
-
+	GetPlayer()->PlayAnimation((int)(PlayerAnimState::Idle), true);
 }
 
 void PlayerIdleState::OnUpdate()

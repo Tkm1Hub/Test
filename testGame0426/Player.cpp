@@ -37,6 +37,19 @@ void Player::Init()
 	team = Team::Player;
 
 	modelHandle = MV1LoadModel("data/model/Player.mv1");
+
+	animation.LoadModel(modelHandle);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Idle,
+		MV1LoadModel("data/animation/Idle.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Walk,
+		MV1LoadModel("data/animation/Running.mv1")
+	);
+
+	PlayAnimation((int)PlayerAnimState::Idle, true);
+
 	MV1SetScale(modelHandle, param.scale);
 
 	// コンボ設定
@@ -68,6 +81,9 @@ void Player::Update()
 
 	// 速度を適用
 	ApplyVelocity();
+
+	// アニメーションの更新
+	animation.Update();
 }
 
 void Player::Draw()

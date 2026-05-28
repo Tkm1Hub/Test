@@ -11,7 +11,7 @@
 
 void PlayerWalkState::OnStart()
 {
-
+	GetPlayer()->PlayAnimation((int)(PlayerAnimState::Walk), true);
 }
 
 void PlayerWalkState::OnUpdate()

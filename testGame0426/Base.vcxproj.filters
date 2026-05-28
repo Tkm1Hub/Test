@@ -179,6 +179,9 @@
     <Filter Include="ソース ファイル\EffectContainer">
       <UniqueIdentifier>{a11f9a81-9597-4941-be36-1dcf1ccf44b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation">
+      <UniqueIdentifier>{dca70708-b3f3-46fb-84f1-f79834b138b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -309,6 +312,9 @@
     </ClCompile>
     <ClCompile Include="EffectContainer.cpp">
       <Filter>ソース ファイル\EffectContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>ソース ファイル\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -476,6 +482,9 @@
     </ClInclude>
     <ClInclude Include="EffectContainer.h">
       <Filter>ソース ファイル\EffectContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>ソース ファイル\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

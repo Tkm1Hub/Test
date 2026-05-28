@@ -2,6 +2,7 @@
 #include "DamageableObject.h"
 #include "StateMachine.h"
 #include "AttackData.h"
+#include "Animation.h"
 
 enum class Team
 {
@@ -49,6 +50,13 @@ public:
 		return attackData;
 	}
 
+	void PlayAnimation(int animIndex,bool loop)
+	{
+		animation.Play(animIndex, loop);
+	}
+
+	Animation animation;
+
 protected:
 	Team team = Team::Neutral;
 
@@ -57,4 +65,6 @@ protected:
 	float extraHitRadius = 0.0f;	// “ÁŽê“–‚½‚è”»’è”¼Œa
 
 	AttackData attackData;
+
+	std::vector<int> animationHandle;
 };

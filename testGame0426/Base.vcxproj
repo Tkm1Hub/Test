@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="AttackHitSphere.cpp" />
     <ClCompile Include="AttackToken.cpp" />
@@ -64,6 +65,7 @@
     <ClCompile Include="UIFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackHitSphere.h" />
