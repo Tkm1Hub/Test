@@ -38,7 +38,7 @@ struct PlayerParameter
 
 	// ===== 回避 =====
 	float dodgeSpeed = 20.0f;
-	float dodgeTime = 0.35f;
+	float dodgeTime = 0.6f;
 
 	// ===== 当たり判定 =====
 	float bodyRadius = 8.0f;
@@ -66,9 +66,9 @@ struct PlayerParameter
 	{
 		// 1段目：出が早い（発生最速、隙も小さく牽制に最適）
 		{
-			.windupTime = 5.0f,         // 発生を最速に
-			.activeTime = 15.0f,         // サッと振る
-			.recoveryTime = 5.0f,       // 次の段へコンボ移行しやすいよう後隙は短め
+			.windupTime = 15.0f,         // 発生を最速に
+			.activeTime = 5.0f,         // サッと振る
+			.recoveryTime = 15.0f,       // 次の段へコンボ移行しやすいよう後隙は短め
 
 			.damage = 6,                // 低
 			.stunPower = 3.0f,         // 中（しっかり怯ませてコンボを繋ぐ）
@@ -81,9 +81,9 @@ struct PlayerParameter
 		},
 		// 2段目：繋ぎ（1段目の勢いを維持しつつ、流れるように繋ぐ）
 		{
-			.windupTime = 8.0f,
-			.activeTime = 15.0f,
-			.recoveryTime = 8.0f,
+			.windupTime = 22.0f,
+			.activeTime = 5.0f,
+			.recoveryTime = 15.0f,
 
 			.damage = 10,               // 中
 			.stunPower = 5.0f,         // 中

@@ -7,7 +7,8 @@
 
 void PlayerFallState::OnStart()
 {
-
+	// ƒAƒjƒÄ¶
+	GetPlayer()->PlayAnimation((int)(PlayerAnimState::Fall), false);
 }
 
 void PlayerFallState::OnUpdate()

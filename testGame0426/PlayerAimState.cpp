@@ -17,6 +17,83 @@ void PlayerAimState::OnUpdate()
 {
 	GetPlayer()->MoveInput();
 
+    VECTOR inputDir = GetPlayer()->GetInputDir();
+
+	//--------------------------------
+	// Aimアニメ切り替え
+	//--------------------------------
+
+    if (VSize(inputDir) > 0.1f)
+    {
+        VECTOR forward = GetPlayer()->GetForward();
+        forward.y = 0.0f;
+        forward = VNorm(forward);
+
+        VECTOR right =
+            VCross(
+                VGet(0, 1, 0),
+                forward
+            );
+
+        right = VNorm(right);
+
+        float forwardDot =
+            VDot(inputDir, forward);
+
+        float rightDot =
+            VDot(inputDir, right);
+
+        //--------------------------------
+        // 前後どちらが強いか
+        //--------------------------------
+
+        if (fabs(forwardDot) > fabs(rightDot))
+        {
+            // 前
+            if (forwardDot > 0.0f)
+            {
+                GetPlayer()->PlayAnimation(
+                    (int)PlayerAnimState::AimWalkFront,
+                    true
+                );
+            }
+            // 後
+            else
+            {
+                GetPlayer()->PlayAnimation(
+                    (int)PlayerAnimState::AimWalkBack,
+                    true
+                );
+            }
+        }
+        else
+        {
+            // 右
+            if (rightDot > 0.0f)
+            {
+                GetPlayer()->PlayAnimation(
+                    (int)PlayerAnimState::AimWalkRight,
+                    true
+                );
+            }
+            // 左
+            else
+            {
+                GetPlayer()->PlayAnimation(
+                    (int)PlayerAnimState::AimWalkLeft,
+                    true
+                );
+            }
+        }
+    }
+    else
+    {
+        GetPlayer()->PlayAnimation(
+            (int)PlayerAnimState::Aim,
+            true
+        );
+    }
+
 	auto target = GetPlayer()->GetTarget().lock();
 
 	if (!target ||
@@ -58,9 +135,12 @@ void PlayerAimState::OnUpdate()
 	// 右トリガーが押されたら射撃
 	if (Input::GetInput().GetRightTrigger() > GetPlayer()->GetParam().fireTriggerDeadZone)
 	{
-		auto state = std::make_shared<PlayerFireState>();
-		GetPlayer()->ChangeState(state);
-		return;
+		if (GetPlayer()->GetCurrentBulletNum() > 0)
+		{
+			auto state = std::make_shared<PlayerFireState>();
+			GetPlayer()->ChangeState(state);
+			return;
+		}
 	}
 }
 

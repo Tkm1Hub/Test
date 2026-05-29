@@ -9,6 +9,7 @@
 #include "EnemyMelee.h"
 #include "EnemyShooter.h"
 #include "PlayerHPUI.h"
+#include "PlayerBulletUI.h"
 #include "UIContainer.h"
 #include "EffectContainer.h"
 
@@ -41,9 +42,12 @@ void TestScene::Init()
 	// UIê∂ê¨
 	auto playerHPUI = std::make_shared<PlayerHPUI>();
 	playerHPUI->SetPlayer(player.get());
+	auto playerBulletUI = std::make_shared<PlayerBulletUI>();
+	playerBulletUI->SetPlayer(player.get());
 
 	// UIÉäÉXÉgí«â¡
 	UIContainer::GetInstance().Add(playerHPUI);
+	UIContainer::GetInstance().Add(playerBulletUI);
 
 	SetMaterialUseVertSpcColor(false);
 

@@ -9,6 +9,10 @@
 
 void PlayerFireState::OnStart()
 {
+	GetPlayer()->ConsumeBullet();
+
+	// ƒAƒjƒ
+	GetPlayer()->PlayAnimation((int)(PlayerAnimState::Fire), false);
 }
 
 void PlayerFireState::OnUpdate()

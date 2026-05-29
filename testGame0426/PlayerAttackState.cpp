@@ -49,6 +49,8 @@ void PlayerAttackState::OnUpdate()
 		// ===== €”õ =====
 	case AttackPhase::Windup:
 
+		PlayAttackAnimation(currentStep);
+
 		if (timer >= step.windupTime)
 		{
 			timer = 0.0f;
@@ -127,4 +129,23 @@ void PlayerAttackState::OnUpdate()
 void PlayerAttackState::OnExit()
 {
 
+}
+
+void PlayerAttackState::PlayAttackAnimation(int step)
+{
+	switch (step)
+	{
+	case 0:
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash1), false);
+		break;
+	case 1:
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash2), false);
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	}
 }

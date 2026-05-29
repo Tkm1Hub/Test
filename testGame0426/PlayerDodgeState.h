@@ -14,5 +14,5 @@ public:
 	}
 private:
 	float dodgeTimer = 0.0f;
-	float dodgeTime = 0.35f;
+	float dodgeTime = 1.0f;
 };

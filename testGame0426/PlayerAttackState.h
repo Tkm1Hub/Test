@@ -18,4 +18,6 @@ private:
 	AttackPhase phase = AttackPhase::Windup;
 	bool hasHit = false;
 	bool nextComboRequested = false;
+
+	void PlayAttackAnimation(int step);
 };

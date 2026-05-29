@@ -182,6 +182,9 @@
     <Filter Include="ソース ファイル\Animation">
       <UniqueIdentifier>{dca70708-b3f3-46fb-84f1-f79834b138b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\PlayerBulletUI">
+      <UniqueIdentifier>{b887f35a-b2bf-4802-93ab-4a8d9a841ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -315,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>ソース ファイル\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBulletUI.cpp">
+      <Filter>ソース ファイル\UI\PlayerBulletUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,6 +491,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>ソース ファイル\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBulletUI.h">
+      <Filter>ソース ファイル\UI\PlayerBulletUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

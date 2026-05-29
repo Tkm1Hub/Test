@@ -15,9 +15,27 @@ void PlayerDodgeState::OnStart()
 
 	auto target = player->GetTarget().lock();
 
-	// “ü—Í‚ª–³‚¯‚ê‚Î‘O•ûŒü‚ðŽg—p
-	if (VSize(dodgeDir) <= 0.1f)
+	//--------------------------------
+	// “ü—Í‚ ‚è ¨ Dive
+	//--------------------------------
+
+	if (VSize(dodgeDir) > 0.1f)
 	{
+		player->PlayAnimation(
+			(int)PlayerAnimState::Dive,
+			false
+		);
+	}
+	//--------------------------------
+	// “ü—Í‚È‚µ ¨ DodgeBack
+	//--------------------------------
+	else
+	{
+		player->PlayAnimation(
+			(int)PlayerAnimState::DodgeBack,
+			false
+		);
+
 		dodgeDir = player->GetForward();
 
 		if (target)
@@ -27,8 +45,13 @@ void PlayerDodgeState::OnStart()
 					target->GetPosition(),
 					player->GetPosition()
 				);
+
+			targetDir.y = 0.0f;
+
 			targetDir = VNorm(targetDir);
-			dodgeDir = VScale(targetDir, -1);
+
+			dodgeDir =
+				VScale(targetDir, -1);
 		}
 	}
 

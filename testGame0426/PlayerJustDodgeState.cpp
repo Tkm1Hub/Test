@@ -10,6 +10,7 @@
 void PlayerJustDodgeState::OnStart()
 {
 	Time::GetInstance().SetTimeScale(0.2f);
+	GetPlayer()->AddBullet();
 }
 
 void PlayerJustDodgeState::OnUpdate()

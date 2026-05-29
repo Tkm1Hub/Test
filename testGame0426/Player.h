@@ -8,6 +8,21 @@ enum class PlayerAnimState :int
 	None = -1,			// なし
 	Idle = 0,			// アイドル
 	Walk = 1,			// 歩き
+	JumpUp = 2,			// ジャンプ開始
+	Fall = 3,			// 落下
+	Aim = 4,			// エイム
+	AimWalkFront = 5,	// エイム移動
+	AimWalkLeft = 6,	// エイム移動
+	AimWalkRight = 7,	// エイム移動
+	AimWalkBack = 8,	// エイム移動
+	Fire = 9,			// 発射
+	Dive = 10,			// 回避
+	DodgeBack = 11,		// 後ろ回避
+	Slash1 = 12,		// 攻撃1
+	Slash2 = 13,		// 攻撃1
+	Slash3 = 14,		// 攻撃1
+	Slash4 = 15,		// 攻撃1
+	Slash5 = 16,		// 攻撃1
 };
 
 class Camera;
@@ -48,6 +63,10 @@ public:
 
 	bool GetIsAim() const { return isAim; }
 	void SetIsAim(bool flag) { isAim = flag; }
+
+	void AddBullet();
+	int GetCurrentBulletNum()const { return currentBulletNum; }
+	void ConsumeBullet();
 private:
 	PlayerParameter param;				// パラメーター
 	AttackStep fireData;				// 射撃データ

@@ -47,6 +47,55 @@ void Player::Init()
 		(int)PlayerAnimState::Walk,
 		MV1LoadModel("data/animation/Running.mv1")
 	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::JumpUp,
+		MV1LoadModel("data/animation/JumpingUp.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Fall,
+		MV1LoadModel("data/animation/Falling.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Aim,
+		MV1LoadModel("data/animation/Pistol Idle.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::AimWalkFront,
+		MV1LoadModel("data/animation/Pistol Walk.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::AimWalkLeft,
+		MV1LoadModel("data/animation/Pistol Strafe Left.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::AimWalkRight,
+		MV1LoadModel("data/animation/Pistol Strafe Right.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::AimWalkBack,
+		MV1LoadModel("data/animation/Pistol Walk BackWard.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Fire,
+		MV1LoadModel("data/animation/Fire.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Dive,
+		MV1LoadModel("data/animation/Dive.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::DodgeBack,
+		MV1LoadModel("data/animation/Back Flip.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Slash1,
+		MV1LoadModel("data/animation/Player Slash1.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Slash2,
+		MV1LoadModel("data/animation/Player Slash2.mv1")
+	);
+
 
 	PlayAnimation((int)PlayerAnimState::Idle, true);
 
@@ -664,5 +713,25 @@ void Player::ToggleLockOn()
 		!targetPtr->IsDead())
 	{
 		isLockOn = true;
+	}
+}
+
+void Player::AddBullet()
+{
+	currentBulletNum += 1;
+
+	if (currentBulletNum >= param.BulletNum)
+	{
+		currentBulletNum = param.BulletNum;
+	}
+}
+
+void Player::ConsumeBullet()
+{
+	currentBulletNum -= 1;
+
+	if (currentBulletNum <= 0)
+	{
+		currentBulletNum = 0;
 	}
 }
