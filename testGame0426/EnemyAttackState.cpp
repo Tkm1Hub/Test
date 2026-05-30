@@ -8,7 +8,7 @@
 
 void EnemyAttackState::OnStart()
 {
-	effectHandle = EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", GetEnemy()->GetCapsuleCenter());
+	effectHandle = EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", GetEnemy()->GetCapsuleCenter(),false);
 }
 
 void EnemyAttackState::OnUpdate()

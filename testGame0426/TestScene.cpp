@@ -10,6 +10,7 @@
 #include "EnemyShooter.h"
 #include "PlayerHPUI.h"
 #include "PlayerBulletUI.h"
+#include "TargetMarkerUI.h"
 #include "UIContainer.h"
 #include "EffectContainer.h"
 
@@ -44,10 +45,13 @@ void TestScene::Init()
 	playerHPUI->SetPlayer(player.get());
 	auto playerBulletUI = std::make_shared<PlayerBulletUI>();
 	playerBulletUI->SetPlayer(player.get());
+	auto targetMarkerUI = std::make_shared<TargetMarkerUI>();
+	targetMarkerUI->SetPlayer(player.get());
 
 	// UIƒŠƒXƒg’Ç‰Á
 	UIContainer::GetInstance().Add(playerHPUI);
 	UIContainer::GetInstance().Add(playerBulletUI);
+	UIContainer::GetInstance().Add(targetMarkerUI);
 
 	SetMaterialUseVertSpcColor(false);
 

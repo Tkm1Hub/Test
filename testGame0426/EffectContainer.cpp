@@ -5,6 +5,7 @@
 void EffectContainer::Init()
 {
     LoadEffect("AttackReady_yellow", "data/effect/AttackReady_yellow.efkefc", 7.0f);
+	LoadEffect("TargetMarker", "data/effect/TargetMarker.efkefc", 5.0f);
 }
 
 /// <summary>
@@ -39,6 +40,38 @@ void EffectContainer::Update()
     {
         if (!IsEffekseer3DEffectPlaying(it->handle))
         {
+            if (it->isLoop)
+            {
+                auto effectIt =
+                    effectHandles.find(it->name);
+
+                if (effectIt != effectHandles.end())
+                {
+                    int newHandle =
+                        PlayEffekseer3DEffect(effectIt->second);
+
+                    SetPosPlayingEffekseer3DEffect(
+                        newHandle,
+                        it->position.x,
+                        it->position.y,
+                        it->position.z
+                    );
+
+                    float timeScale =
+                        Time::GetInstance().GetTimeScale();
+
+                    SetSpeedPlayingEffekseer3DEffect(
+                        newHandle,
+                        timeScale
+                    );
+
+                    it->handle = newHandle;
+                }
+
+                ++it;
+                continue;
+            }
+
             it = activeEffects.erase(it);
             continue;
         }
@@ -58,7 +91,7 @@ void EffectContainer::Draw()
     // Effekseerにより再生中のエフェクトを描画する。
     //DrawEffekseer3D_Draw(playingEffectHandle);
     DrawEffekseer3D();
-
+    DrawEffekseer2D();
 }
 
 /// <summary>
@@ -91,7 +124,7 @@ void EffectContainer::SetScale(VECTOR scale)
 /// <summary>
 ///  エフェクトを再生
 /// </summary>
-int EffectContainer::PlayEffect(const std::string& name, const VECTOR& position)
+int EffectContainer::PlayEffect(const std::string& name, const VECTOR& position,bool loop)
 {
     // エフェクトを再生する。
     auto it = effectHandles.find(name);
@@ -103,7 +136,14 @@ int EffectContainer::PlayEffect(const std::string& name, const VECTOR& position)
     float timeScale = Time::GetInstance().GetTimeScale();
     SetSpeedPlayingEffekseer3DEffect(handle, timeScale);
 
-    activeEffects.push_back({ name, handle, position, true });
+    activeEffects.push_back(
+        {
+            name,
+            handle,
+            position,
+            true,
+            loop
+        });
 
     return handle;
 }
@@ -111,9 +151,26 @@ int EffectContainer::PlayEffect(const std::string& name, const VECTOR& position)
 /// <summary>
 /// 再生中のモーションを停止する
 /// </summary>
-void EffectContainer::StopEffect()
+void EffectContainer::StopEffect(
+    const std::string& name
+)
 {
-    StopEffekseer3DEffect(playingEffectHandle);
+    for (auto it = activeEffects.begin();
+        it != activeEffects.end();)
+    {
+        if (it->name == name)
+        {
+            StopEffekseer3DEffect(
+                it->handle
+            );
+
+            it = activeEffects.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }
 
 void EffectContainer::SetSpeed(float speed)
@@ -137,4 +194,18 @@ void EffectContainer::SetRotation(const std::string& name, VECTOR setRotation)
             e.position = setRotation;
         }
     }
+}
+
+int EffectContainer::GetEffectHandle(
+    const std::string& name
+)
+{
+    auto it = effectHandles.find(name);
+
+    if (it == effectHandles.end())
+    {
+        return -1;
+    }
+
+    return it->second;
 }

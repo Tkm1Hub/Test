@@ -32,7 +32,7 @@ void DamageTextUI::Update()
 	float rate =
 		1.0f - (timer / lifeTime);
 
-	rate = max(0.0f, min(rate, 1.0f));
+	rate = std::max(0.0f, std::min(rate, 1.0f));
 
 	alpha =
 		static_cast<int>(255 * rate);

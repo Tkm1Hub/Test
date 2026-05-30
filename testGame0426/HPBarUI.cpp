@@ -29,7 +29,7 @@ void HPBarUI::Update()
 		static_cast<float>(t->GetMaxHP());
 
 	hpRate =
-		max(0.0f, min(hpRate, 1.0f));
+		std::max(0.0f, std::min(hpRate, 1.0f));
 
 	//--------------------------------
 	// ƒXƒ^ƒ“Š„‡
@@ -47,7 +47,7 @@ void HPBarUI::Update()
 			stun->GetMaxStunGauge();
 
 		stunRate =
-			max(0.0f, min(stunRate, 1.0f));
+			std::max(0.0f, std::min(stunRate, 1.0f));
 	}
 
 	//--------------------------------

@@ -59,7 +59,7 @@ public:
 			float rate =
 				stunTimer / stunTime;
 
-			rate = max(0.0f, min(rate, 1.0f));
+			rate = std::max(0.0f, std::min(rate, 1.0f));
 
 			// 見た目ゲージ更新
 			stunGauge =

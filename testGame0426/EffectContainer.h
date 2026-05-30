@@ -5,6 +5,7 @@ struct EffectInstance
     int handle = -1;
     VECTOR position;
     bool isActive = false;
+	bool isLoop = false;
 };
 
 
@@ -44,7 +45,9 @@ public:
     void SetSpeed(float speed);
     void SetPosition(const std::string& name, const VECTOR setPosition);
     void SetRotation(const std::string& name, VECTOR setPosition);
-    int PlayEffect(const std::string& name, const VECTOR& position);
-    void StopEffect();
+    int PlayEffect(const std::string& name, const VECTOR& position, bool loop);
+    void StopEffect(const std::string& name);
+
+    int GetEffectHandle(const std::string& name);
 };
 

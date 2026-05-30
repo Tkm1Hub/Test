@@ -185,6 +185,9 @@
     <Filter Include="ソース ファイル\UI\PlayerBulletUI">
       <UniqueIdentifier>{b887f35a-b2bf-4802-93ab-4a8d9a841ede}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\TargetMarkar">
+      <UniqueIdentifier>{9d9bff5f-8737-491a-a308-d695c22b6f5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -321,6 +324,9 @@
     </ClCompile>
     <ClCompile Include="PlayerBulletUI.cpp">
       <Filter>ソース ファイル\UI\PlayerBulletUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetMarkerUI.cpp">
+      <Filter>ソース ファイル\UI\TargetMarkar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -494,6 +500,9 @@
     </ClInclude>
     <ClInclude Include="PlayerBulletUI.h">
       <Filter>ソース ファイル\UI\PlayerBulletUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetMarkerUI.h">
+      <Filter>ソース ファイル\UI\TargetMarkar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
