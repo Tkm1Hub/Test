@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "TestScene.h"
+#include "Font.h"
 
 //画面設定
 int constexpr SCREEN_WIDTH = 1920;
@@ -55,6 +56,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 裏画面に描画
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	// フォントを読み込む
+	AddFontResourceExA("data/Font/GenEiLateGoN_v2.ttf", FR_PRIVATE, NULL);
+
+	Font::Init();
+
 	std::shared_ptr<SceneManager> sceneManager = std::make_shared<SceneManager>();
 
 	sceneManager->Add<TestScene>("Test");
@@ -86,6 +92,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// Effekseerを終了する。
 	Effkseer_End();
+
+	// フォントデータの削除
+	RemoveFontResourceExA("", FR_PRIVATE, NULL);
 
 	//Dxライブラリの後始末
 	DxLib_End();

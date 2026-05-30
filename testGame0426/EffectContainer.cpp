@@ -5,7 +5,9 @@
 void EffectContainer::Init()
 {
     LoadEffect("AttackReady_yellow", "data/effect/AttackReady_yellow.efkefc", 7.0f);
-	LoadEffect("TargetMarker", "data/effect/TargetMarker.efkefc", 5.0f);
+	LoadEffect("TargetMarker", "data/effect/TargetMarker.efkefc", 7.0f);
+    LoadEffect("LockOnMarker", "data/effect/LockOnMarker.efkefc", 7.0f);
+    LoadEffect("StunImpact", "data/effect/StunImpact.efkefc", 7.0f);
 }
 
 /// <summary>
@@ -81,6 +83,7 @@ void EffectContainer::Update()
     }
 
     UpdateEffekseer3D();
+    UpdateEffekseer2D();
 }
 
 /// <summary>

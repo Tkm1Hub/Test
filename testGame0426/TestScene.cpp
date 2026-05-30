@@ -13,6 +13,7 @@
 #include "TargetMarkerUI.h"
 #include "UIContainer.h"
 #include "EffectContainer.h"
+#include "Font.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -39,6 +40,8 @@ void TestScene::Init()
 	camera->Init();
 
 	EffectContainer::GetInstance().Init();
+
+	Font::Init();
 
 	// UIê∂ê¨
 	auto playerHPUI = std::make_shared<PlayerHPUI>();

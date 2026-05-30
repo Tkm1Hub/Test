@@ -70,12 +70,12 @@ struct PlayerParameter
 			.activeTime = 5.0f,         // サッと振る
 			.recoveryTime = 15.0f,       // 次の段へコンボ移行しやすいよう後隙は短め
 
-			.damage = 6,                // 低
+			.damage = 9,                // 低
 			.stunPower = 3.0f,         // 中（しっかり怯ませてコンボを繋ぐ）
 
 			.attackMoveSpeed = 5.0f,
 			.attackHitRadius = 16.0f,
-			.attackForwardOffset = 14.0f,
+			.attackForwardOffset = 30.0f,
 
 			.knockBackPower = 12.0f      // 敵が離れすぎないように低め
 		},
@@ -90,29 +90,29 @@ struct PlayerParameter
 
 			.attackMoveSpeed = 6.0f,
 			.attackHitRadius = 18.0f,
-			.attackForwardOffset = 16.0f,
+			.attackForwardOffset = 30.0f,
 
 			.knockBackPower = 12.0f
 		},
 		// 3段目：前進強い（大きく踏み込んで間合いを詰める、または敵を押し込む）
 		{
-			.windupTime = 12.0f,
-			.activeTime = 15.0f,
-			.recoveryTime = 12.0f,
+			.windupTime = 25.0f,
+			.activeTime = 5.0f,
+			.recoveryTime = 15.0f,
 
 			.damage = 14,               // 中
 			.stunPower = 7.0f,         // 高（相手の強靭を削るイメージ）
 
 			.attackMoveSpeed = 16.0f,   // ★前進力を大幅強化（グッと踏み込む）
 			.attackHitRadius = 22.0f,   // 踏み込む分、判定も少し広めに
-			.attackForwardOffset = 24.0f, // 前方に判定を突き出す
+			.attackForwardOffset = 30.0f, // 前方に判定を突き出す
 
 			.knockBackPower = 12.0f
 		},
 		// 4段目：隙大きめ（5段目への大振りの溜め。威力・疲労が高いが外すと危険）
 		{
-			.windupTime = 15.0f,         // ★前振りを長くして「大振り感」を演出
-			.activeTime = 15.0f,
+			.windupTime = 25.0f,         // ★前振りを長くして「大振り感」を演出
+			.activeTime = 5.0f,
 			.recoveryTime = 18.0f,      // ★後隙を大きく（コンボを止めると隙だらけ）
 
 			.damage = 22,               // 高
@@ -120,14 +120,14 @@ struct PlayerParameter
 
 			.attackMoveSpeed = 8.0f,
 			.attackHitRadius = 26.0f,
-			.attackForwardOffset = 24.0f,
+			.attackForwardOffset = 30.0f,
 
-			.knockBackPower = 12.0f
+			.knockBackPower = 20.0f
 		},
 		// 5段目：フィニッシュ（一撃必殺。4段目の大きな隙から放たれる超ド級の一撃）
 		{
-			.windupTime = 20.0f,        // ★最大級のタメ（ヒットストップやエフェクトが映える時間）
-			.activeTime = 15.0f,
+			.windupTime = 50.0f,        // ★最大級のタメ（ヒットストップやエフェクトが映える時間）
+			.activeTime = 5.0f,
 			.recoveryTime = 25.0f,      // 全力を出し切った後の大きな戻りモーション
 
 			.damage = 45,               // 超高
@@ -135,7 +135,7 @@ struct PlayerParameter
 
 			.attackMoveSpeed = 20.0f,   // 最後の押し込み
 			.attackHitRadius = 35.0f,   // 巻き込みを広く（超広範囲）
-			.attackForwardOffset = 30.0f,
+			.attackForwardOffset = 40.0f,
 
 			.knockBackPower = 35.0f     // ★超強力な吹き飛ばし
 		}

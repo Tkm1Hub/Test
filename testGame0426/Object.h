@@ -39,7 +39,7 @@ protected:
 	float moveDecel = 0.8f;
 	float extDecel = 0.83f;
 	float angleSpeed = 0.5f;
-	float gravity = 0.5;
+	float gravity = 0.4f;
 
 	StateMachine stateMachine;					// ステートマシン
 	int modelHandle = -1;						// モデルハンドル

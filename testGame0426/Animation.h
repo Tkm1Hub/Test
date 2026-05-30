@@ -13,6 +13,8 @@ public:
 
     void Update();
 
+    bool GetIsAnimFinished() { return isAnimFinished; }
+
 private:
 
     struct AnimData

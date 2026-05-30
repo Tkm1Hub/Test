@@ -4,6 +4,9 @@
 #include "EnemyDeadState.h"
 #include "EnemyDamageState.h"
 #include "EnemyStunState.h"
+#include "EffectContainer.h"
+#include "DamageTextUI.h"
+#include "UIContainer.h"
 #include "Time.h"
 
 void Enemy::SetPlayer(const std::weak_ptr<Player>& playerPtr)
@@ -100,11 +103,26 @@ void Enemy::OnHit(const DamageInfo& info)
 	lastDamageInfo.damage = finalDamage;
 	lastDamageInfo.stunPower = finalStunPower;
 
+	// ダメージUI
+	auto damageUI =
+		std::make_shared<DamageTextUI>();
+
+	damageUI->Init(
+		GetCapsuleTop(),
+		info.damage
+	);
+
+	UIContainer::GetInstance().Add(damageUI);
+
+
 	// HP減算
 	TakeDamage(finalDamage);
 
 	// スタン蓄積
-	AddStunGauge(finalStunPower);
+	if (!isStun)
+	{
+		AddStunGauge(finalStunPower);
+	}
 
 	// ノックバック
 	SetExternalVelocity(
@@ -126,6 +144,12 @@ void Enemy::OnHit(const DamageInfo& info)
 
 void Enemy::OnStun()
 {
+	EffectContainer::GetInstance().PlayEffect(
+		"StunImpact",
+		GetCapsuleCenter(),
+		false
+	);
+
 	auto state =
 		std::make_shared<EnemyStunState>();
 

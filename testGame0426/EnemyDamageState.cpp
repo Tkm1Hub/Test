@@ -5,29 +5,9 @@
 #include "EnemyStunState.h"
 #include "Enemy.h"
 #include "Time.h"
-#include "DamageTextUI.h"
-#include "UIContainer.h"
 
 void EnemyDamageState::OnStart()
 {
-    auto enemy = GetEnemy();
-    if (!enemy) return;
-
-    // îÌíeèÓïÒéÊìæ
-    const DamageInfo& info =
-        enemy->GetLastDamageInfo();
-
-    // É_ÉÅÅ[ÉWUI
-    auto damageUI =
-        std::make_shared<DamageTextUI>();
-
-    damageUI->Init(
-        enemy->GetCapsuleTop(),
-        info.damage
-    );
-
-    UIContainer::GetInstance().Add(damageUI);
-
 }
 
 void EnemyDamageState::OnUpdate()

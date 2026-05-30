@@ -462,7 +462,7 @@ void Camera::UpdateAimCamera()
 
 void Camera::InputAngle()
 {
-	float dt = Time::GetInstance().GetScaledDeltaTime() * 60.0f;
+	float dt = Time::GetInstance().GetDeltaTime() * 60;
 
 	float stickX = Input::GetInput().GetRightStickX();
 

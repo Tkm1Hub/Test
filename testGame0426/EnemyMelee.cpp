@@ -8,6 +8,7 @@
 #include "HPBarUI.h"
 #include "UIContainer.h"
 #include "UIFactory.h"
+#include "EnemyStunState.h"
 
 void EnemyMelee::Init()
 {
@@ -92,4 +93,9 @@ void EnemyMelee::Attack(const AttackStep& step)
 	);
 
 	Objects::GetInstance().Add(hitSphere);
+}
+
+void EnemyMelee::OnParry()
+{
+	AddStunGauge(100);
 }

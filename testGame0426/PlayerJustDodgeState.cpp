@@ -17,6 +17,27 @@ void PlayerJustDodgeState::OnUpdate()
 {
 	justDodgeTimer += Time::GetInstance().GetDeltaTime();
 
+	float t =
+		justDodgeTimer / justDodgeTime;
+
+	t = std::clamp(
+		t,
+		0.0f,
+		1.0f
+	);
+
+	//---------------------------------
+	// EaseInQuad
+	//---------------------------------
+
+	float ease = t * t * t;
+
+	float timeScale =
+		0.2f +
+		(1.0f - 0.2f) * ease;
+
+	Time::GetInstance().SetTimeScale(timeScale);
+
 	// 回避時間が経過したらステート変更
 	if (justDodgeTimer >=
 		justDodgeTime)

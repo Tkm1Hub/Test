@@ -27,13 +27,64 @@ void TargetMarkerUI::Update()
 
             effectHandle = -1;
             isPlaying = false;
+            currentTarget = nullptr;
+            currentEffectName.clear();
         }
 
         return;
     }
 
+    Enemy* targetPtr = target.get();
+
     //-----------------------------------
-    // ワールド座標 → スクリーン座標
+    // 使用するマーカー決定
+    //-----------------------------------
+
+    std::string nextEffectName =
+        player->GetIsLockOn()
+        ? "LockOnMarker"
+        : "TargetMarker";
+
+    //-----------------------------------
+    // 再生し直し判定
+    //-----------------------------------
+
+    bool needRestart = false;
+
+    if (targetPtr != currentTarget)
+    {
+        needRestart = true;
+    }
+
+    if (nextEffectName != currentEffectName)
+    {
+        needRestart = true;
+    }
+
+    //-----------------------------------
+    // エフェクト再生
+    //-----------------------------------
+
+    if (needRestart)
+    {
+        if (isPlaying)
+        {
+            StopEffekseer2DEffect(effectHandle);
+        }
+
+        effectHandle =
+            PlayEffekseer2DEffect(
+                EffectContainer::GetInstance()
+                .GetEffectHandle(nextEffectName)
+            );
+
+        currentTarget = targetPtr;
+        currentEffectName = nextEffectName;
+        isPlaying = true;
+    }
+
+    //-----------------------------------
+    // ワールド座標→スクリーン座標
     //-----------------------------------
 
     VECTOR worldPos =
@@ -52,21 +103,6 @@ void TargetMarkerUI::Update()
     }
 
     //-----------------------------------
-    // 初回再生
-    //-----------------------------------
-
-    if (!isPlaying)
-    {
-        effectHandle =
-            PlayEffekseer2DEffect(
-                EffectContainer::GetInstance()
-                .GetEffectHandle("TargetMarker")
-            );
-
-        isPlaying = true;
-    }
-
-    //-----------------------------------
     // 座標更新
     //-----------------------------------
 
@@ -74,7 +110,7 @@ void TargetMarkerUI::Update()
         effectHandle,
         screenPos.x,
         screenPos.y,
-		0.0f
+        0.0f
     );
 }
 

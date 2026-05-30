@@ -53,6 +53,8 @@ public:
 
 	const AttackData& GetAttackData() { return attackData; }
 
+	virtual void OnParry() {};
+
 	virtual const EnemyParameter& GetParam() const = 0;
 
 protected:

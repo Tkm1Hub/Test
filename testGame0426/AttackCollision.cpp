@@ -97,6 +97,18 @@ void AttackCollision::ProcessHit(AttackHitSphere* hitSphere)
 
 			// 被弾通知
 			character->OnHit(hitSphere->GetDamageInfo());
+
+			// プレイヤーの飛び道具だけ消す
+			if (
+				hitSphere->GetDamageInfo().damageType ==
+				DamageType::Projectile &&
+				hitSphere->GetOwner()->GetTeam() ==
+				Team::Player
+				)
+			{
+				hitSphere->Destroy();
+				return;
+			}
 		}
 	}
 }

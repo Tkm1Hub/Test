@@ -1,7 +1,7 @@
 #pragma once
 #include "PlayerStateBase.h"
 
-class PlayerJustDodgeState : public PlayerStateBase
+class PlayerParryState : public PlayerStateBase
 {
 public:
 	void OnStart() override;
@@ -10,12 +10,11 @@ public:
 
 	const char* GetName() const override
 	{
-		return "JustDodge";
+		return "Parry";
 	}
 
 private:
-	float justDodgeTimer = 0.0f;
-	float justDodgeTime = 0.9f;
+	float parryTimer = 0.0f;
 
-	float accel = 0.05f;
+	float parryTime = 0.75f;
 };

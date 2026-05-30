@@ -18,6 +18,8 @@ public:
 
 	const EnemyMeleeParameter& GetEnemyMeleeParam() { return param; }
 
+	void OnParry() override;
+
 private:
 	EnemyMeleeParameter param;
 };

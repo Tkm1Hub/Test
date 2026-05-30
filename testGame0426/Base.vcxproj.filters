@@ -47,9 +47,6 @@
     <Filter Include="ソース ファイル\State\PlayerState\Dodge">
       <UniqueIdentifier>{80416491-4c51-4679-836b-04738d45db89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\State\PlayerState\Guard">
-      <UniqueIdentifier>{c3077dfb-a000-4b68-868c-a65f6b3524c6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State\PlayerState\Damage">
       <UniqueIdentifier>{2ba2841a-7f2d-4b37-b126-8f0650eb8672}</UniqueIdentifier>
     </Filter>
@@ -187,6 +184,15 @@
     </Filter>
     <Filter Include="ソース ファイル\UI\TargetMarkar">
       <UniqueIdentifier>{9d9bff5f-8737-491a-a308-d695c22b6f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Font">
+      <UniqueIdentifier>{f1e138b2-672c-4e10-b7e8-8540ac27a6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Block">
+      <UniqueIdentifier>{c3077dfb-a000-4b68-868c-a65f6b3524c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Parry">
+      <UniqueIdentifier>{31d87f81-6e98-4f43-9f14-5bc6babb3ac0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +333,15 @@
     </ClCompile>
     <ClCompile Include="TargetMarkerUI.cpp">
       <Filter>ソース ファイル\UI\TargetMarkar</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>ソース ファイル\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBlockState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerParryState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Parry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -503,6 +518,15 @@
     </ClInclude>
     <ClInclude Include="TargetMarkerUI.h">
       <Filter>ソース ファイル\UI\TargetMarkar</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>ソース ファイル\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBlockState.h">
+      <Filter>ソース ファイル\State\PlayerState\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerParryState.h">
+      <Filter>ソース ファイル\State\PlayerState\Parry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

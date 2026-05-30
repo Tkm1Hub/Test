@@ -5,11 +5,30 @@
 #include "PlayerWalkState.h"
 #include "PlayerAttackState.h"
 #include "PlayerDodgeState.h"
+#include "PlayerBlockState.h"
 #include "Time.h"
 #include "EffectContainer.h"
+#include "Enemy.h"
 
 void PlayerAttackState::OnStart()
 {
+	auto player = GetPlayer();
+	if (!player)return;
+
+	auto target = player->GetTarget().lock();
+	if (!target)return;
+
+	VECTOR targetDir = VSub(
+		target->GetPosition(),
+		player->GetPosition()
+	);
+	
+	targetDir.y = 0.0f;
+
+	targetDir = VNorm(targetDir);
+
+	// 正面を合わせる
+	player->SetLookDir(targetDir);
 }
 
 void PlayerAttackState::OnUpdate()
@@ -78,6 +97,15 @@ void PlayerAttackState::OnUpdate()
 		// ===== 後隙 =====
 	case AttackPhase::Recovery:
 
+		// Lボタンでガード
+		if (Input::GetInput().IsPress(XINPUT_BUTTON_LEFT_SHOULDER))
+		{
+			auto state = std::make_shared<PlayerBlockState>();
+			GetPlayer()->ChangeState(state);
+			return;
+		}
+
+
 		//--------------------------------
 		// 次コンボへ
 		//--------------------------------
@@ -142,10 +170,13 @@ void PlayerAttackState::PlayAttackAnimation(int step)
 		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash2), false);
 		break;
 	case 2:
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash3), false);
 		break;
 	case 3:
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash4), false);
 		break;
 	case 4:
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash5), false);
 		break;
 	}
 }

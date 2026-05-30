@@ -9,6 +9,8 @@
 #include "PlayerDamageState.h"
 #include "PlayerJustDodgeState.h"
 #include "PlayerDodgeState.h"
+#include "PlayerBlockState.h"
+#include "PlayerParryState.h"
 #include "Enemy.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
@@ -94,6 +96,30 @@ void Player::Init()
 	animation.AddAnimation(
 		(int)PlayerAnimState::Slash2,
 		MV1LoadModel("data/animation/Player Slash2.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Slash3,
+		MV1LoadModel("data/animation/Player Slash3.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Slash4,
+		MV1LoadModel("data/animation/Player Slash4.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Slash5,
+		MV1LoadModel("data/animation/Player Slash5.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::BlockStart,
+		MV1LoadModel("data/animation/Block Start.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::BlockIdle,
+		MV1LoadModel("data/animation/Block Idle.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::Parry,
+		MV1LoadModel("data/animation/Parry.mv1")
 	);
 
 
@@ -289,6 +315,9 @@ void Player::Fire(const AttackStep& step)
 	VECTOR fireDir = VSub(targetPtr->GetPosition(), pos);
 	fireDir = VNorm(fireDir);
 
+	// ストップ
+	Time::GetInstance().StartHitStop(0.1f);
+
 	// ノックバック
 	VECTOR KnockBackDir = VScale(forward, -1);
 
@@ -424,6 +453,16 @@ void Player::OnHit(const DamageInfo& info)
 	}
 	else if (currentState->GetName() == "JustDodge")
 	{
+		return;
+	}
+
+	//--------------------------------
+	// パリィ成功
+	//--------------------------------
+
+	if (CanParry())
+	{
+		OnParry(info);
 		return;
 	}
 
@@ -734,4 +773,39 @@ void Player::ConsumeBullet()
 	{
 		currentBulletNum = 0;
 	}
+}
+
+bool Player::CanParry() const
+{
+	auto blockState =
+		dynamic_cast<PlayerBlockState*>(
+			stateMachine.GetCurrentState()
+			);
+
+	if (!blockState)
+		return false;
+
+	return blockState->IsParryWindow();
+}
+
+void Player::OnParry(
+	const DamageInfo& info
+)
+{
+	Time::GetInstance().StartHitStop(0.1f);
+
+
+	auto enemy =
+		dynamic_cast<Enemy*>(
+			info.attacker
+			);
+
+	if (enemy)
+	{
+		enemy->OnParry();
+	}
+
+	// パリィ状態
+	auto state = std::make_shared<PlayerParryState>();
+	ChangeState(state);
 }

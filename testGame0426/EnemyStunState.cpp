@@ -2,6 +2,7 @@
 #include "EnemyStunState.h"
 #include "EnemyCombatIdleState.h"
 #include "Enemy.h"
+#include "EffectContainer.h"
 #include "Time.h"
 
 void EnemyStunState::OnStart()

@@ -8,6 +8,7 @@
 #include "PlayerDodgeState.h"
 #include "PlayerAttackState.h"
 #include "PlayerAimState.h"
+#include "PlayerBlockState.h"
 
 void PlayerIdleState::OnStart()
 {
@@ -36,6 +37,14 @@ void PlayerIdleState::OnUpdate()
 	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_RIGHT_SHOULDER))
 	{
 		auto state = std::make_shared<PlayerDodgeState>();
+		GetPlayer()->ChangeState(state);
+		return;
+	}
+
+	// Lボタンでガード
+	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_LEFT_SHOULDER))
+	{
+		auto state = std::make_shared<PlayerBlockState>();
 		GetPlayer()->ChangeState(state);
 		return;
 	}

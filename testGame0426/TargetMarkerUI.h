@@ -2,7 +2,7 @@
 #include "UIBase.h"
 
 class Player;
-
+class Enemy;
 class TargetMarkerUI : public UIBase
 {
 public:
@@ -17,4 +17,8 @@ private:
     int effectHandle = -1;
 
     bool isPlaying = false;
+
+    Enemy* currentTarget = nullptr;
+
+    std::string currentEffectName;
 };

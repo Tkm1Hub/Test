@@ -6,7 +6,7 @@ struct EnemyMeleeParameter : EnemyParameter
 	EnemyMeleeParameter()
 	{
         // ===== Šî–{ =====
-        HP = 120;
+        HP = 350;
         attackPower = 15;
 
         // ===== ˆÚ“® =====

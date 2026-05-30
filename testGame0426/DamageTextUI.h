@@ -23,6 +23,8 @@ private:
 	float lifeTime = 60.0f;
 
 	float velocityY = -1.0f;
+	
+	float scale = 1.3f;
 
 	int alpha = 255;
 };

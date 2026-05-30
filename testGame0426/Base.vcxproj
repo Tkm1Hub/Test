@@ -39,11 +39,13 @@
     <ClCompile Include="EnemyShooter.cpp" />
     <ClCompile Include="EnemyStateBase.cpp" />
     <ClCompile Include="EnemyStunState.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="HPBarUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="PlayerParryState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAimState.cpp" />
     <ClCompile Include="PlayerBulletUI.cpp" />
@@ -51,6 +53,7 @@
     <ClCompile Include="PlayerDodgeState.cpp" />
     <ClCompile Include="PlayerFallState.cpp" />
     <ClCompile Include="PlayerFireState.cpp" />
+    <ClCompile Include="PlayerBlockState.cpp" />
     <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
@@ -88,8 +91,10 @@
     <ClInclude Include="EnemyShooter.h" />
     <ClInclude Include="EnemyShooterParameter.h" />
     <ClInclude Include="EnemyStunState.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="PlayerParryState.h" />
     <ClInclude Include="PlayerAimState.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="Camera.h" />
@@ -106,6 +111,7 @@
     <ClInclude Include="PlayerDodgeState.h" />
     <ClInclude Include="PlayerFallState.h" />
     <ClInclude Include="PlayerFireState.h" />
+    <ClInclude Include="PlayerBlockState.h" />
     <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpState.h" />
