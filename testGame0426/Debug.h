@@ -12,4 +12,6 @@ private:
 	void DrawTargetMarker();
 	void DrawGridLine(float interval, float diameter);
 	void DrawCylinder(VECTOR pos, float radius, float height, float division, unsigned int color);
+	void DrawObjectInfo();
+	void DrawCharacterCollision();
 };

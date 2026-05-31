@@ -10,21 +10,36 @@
 
 void Debug::Update()
 {
+
+	if (CheckHitKey(KEY_INPUT_UP))
+	{
+		float timeScale = Time::GetInstance().GetTimeScale();
+		timeScale += 0.01f;
+		Time::GetInstance().SetTimeScale(timeScale);
+	}
+	else if (CheckHitKey(KEY_INPUT_DOWN))
+	{
+		float timeScale = Time::GetInstance().GetTimeScale();
+		timeScale -= 0.01f;
+		Time::GetInstance().SetTimeScale(timeScale);
+	}
+
 }
 
 void Debug::Draw()
 {
-	clsDx();
-
 	// 地面グリッド
 	DrawGridLine(50.0f, 1000.0f);
 
 	// 入力表示
 	DrawInputDebug();
 
+	DrawObjectInfo();
 
 	// ターゲットマーカー描画
 	DrawTargetMarker();
+
+	DrawCharacterCollision();
 
 	// プレイヤー索敵範囲描画
 	for (auto& obj : Objects::GetInstance().objects)
@@ -278,5 +293,75 @@ void Debug::DrawCylinder(VECTOR pos, float radius, float height, float division,
 
 		// 下面の線
 		DrawLine3D(bottom1, bottom2, color);
+	}
+}
+
+void Debug::DrawObjectInfo()
+{
+	for (auto& obj : Objects::GetInstance().objects)
+	{
+		if (!obj)
+			continue;
+
+		//--------------------------------
+		// Forward
+		//--------------------------------
+
+		DrawLine3D(
+			VAdd(obj->GetPosition(), VGet(0.0f, 2.5f, 0.0f)),
+			VAdd(
+				VAdd(obj->GetPosition(), VGet(0.0f, 2.5f, 0.0f)),
+				VScale(obj->GetForward(), 50.0f)
+			),
+			GetColor(255, 0, 0)
+		);
+
+		//--------------------------------
+		// MoveDir
+		//--------------------------------
+
+		DrawLine3D(
+			VAdd(obj->GetPosition(), VGet(0.0f, 2.0f, 0.0f)),
+			VAdd(
+				VAdd(obj->GetPosition(), VGet(0.0f, 2.0f, 0.0f)),
+				VScale(obj->GetMoveDir(), 40.0f)
+			),
+			GetColor(0, 255, 0)
+		);
+
+		//--------------------------------
+		// Velocity
+		//--------------------------------
+
+		DrawLine3D(
+			obj->GetPosition(),
+			VAdd(
+				obj->GetPosition(),
+				VScale(obj->GetMoveVelocity(), 30.0f)
+			),
+			GetColor(0, 0, 255)
+		);
+	}
+}
+
+void Debug::DrawCharacterCollision()
+{
+	for (auto& obj : Objects::GetInstance().objects)
+	{
+		auto character =
+			dynamic_cast<CharacterBase*>(obj.get());
+
+		if (!character)
+			continue;
+
+		DrawCapsule3D(
+			character->GetCapsuleBottom(),
+			character->GetCapsuleTop(),
+			character->GetBodyRadius(),
+			8,
+			GetColor(0, 180, 255),
+			GetColor(0, 0, 0),
+			FALSE
+		);
 	}
 }

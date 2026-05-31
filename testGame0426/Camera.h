@@ -27,8 +27,8 @@ private:
 	// ’è”
 	//==============================
 
-	static constexpr float CAMERA_NEAR = 10.0f;
-	static constexpr float CAMERA_FAR = 3000.0f;
+	static constexpr float CAMERA_NEAR = 5.0f;
+	static constexpr float CAMERA_FAR = 2000.0f;
 
 	static constexpr float LOOK_OFFSET_Y = 50.0f;
 
@@ -55,6 +55,9 @@ private:
 
 	// Ø‚è‘Ö‚¦•âŠÔ
 	static constexpr float TRANSITION_TIME = 0.3f;
+
+	// ‰Ÿ‚µo‚µ‹——£
+	static constexpr float CAMERA_HIT_RADIUS = 1.5f;
 
 	//==============================
 	// ƒJƒƒ‰ó‘Ô
@@ -120,5 +123,10 @@ private:
 		const VECTOR& current,
 		const VECTOR& destination,
 		float speed
+	);
+
+	void ResolveStageCollision(
+		const VECTOR& targetPos,
+		VECTOR& cameraPos
 	);
 };

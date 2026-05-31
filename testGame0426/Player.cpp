@@ -157,22 +157,15 @@ void Player::Update()
 	// 速度を適用
 	ApplyVelocity();
 
+	// ステージとの当たり判定
+	ResolveStageCollision();
+
 	// アニメーションの更新
 	animation.Update();
 }
 
 void Player::Draw()
 {
-	DrawCapsule3D(
-		GetCapsuleBottom(),
-		GetCapsuleTop(),
-		param.bodyRadius,
-		8,
-		GetColor(18, 105, 204),
-		GetColor(0, 0, 0),
-		false
-	);
-
 	printfDx("[Player.moveVelocity : %f, %f, %f ]", moveVelocity.x, moveVelocity.y, moveVelocity.z);
 
 	Object::Draw();
@@ -808,4 +801,39 @@ void Player::OnParry(
 	// パリィ状態
 	auto state = std::make_shared<PlayerParryState>();
 	ChangeState(state);
+}
+
+void Player::UpdateTransparency(
+	float cameraDistance
+)
+{
+	constexpr float kNormalDistance = 130.0f;
+
+	constexpr float kFadeStart =
+		kNormalDistance * 0.8f;   // 104
+
+	constexpr float kFadeEnd =
+		kNormalDistance * 0.4f;   // 52
+
+	float targetAlpha = 1.0f;
+
+	if (cameraDistance < kFadeStart)
+	{
+		float t =
+			(cameraDistance - kFadeEnd) /
+			(kFadeStart - kFadeEnd);
+
+		t = std::clamp(
+			t,
+			0.0f,
+			1.0f
+		);
+
+		targetAlpha = t;
+	}
+
+	alpha +=
+		(targetAlpha - alpha) * 0.15f;
+
+	printfDx("alpha : %.2f", alpha);
 }

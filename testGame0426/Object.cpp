@@ -3,31 +3,9 @@
 
 void Object::Draw()
 {
-    // 向いてる方向表示
-    DrawLine3D(
-        VAdd(pos, VGet(0.0f, 2.5f, 0.0f)),
-        VAdd(
-            VAdd(pos, VGet(0.0f, 2.5f, 0.0f)),
-            VScale(forward, 50.0f)
-        ),
-        GetColor(255, 0, 0)
-    );
-
-    // 入力方向表示
-    DrawLine3D(
-        VAdd(pos, VGet(0.0f, 2.0f, 0.0f)),
-        VAdd(
-            VAdd(pos, VGet(0.0f, 2.0f, 0.0f)),
-            VScale(moveDir, 40.0f)
-        ),
-        GetColor(0, 255, 0)
-    );
-
-    // Velocity
-    DrawLine3D(
-        pos,
-        VAdd(pos, VScale(moveVelocity, 30.0f)),
-        GetColor(0, 0, 255)
+    MV1SetOpacityRate(
+        modelHandle,
+        alpha
     );
 
     MV1DrawModel(modelHandle);
@@ -45,10 +23,14 @@ void Object::AddVerticalVelocity(float power)
 
 void Object::ApplyGravity()
 {
+    float dt =
+        Time::GetInstance().GetScaledDeltaTime()
+        * 60.0f;
+
     // 着地状態だと早期リターン
     if (isGround)return;
 
-	verticalVelocity -= gravity;
+	verticalVelocity -= gravity * dt;
 	
 	// 速度が早くなりすぎないように制限
 	if (verticalVelocity < -5.0)
@@ -80,9 +62,9 @@ void Object::ApplyVelocity()
 
     pos = VAdd(pos, VScale(finalVelocity, dt));
 
-    if (pos.y < 0.0f)
+    if (pos.y < -50.0f)
     {
-        pos.y = 0.0f;
+        pos = VGet(0.0f,0.0f,0.0f);
         verticalVelocity = 0.0f;
         isGround = true;
     }
@@ -153,14 +135,14 @@ void Object::RotateAngle()
 {
     if (VSize(lookDir) <= 0.01f) return;
 
-    forward = 
+    forward =
         VAdd(
             VScale(forward, 1.0f - angleSpeed),
             VScale(lookDir, angleSpeed)
-    );
+        );
 
     forward.y = 0;
-    
+
     forward = VNorm(forward);
 
     // forward から Y回転角度を作る
@@ -172,4 +154,43 @@ void Object::RotateAngle()
         modelHandle,
         VGet(0.0f, rotY, 0.0f)
     );
+}
+
+void Object::StartFadeIn()
+{
+    alpha = 0.0f;
+    isFadeIn = true;
+    isFadeOut = false;
+}
+
+void Object::StartFadeOut()
+{
+    isFadeOut = true;
+    isFadeIn = false;
+}
+
+void Object::UpdateFade()
+{
+    if (isFadeIn)
+    {
+        alpha += fadeSpeed;
+
+        if (alpha >= 1.0f)
+        {
+            alpha = 1.0f;
+            isFadeIn = false;
+        }
+    }
+
+    if (isFadeOut)
+    {
+        alpha -= fadeSpeed;
+
+        if (alpha <= 0.0f)
+        {
+            alpha = 0.0f;
+            isFadeOut = false;
+
+        }
+    }
 }

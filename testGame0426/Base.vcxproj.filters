@@ -194,6 +194,15 @@
     <Filter Include="ソース ファイル\State\PlayerState\Parry">
       <UniqueIdentifier>{31d87f81-6e98-4f43-9f14-5bc6babb3ac0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\Stage">
+      <UniqueIdentifier>{9eb56058-268e-4cf6-bb8f-bac2798b429b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Shadow">
+      <UniqueIdentifier>{9d008f23-82ff-42f5-b9be-a9324b9afdde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision\StageCollision">
+      <UniqueIdentifier>{ff3b14b5-ac26-4d4f-8558-99c0229b185c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -342,6 +351,15 @@
     </ClCompile>
     <ClCompile Include="PlayerParryState.cpp">
       <Filter>ソース ファイル\State\PlayerState\Parry</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>ソース ファイル\object\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>ソース ファイル\Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="StageCollision.cpp">
+      <Filter>ソース ファイル\Collision\StageCollision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -527,6 +545,15 @@
     </ClInclude>
     <ClInclude Include="PlayerParryState.h">
       <Filter>ソース ファイル\State\PlayerState\Parry</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>ソース ファイル\object\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>ソース ファイル\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="StageCollision.h">
+      <Filter>ソース ファイル\Collision\StageCollision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

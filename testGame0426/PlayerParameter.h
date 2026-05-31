@@ -14,7 +14,7 @@ struct PlayerParameter
 	float moveAccel = 0.14f;
 	float moveDecel = 0.84f;
 	float maxMoveSpeed = 3.6f;
-	float jumpPower = 8.0f;
+	float jumpPower = 5.0f;
 	float angleSpeed = 0.22f;
 
 	// ===== ƒGƒCƒ€ =====
@@ -41,7 +41,7 @@ struct PlayerParameter
 	float dodgeTime = 0.6f;
 
 	// ===== “–‚½‚è”»’è =====
-	float bodyRadius = 8.0f;
+	float bodyRadius = 15.0f;
 	float bodyHeight = 32.0f;
 	float extraHitRadius = 32.0f;
 

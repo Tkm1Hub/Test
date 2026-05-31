@@ -15,8 +15,8 @@ void PlayerFallState::OnUpdate()
 {
 	GetPlayer()->MoveInput();
 
-	// pos.yが０以下ならIdle or Walk
-	if (GetPlayer()->GetPosition().y > 0.0f) return;
+	// 着地状態ならIdle or Walk
+	if (!GetPlayer()->GetIsGround()) return;
 
 	// 左スティックの操作中かどうかで分岐
 	if (!Input::GetInput().GetIsMoveLStick())
@@ -37,5 +37,4 @@ void PlayerFallState::OnUpdate()
 
 void PlayerFallState::OnExit()
 {
-	GetPlayer()->SetIsGraund(true);
 }

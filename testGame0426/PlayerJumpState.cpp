@@ -12,7 +12,7 @@ void PlayerJumpState::OnStart()
 	);
 
 	// 着地フラグをFalseに
-	GetPlayer()->SetIsGraund(false);
+	GetPlayer()->SetIsGround(false);
 
 	// アニメ再生
 	GetPlayer()->PlayAnimation((int)(PlayerAnimState::JumpUp), false);

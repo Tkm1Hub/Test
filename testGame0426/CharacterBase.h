@@ -15,6 +15,9 @@ class CharacterBase :
     public DamageableObject
 {
 public:
+	// ステージとの衝突判定
+	void ResolveStageCollision();
+
 	//カプセル
 	VECTOR GetCapsuleBottom() const;
 	VECTOR GetCapsuleTop() const;
@@ -63,6 +66,8 @@ protected:
     float bodyRadius = 0.0f;	// 当たり判定半径
 	float bodyHeight = 0.0f;	// 当たり判定高さ
 	float extraHitRadius = 0.0f;	// 特殊当たり判定半径
+
+	static constexpr float FallUpPower = 0.05f;	// 足を踏み外した時のジャンプ力
 
 	AttackData attackData;
 

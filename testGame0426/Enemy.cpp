@@ -47,6 +47,9 @@ void Enemy::Update()
 
 	// 速度を適用
 	ApplyVelocity();
+
+	// ステージとの当たり判定
+	ResolveStageCollision();
 }
 
 void Enemy::MoveTo(const VECTOR& targetPos)

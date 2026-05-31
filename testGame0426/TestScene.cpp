@@ -14,6 +14,9 @@
 #include "UIContainer.h"
 #include "EffectContainer.h"
 #include "Font.h"
+#include "Stage.h"
+#include "Shadow.h"
+#include "StageCollision.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -23,25 +26,29 @@ TestScene::~TestScene(){}
 void TestScene::Init()
 {
 	// オブジェクト生成
+	auto stage = std::make_shared<Stage>();
 	debug = std::make_shared<Debug>();
 	player = std::make_shared<Player>();
 	camera = std::make_shared<Camera>();
-	auto enemyMelee = std::make_shared<EnemyMelee>();
+	shadow = std::make_shared<Shadow>();
 
 	camera->SetPlayer(player);
 	player->SetCamera(camera);
-	enemyMelee->SetPlayer(player);
 
 	// オブジェクトリストに追加
+	Objects::GetInstance().Add(stage);
 	Objects::GetInstance().Add(player);
-	Objects::GetInstance().Add(enemyMelee);
 
 	// オブジェクト初期化
 	camera->Init();
 
 	EffectContainer::GetInstance().Init();
 
+	StageCollision::GetInstance().SetStageCollision(stage->GetModelHandle());
+
 	Font::Init();
+
+	shadow->Init();
 
 	// UI生成
 	auto playerHPUI = std::make_shared<PlayerHPUI>();
@@ -74,6 +81,7 @@ void TestScene::Update()
 {
 	Input::GetInput().Update();
 	Time::GetInstance().Update();
+	debug->Update();
 
 	// デバッグ：Meleeスポーン
 	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_DPAD_UP))
@@ -100,17 +108,40 @@ void TestScene::Update()
 	Objects::GetInstance().Update();
 	camera->Update();
 
+	shadow->Update(player->GetPosition());
+
 	EffectContainer::GetInstance().Update();
 
 }
 
 void TestScene::Draw() const
 {
+	clsDx();
+
+	//シャドウマップの準備
+	ShadowMap_DrawSetup(shadow->GetShadowMapHandle());
+
+	// 影有効オブジェクトの描画
 	Objects::GetInstance().Draw();
 
+	//シャドウマップへの描画を終了
+	ShadowMap_DrawEnd();
+
+	// 描画に使用するシャドウマップを設定
+	SetUseShadowMap(0, shadow->GetShadowMapHandle());
+
+	// オブジェクトの描画
+	Objects::GetInstance().Draw();
+
+	// 描画に使用するシャドウマップの設定を解除
+	SetUseShadowMap(0, -1);
+
+	// デバッグの描画
 	debug->Draw();
 
+	// エフェクトの描画
 	EffectContainer::GetInstance().Draw();
 
+	// UIの描画
 	UIContainer::GetInstance().Draw();
 }

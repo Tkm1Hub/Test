@@ -195,58 +195,17 @@ void Animation::Update()
 
 	if (prevPlayAnim != -1)
 	{
-		animTotalTime =
-			MV1GetAttachAnimTotalTime(
-				modelHandle,
-				prevPlayAnim
-			);
-
-		//--------------------------------
-		// 再生時間更新
-		//--------------------------------
-
-		prevAnimCount +=
-			ANIM_PLAY_SPEED *
-			Time::GetInstance().GetTimeScale();
-
-		//--------------------------------
-		// ループ
-		//--------------------------------
-
-		if (prevAnimCount >= animTotalTime)
-		{
-			prevAnimCount =
-				static_cast<float>(
-					fmod(
-						prevAnimCount,
-						animTotalTime
-					)
-					);
-		}
-
-		//--------------------------------
-		// 時間反映
-		//--------------------------------
-
 		MV1SetAttachAnimTime(
 			modelHandle,
 			prevPlayAnim,
 			prevAnimCount
 		);
 
-		//--------------------------------
-		// ブレンド率反映
-		//--------------------------------
-
 		MV1SetAttachAnimBlendRate(
 			modelHandle,
 			prevPlayAnim,
 			1.0f - animBlendRate
 		);
-
-		//--------------------------------
-		// ブレンド終了
-		//--------------------------------
 
 		if (animBlendRate >= 1.0f)
 		{

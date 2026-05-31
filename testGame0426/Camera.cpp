@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Input.h"
 #include "Time.h"
+#include "StageCollision.h"
 
 void Camera::SetPlayer(
 	const std::weak_ptr<Player>& playerPtr
@@ -89,6 +90,12 @@ void Camera::Update()
 	}
 
 	//--------------------------------
+	// ステージ当たり判定
+	//--------------------------------
+
+	ResolveStageCollision(target,pos);
+
+	//--------------------------------
 	// forward更新
 	//--------------------------------
 
@@ -107,6 +114,19 @@ void Camera::Update()
 		pos,
 		target
 	);
+
+	if (p)
+	{
+		float distance =
+			VSize(
+				VSub(
+					pos,
+					p->GetPosition()
+				)
+			);
+
+		p->UpdateTransparency(distance);
+	}
 }
 
 void Camera::UpdateNormalCamera()
@@ -644,4 +664,32 @@ VECTOR Camera::SmoothTarget(
 			speed
 		)
 	);
+}
+
+void Camera::ResolveStageCollision(
+	const VECTOR& targetPos,
+	VECTOR& cameraPos
+)
+{
+	auto hit =
+		MV1CollCheck_Line(
+			StageCollision::GetInstance().GetCollisionModelHandle(),
+			-1,
+			targetPos,
+			cameraPos
+		);
+
+	if (hit.HitFlag)
+	{
+		VECTOR dir =
+			VNorm(
+				VSub(cameraPos, targetPos)
+			);
+
+		cameraPos =
+			VSub(
+				hit.HitPosition,
+				VScale(dir, CAMERA_HIT_RADIUS)
+			);
+	}
 }

@@ -26,7 +26,7 @@ void PlayerDamageState::OnStart()
     );
 
     // ’n–Ê‰ðœ
-    player->SetIsGraund(false);
+    player->SetIsGround(false);
 
     // ˆÚ“®’âŽ~
     player->SetMoveVelocity(

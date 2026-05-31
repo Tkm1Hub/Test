@@ -73,6 +73,8 @@ public:
 
 	bool CanParry() const;
 	void OnParry(const DamageInfo& info);
+
+	void UpdateTransparency(float cameraDistance);
 private:
 	PlayerParameter param;				// パラメーター
 	AttackStep fireData;				// 射撃データ

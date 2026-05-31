@@ -13,6 +13,7 @@ public:
 	virtual ~Object(){}
 
 	// 取得関数
+	int GetModelHandle() const { return modelHandle; }
 	VECTOR GetPosition() const { return pos; }
 	VECTOR GetForward() const { return forward; }
 	VECTOR GetScale() const { return scale; }
@@ -23,14 +24,15 @@ public:
 	VECTOR GetExternalVelocity() const { return externalVelocity; }
 	VECTOR GetMoveVelocity() const { return moveVelocity; }
 	const VECTOR& GetMoveDir() const { return moveDir; }
+	bool GetIsGround()const { return isGround; }
 
 	void SetPosition(const VECTOR& newPos) { pos = newPos; }
 	void SetMoveVelocity(const VECTOR& velocity) { moveVelocity = velocity; }
 	void SetExternalVelocity(const VECTOR& velocity) { externalVelocity = velocity; }
+	void SetIsGround(bool flag) { isGround = flag; }
 	void AddVerticalVelocity(float power);
 
 	void SetLookDir(const VECTOR& dir) { lookDir = dir; }
-	void SetIsGraund(bool flag) { isGround = flag; }
 	void SetIsCollisionEnabled(bool flag) { isCollisionEnabled = flag; }
 	void Destroy() { isDestroy = true; }
 
@@ -39,7 +41,17 @@ protected:
 	float moveDecel = 0.8f;
 	float extDecel = 0.83f;
 	float angleSpeed = 0.5f;
-	float gravity = 0.4f;
+	float gravity = 0.2f;
+	float alpha = 1.0f;
+
+	bool isFadeIn = false;
+	bool isFadeOut = false;
+
+	float fadeSpeed = 0.05f;
+
+	void StartFadeIn();
+	void StartFadeOut();
+	void UpdateFade();
 
 	StateMachine stateMachine;					// ステートマシン
 	int modelHandle = -1;						// モデルハンドル
@@ -61,6 +73,7 @@ protected:
 	bool isCollisionEnabled = true;			// 当たり判定フラグ
 	bool isMove = false;					// 移動フラグ
 	bool isGround = false;					// 着地フラグ
+	bool wasGround = false;
 
 	void ApplyVelocity();
 	void CalcMoveSpeed();

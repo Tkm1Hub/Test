@@ -4,6 +4,7 @@
 class Debug;
 class Player;
 class Camera;
+class Shadow;
 class TestScene :public Scene
 {
 public:
@@ -19,4 +20,5 @@ private:
 	std::shared_ptr<Debug> debug = nullptr;
 	std::shared_ptr<Player> player = nullptr;
 	std::shared_ptr<Camera> camera = nullptr;
+	std::shared_ptr<Shadow> shadow = nullptr;
 };
