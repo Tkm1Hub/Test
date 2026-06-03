@@ -9,6 +9,7 @@
 void EnemyAttackState::OnStart()
 {
 	effectHandle = EffectContainer::GetInstance().PlayEffect("AttackReady_yellow", GetEnemy()->GetCapsuleCenter(),false);
+	GetEnemy()->SetIsAttack(true);
 }
 
 void EnemyAttackState::OnUpdate()
@@ -111,4 +112,6 @@ void EnemyAttackState::OnExit()
 
 	// クールダウン設定
 	enemy->SetAttackCooldown(enemy->GetParam().attackCooldown);
+
+	GetEnemy()->SetIsAttack(true);
 }

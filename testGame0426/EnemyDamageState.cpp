@@ -49,5 +49,4 @@ void EnemyDamageState::OnUpdate()
 
 void EnemyDamageState::OnExit()
 {
-
 }

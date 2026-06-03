@@ -140,9 +140,12 @@ void Enemy::OnHit(const DamageInfo& info)
 	}
 
 	// ”í’e
-	auto state = std::make_shared<EnemyDamageState>();
-	ChangeState(state);
-	return;
+	if (!isAttack)
+	{
+		auto state = std::make_shared<EnemyDamageState>();
+		ChangeState(state);
+		return;
+	}
 }
 
 void Enemy::OnStun()

@@ -53,6 +53,9 @@ public:
 
 	const AttackData& GetAttackData() { return attackData; }
 
+	void SetIsAttack(bool flag) { isAttack = flag; }
+	bool GetIsAttack() { return isAttack; }
+
 	virtual void OnParry() {};
 
 	virtual const EnemyParameter& GetParam() const = 0;
@@ -60,4 +63,5 @@ public:
 protected:
 	std::weak_ptr<Player> player;
 	float attackCooldown = 0.0f;
+	bool isAttack = false;
 };
