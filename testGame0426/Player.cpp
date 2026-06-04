@@ -39,6 +39,7 @@ void Player::Init()
 	team = Team::Player;
 
 	modelHandle = MV1LoadModel("data/model/Player.mv1");
+	handBoneIndex = MV1SearchFrame(modelHandle, "mixamorig:RightHandIndex1");
 
 	animation.LoadModel(modelHandle);
 	animation.AddAnimation(
@@ -121,6 +122,14 @@ void Player::Init()
 		(int)PlayerAnimState::Parry,
 		MV1LoadModel("data/animation/Parry.mv1")
 	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::SPAttack1,
+		MV1LoadModel("data/animation/Player SP1.mv1")
+	);
+	animation.AddAnimation(
+		(int)PlayerAnimState::SPAttack2,
+		MV1LoadModel("data/animation/Player SP2.mv1")
+	);
 
 
 	PlayAnimation((int)PlayerAnimState::Idle, true);
@@ -130,6 +139,7 @@ void Player::Init()
 	// コンボ設定
 	SetupCombo(param.combo);
 	fireData = param.bullet;
+	SPAttackData.combo = param.SPAttack;
 }
 
 void Player::Update()
@@ -162,6 +172,8 @@ void Player::Update()
 
 	// アニメーションの更新
 	animation.Update();
+
+	handMatrix = MV1GetFrameLocalWorldMatrix(modelHandle, handBoneIndex);
 }
 
 void Player::Draw()

@@ -36,7 +36,7 @@ void EffectContainer::PositionUpdate(const VECTOR& objectPosition)
 /// </summary>
 void EffectContainer::Update()
 {
-    float timeScale = Time::GetInstance().GetTimeScale();
+    float timeScale = Time::GetInstance().GetWorldTimeScale();
 
     for (auto it = activeEffects.begin(); it != activeEffects.end(); )
     {
@@ -60,7 +60,7 @@ void EffectContainer::Update()
                     );
 
                     float timeScale =
-                        Time::GetInstance().GetTimeScale();
+                        Time::GetInstance().GetWorldTimeScale();
 
                     SetSpeedPlayingEffekseer3DEffect(
                         newHandle,
@@ -136,7 +136,7 @@ int EffectContainer::PlayEffect(const std::string& name, const VECTOR& position,
     int handle = PlayEffekseer3DEffect(it->second);
     SetPosPlayingEffekseer3DEffect(handle, position.x, position.y, position.z);
 
-    float timeScale = Time::GetInstance().GetTimeScale();
+    float timeScale = Time::GetInstance().GetWorldTimeScale();
     SetSpeedPlayingEffekseer3DEffect(handle, timeScale);
 
     activeEffects.push_back(

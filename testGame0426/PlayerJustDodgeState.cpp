@@ -9,7 +9,7 @@
 
 void PlayerJustDodgeState::OnStart()
 {
-	Time::GetInstance().SetTimeScale(0.2f);
+	Time::GetInstance().SetWorldTimeScale(0.2f);
 	GetPlayer()->AddBullet();
 }
 
@@ -36,7 +36,7 @@ void PlayerJustDodgeState::OnUpdate()
 		0.2f +
 		(1.0f - 0.2f) * ease;
 
-	Time::GetInstance().SetTimeScale(timeScale);
+	Time::GetInstance().SetWorldTimeScale(timeScale);
 
 	// 回避時間が経過したらステート変更
 	if (justDodgeTimer >=
@@ -71,5 +71,5 @@ void PlayerJustDodgeState::OnUpdate()
 
 void PlayerJustDodgeState::OnExit()
 {
-	Time::GetInstance().SetTimeScale(1.0f);
+	Time::GetInstance().SetWorldTimeScale(1.0f);
 }

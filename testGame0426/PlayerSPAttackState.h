@@ -1,7 +1,7 @@
 #pragma once
 #include "PlayerStateBase.h"
 
-class PlayerAttackState : public PlayerStateBase
+class PlayerSPAttackState : public PlayerStateBase
 {
 public:
 	void OnStart() override;
@@ -10,7 +10,7 @@ public:
 
 	const char* GetName() const override
 	{
-		return "Attack";
+		return "SPAttack";
 	}
 private:
 	int currentStep = 0;
@@ -18,7 +18,6 @@ private:
 	AttackPhase phase = AttackPhase::Windup;
 	bool hasHit = false;
 	bool nextComboRequested = false;
-	bool spAttack = false;
 
 	void PlayAttackAnimation(int step);
 };

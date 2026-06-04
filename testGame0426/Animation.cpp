@@ -115,7 +115,7 @@ void Animation::Update()
 	{
 		animBlendRate +=
 			ANIM_BLEND_SPEED *
-			Time::GetInstance().GetTimeScale();
+			Time::GetInstance().GetWorldTimeScale();
 
 		if (animBlendRate > 1.0f)
 		{
@@ -141,7 +141,7 @@ void Animation::Update()
 
 		currentAnimCount +=
 			ANIM_PLAY_SPEED *
-			Time::GetInstance().GetTimeScale();
+			Time::GetInstance().GetWorldTimeScale();
 
 		//--------------------------------
 		// èIí[èàóù

@@ -43,7 +43,7 @@ bool AttackCollision::CheckHit(
 	return distance <=
 		(
 			hitSphere->GetRadius() +
-			target->GetBodyRadius()
+			target->GetExtraHitRadius()
 			);
 }
 

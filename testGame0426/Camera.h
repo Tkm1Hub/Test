@@ -28,7 +28,7 @@ private:
 	//==============================
 
 	static constexpr float CAMERA_NEAR = 5.0f;
-	static constexpr float CAMERA_FAR = 2000.0f;
+	static constexpr float CAMERA_FAR = 3000.0f;
 
 	static constexpr float LOOK_OFFSET_Y = 50.0f;
 

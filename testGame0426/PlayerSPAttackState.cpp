@@ -3,15 +3,14 @@
 #include "Input.h"
 #include "PlayerIdleState.h"
 #include "PlayerWalkState.h"
-#include "PlayerAttackState.h"
+#include "PlayerSPAttackState.h"
 #include "PlayerDodgeState.h"
 #include "PlayerBlockState.h"
 #include "Time.h"
 #include "EffectContainer.h"
 #include "Enemy.h"
-#include "PlayerSPAttackState.h"
 
-void PlayerAttackState::OnStart()
+void PlayerSPAttackState::OnStart()
 {
 	auto player = GetPlayer();
 	if (!player)return;
@@ -19,18 +18,11 @@ void PlayerAttackState::OnStart()
 	auto target = player->GetTarget().lock();
 	if (!target)return;
 
-	if (target->GetIsStun())
-	{
-		auto state = std::make_shared<PlayerSPAttackState>();
-		GetPlayer()->ChangeState(state);
-		return;
-	}
-
 	VECTOR targetDir = VSub(
 		target->GetPosition(),
 		player->GetPosition()
 	);
-	
+
 	targetDir.y = 0.0f;
 
 	targetDir = VNorm(targetDir);
@@ -39,7 +31,7 @@ void PlayerAttackState::OnStart()
 	player->SetLookDir(targetDir);
 }
 
-void PlayerAttackState::OnUpdate()
+void PlayerSPAttackState::OnUpdate()
 {
 	// player取得
 	auto player = GetPlayer();
@@ -49,27 +41,14 @@ void PlayerAttackState::OnUpdate()
 	timer += Time::GetInstance().GetScaledDeltaTime() * 60;
 
 	// 攻撃データ取得
-	const AttackData& attackData = player->GetAttackData();
+	const AttackData& SPAttackData = player->GetSPAttackData();
 
 	// 現在段
-	const AttackStep& step = attackData.combo[currentStep];
+	const AttackStep& step = SPAttackData.combo[currentStep];
 
 	//--------------------------------
 	// 次コンボ入力受付
 	//--------------------------------
-
-	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_X))
-	{
-		nextComboRequested = true;
-	}
-
-	// 回避
-	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_RIGHT_SHOULDER))
-	{
-		auto state = std::make_shared<PlayerDodgeState>();
-		player->ChangeState(state);
-		return;
-	}
 
 	switch (phase)
 	{
@@ -105,38 +84,27 @@ void PlayerAttackState::OnUpdate()
 		// ===== 後隙 =====
 	case AttackPhase::Recovery:
 
-		// Lボタンでガード
-		if (Input::GetInput().IsPress(XINPUT_BUTTON_LEFT_SHOULDER))
-		{
-			auto state = std::make_shared<PlayerBlockState>();
-			GetPlayer()->ChangeState(state);
-			return;
-		}
-
-
-		//--------------------------------
-		// 次コンボへ
-		//--------------------------------
-
-		if (nextComboRequested &&
-			currentStep + 1 < attackData.combo.size())
-		{
-
-			currentStep++;
-
-			phase = AttackPhase::Windup;
-
-			hasHit = false;
-
-			nextComboRequested = false;
-
-			return;
-		}
 
 		if (timer >= step.recoveryTime)
 		{
 			timer = 0.0f;
 
+			//--------------------------------
+			// 次コンボへ
+			//--------------------------------
+
+			if (currentStep + 1 < SPAttackData.combo.size())
+			{
+				currentStep++;
+
+				phase = AttackPhase::Windup;
+
+				hasHit = false;
+
+				nextComboRequested = false;
+
+				return;
+			}
 
 			//--------------------------------
 			// コンボ終了
@@ -161,31 +129,23 @@ void PlayerAttackState::OnUpdate()
 		}
 		break;
 	}
+
 }
 
-void PlayerAttackState::OnExit()
+void PlayerSPAttackState::OnExit()
 {
 
 }
 
-void PlayerAttackState::PlayAttackAnimation(int step)
+void PlayerSPAttackState::PlayAttackAnimation(int step)
 {
 	switch (step)
 	{
 	case 0:
-		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash1), false);
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::SPAttack1), false);
 		break;
 	case 1:
-		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash2), false);
-		break;
-	case 2:
-		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash3), false);
-		break;
-	case 3:
-		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash4), false);
-		break;
-	case 4:
-		GetPlayer()->PlayAnimation((int)(PlayerAnimState::Slash5), false);
+		GetPlayer()->PlayAnimation((int)(PlayerAnimState::SPAttack2), false);
 		break;
 	}
 }

@@ -17,6 +17,7 @@
 #include "Stage.h"
 #include "Shadow.h"
 #include "StageCollision.h"
+#include "Sword.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -29,15 +30,18 @@ void TestScene::Init()
 	auto stage = std::make_shared<Stage>();
 	debug = std::make_shared<Debug>();
 	player = std::make_shared<Player>();
+	auto sword = std::make_shared<Sword>();
 	camera = std::make_shared<Camera>();
 	shadow = std::make_shared<Shadow>();
 
 	camera->SetPlayer(player);
 	player->SetCamera(camera);
+	sword->SetOwner(player);
 
 	// オブジェクトリストに追加
 	Objects::GetInstance().Add(stage);
 	Objects::GetInstance().Add(player);
+	Objects::GetInstance().Add(sword);
 
 	// オブジェクト初期化
 	camera->Init();
@@ -91,6 +95,8 @@ void TestScene::Update()
 		enemy->SetPlayer(player);
 
 		Objects::GetInstance().Add(enemy);
+
+		enemy->SetPosition(player->GetPosition());
 	}
 
 	// デバッグ：Shooterスポーン
@@ -101,6 +107,8 @@ void TestScene::Update()
 		enemy->SetPlayer(player);
 
 		Objects::GetInstance().Add(enemy);
+		
+		enemy->SetPosition(player->GetPosition());
 	}
 
 

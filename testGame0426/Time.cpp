@@ -23,5 +23,5 @@ void Time::Update()
         return;
     }
 
-    scaledDeltaTime = deltaTime * timeScale;
+    scaledDeltaTime = deltaTime * worldTimeScale;
 }

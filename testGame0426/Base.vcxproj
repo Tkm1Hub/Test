@@ -62,9 +62,11 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="PlayerSPAttackState.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageCollision.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TargetMarkerUI.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -125,12 +127,14 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shadow.h" />
+    <ClInclude Include="PlayerSPAttackState.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageCollision.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StunComponent.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="TargetMarkerUI.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Time.h" />

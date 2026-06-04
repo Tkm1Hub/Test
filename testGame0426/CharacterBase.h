@@ -22,8 +22,9 @@ public:
 	VECTOR GetCapsuleBottom() const;
 	VECTOR GetCapsuleTop() const;
 	VECTOR GetCapsuleCenter() const;
-	float GetBodyRadius() const { return bodyRadius + extraHitRadius; }
+	float GetBodyRadius() const { return bodyRadius; }
 	float GetBodyHeight() const { return bodyHeight; }
+	float GetExtraHitRadius() const { return bodyRadius + extraHitRadius; }
 	void SetExtraHitRadius(float radius) { extraHitRadius = radius; }
 
 	// ステート名取得

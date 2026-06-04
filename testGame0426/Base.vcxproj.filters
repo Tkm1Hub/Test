@@ -203,6 +203,12 @@
     <Filter Include="ソース ファイル\Collision\StageCollision">
       <UniqueIdentifier>{ff3b14b5-ac26-4d4f-8558-99c0229b185c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\Swrod">
+      <UniqueIdentifier>{79ff8e20-b823-4a7f-8c96-51e9eb4fbf32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\SPAttack">
+      <UniqueIdentifier>{c132e087-0122-4982-bdbf-774d595e046d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -360,6 +366,12 @@
     </ClCompile>
     <ClCompile Include="StageCollision.cpp">
       <Filter>ソース ファイル\Collision\StageCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>ソース ファイル\object\Swrod</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSPAttackState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\SPAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -554,6 +566,12 @@
     </ClInclude>
     <ClInclude Include="StageCollision.h">
       <Filter>ソース ファイル\Collision\StageCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>ソース ファイル\object\Swrod</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSPAttackState.h">
+      <Filter>ソース ファイル\State\PlayerState\SPAttack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

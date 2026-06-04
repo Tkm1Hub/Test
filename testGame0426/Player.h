@@ -26,6 +26,8 @@ enum class PlayerAnimState :int
 	BlockStart = 17,		// ガード開始
 	BlockIdle = 18,		// ガード中
 	Parry = 19,			// パリィ
+	SPAttack1 = 20,		// スペシャル攻撃1段
+	SPAttack2 = 21,		// スペシャル攻撃2段
 };
 
 class Camera;
@@ -53,6 +55,7 @@ public:
 
 	const AttackData& GetAttackData() { return attackData; }
 	const AttackStep& GetFireData() { return fireData; }
+	const AttackData& GetSPAttackData() { return SPAttackData; }
 
 	PlayerParameter& GetParam() { return param; }
 
@@ -75,11 +78,19 @@ public:
 	void OnParry(const DamageInfo& info);
 
 	void UpdateTransparency(float cameraDistance);
+
+	const MATRIX GetHandMatrix()const { return handMatrix; }
+	const int GetHandBoneIndex() const { return handBoneIndex; }
 private:
 	PlayerParameter param;				// パラメーター
 	AttackStep fireData;				// 射撃データ
+	AttackData SPAttackData;
 	std::weak_ptr<Camera> camera;
 	std::weak_ptr<Enemy> target;
+
+	// 手のボーン
+	int handBoneIndex = -1;
+	MATRIX handMatrix;
 
 	bool isLockOn = false;
 	bool isAim = false;

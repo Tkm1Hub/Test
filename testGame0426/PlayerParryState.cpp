@@ -15,7 +15,7 @@ void PlayerParryState::OnStart()
 
     GetPlayer()->PlayAnimation((int)(PlayerAnimState::Parry), false);
 
-    Time::GetInstance().SetTimeScale(0.05f);
+    Time::GetInstance().SetWorldTimeScale(0.05f);
 
     auto target = GetPlayer()->GetTarget().lock();
 
@@ -34,7 +34,7 @@ void PlayerParryState::OnStart()
         GetPlayer()->SetExternalVelocity(
             VScale(
                 VScale(
-                    targetDir, -1), 35)
+                    targetDir, -1), 15)
         );
     }
 
@@ -64,7 +64,7 @@ void PlayerParryState::OnUpdate()
         0.2f +
         (1.0f - 0.2f) * ease;
 
-    Time::GetInstance().SetTimeScale(timeScale);
+    Time::GetInstance().SetWorldTimeScale(timeScale);
 
     // ŽžŠÔŒo‰ß‚ÅŒ³‚É–ß‚·
     if (parryTimer >= parryTime)

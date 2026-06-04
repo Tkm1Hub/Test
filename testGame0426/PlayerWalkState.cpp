@@ -19,6 +19,7 @@ void PlayerWalkState::OnUpdate()
 {
 	GetPlayer()->MoveInput();
 
+
 	// 左スティックが入力なしならIdle
 	if (!Input::GetInput().GetIsMoveLStick())
 	{

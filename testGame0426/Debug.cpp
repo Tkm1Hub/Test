@@ -13,15 +13,15 @@ void Debug::Update()
 
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		float timeScale = Time::GetInstance().GetTimeScale();
+		float timeScale = Time::GetInstance().GetWorldTimeScale();
 		timeScale += 0.01f;
-		Time::GetInstance().SetTimeScale(timeScale);
+		Time::GetInstance().SetWorldTimeScale(timeScale);
 	}
 	else if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		float timeScale = Time::GetInstance().GetTimeScale();
+		float timeScale = Time::GetInstance().GetWorldTimeScale();
 		timeScale -= 0.01f;
-		Time::GetInstance().SetTimeScale(timeScale);
+		Time::GetInstance().SetWorldTimeScale(timeScale);
 	}
 
 }
@@ -96,7 +96,7 @@ void Debug::DrawInputDebug()
 		Input::GetInput().GetNowFrameInput());
 
 	printfDx("TimeScale : %.1f \n",
-		Time::GetInstance().GetTimeScale());
+		Time::GetInstance().GetWorldTimeScale());
 }
 
 //

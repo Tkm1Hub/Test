@@ -17,6 +17,7 @@ public:
 	VECTOR GetPosition() const { return pos; }
 	VECTOR GetForward() const { return forward; }
 	VECTOR GetScale() const { return scale; }
+	float GetAlpha() const { return alpha; }
 	bool GetIsActive() const { return isActive; }
 	bool GetIsDestoroy() const { return isDestroy; }
 	bool GetIsCollision() const { return isCollisionEnabled; }
@@ -39,7 +40,7 @@ public:
 protected:
 	float moveAccel = 0.14f;
 	float moveDecel = 0.8f;
-	float extDecel = 0.83f;
+	float extDecel = 0.9f;
 	float angleSpeed = 0.5f;
 	float gravity = 0.2f;
 	float alpha = 1.0f;
