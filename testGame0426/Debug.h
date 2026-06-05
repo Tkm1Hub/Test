@@ -14,4 +14,7 @@ private:
 	void DrawCylinder(VECTOR pos, float radius, float height, float division, unsigned int color);
 	void DrawObjectInfo();
 	void DrawCharacterCollision();
+
+	bool prevF1 = false;
+	bool isDebugMode = false;
 };

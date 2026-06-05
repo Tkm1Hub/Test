@@ -50,6 +50,10 @@ void Enemy::Update()
 
 	// ステージとの当たり判定
 	ResolveStageCollision();
+
+	// アニメーションの更新
+	animation.Update();
+
 }
 
 void Enemy::MoveTo(const VECTOR& targetPos)
@@ -131,6 +135,8 @@ void Enemy::OnHit(const DamageInfo& info)
 	SetExternalVelocity(
 		VScale(info.hitDir, info.knockBackPower)
 	);
+
+	SetLookDir(VScale(info.hitDir, -1));
 
 	// 死亡判定
 	if (IsDead())

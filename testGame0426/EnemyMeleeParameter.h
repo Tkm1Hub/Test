@@ -49,14 +49,14 @@ struct EnemyMeleeParameter : EnemyParameter
         maxFallSpeed = 1.0f;
 
         // ===== “–‚½‚è”»’è =====
-        bodyRadius = 8.0f;
-        bodyHeight = 24.0f;
+        bodyRadius = 15.0f;
+        bodyHeight = 30.0f;
 
         // ===== ƒRƒ“ƒ{ =====
         combo =
         {
             {
-                .windupTime = 35.0f,
+                .windupTime = 60.0f,
                 .activeTime = 10.0f,
                 .recoveryTime = 45.0f,
 

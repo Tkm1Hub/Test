@@ -31,7 +31,7 @@ struct PlayerParameter
 	float attackMoveSpeed = 8.0f;			// UŒ‚ˆÚ“®‘¬“x
 	float attackHitRadius = 20.0f;			// HitSphere”¼Œa
 
-	float SearchEnemyDistance = 360.0f;	// “GŒŸõ‹——£
+	float SearchEnemyDistance = 450.0f;	// “GŒŸõ‹——£
 
 	// ===== ƒ_ƒ[ƒW =====
 	float damageTime = 4.0f;		// ”íƒ_ƒ[ƒWd’¼ŠÔ

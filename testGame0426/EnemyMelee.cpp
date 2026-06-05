@@ -20,10 +20,37 @@ void EnemyMelee::Init()
 	bodyRadius = param.bodyRadius;
 	stunTime = param.stunTime;
 	bodyHeight = param.bodyHeight;
+	scale = VGet(0.5f, 0.5f, 0.5f);
+
+	modelHandle = MV1LoadModel("data/model/EnemyMelee.mv1");
+	MV1SetScale(modelHandle, scale);
+
+	// アニメーション
+	animation.LoadModel(modelHandle);
+	animation.AddAnimation(
+		(int)EnemyAnimState::Idle,
+		MV1LoadModel("data/animation/EnemyMelee/Idle.mv1")
+	);
+	animation.AddAnimation(
+		(int)EnemyAnimState::Chase,
+		MV1LoadModel("data/animation/EnemyMelee/Run.mv1")
+	);
+	animation.AddAnimation(
+		(int)EnemyAnimState::Attack,
+		MV1LoadModel("data/animation/EnemyMelee/Attack.mv1")
+	);
+	animation.AddAnimation(
+		(int)EnemyAnimState::Damage,
+		MV1LoadModel("data/animation/EnemyMelee/Damage.mv1")
+	);
+	animation.AddAnimation(
+		(int)EnemyAnimState::Dead,
+		MV1LoadModel("data/animation/EnemyMelee/Dead.mv1")
+	);
 
 	// UI生成
 	auto ui = UIFactory::CreateHPBarUI(
-		std::static_pointer_cast<DamageableObject>(shared_from_this())
+		std::static_pointer_cast<CharacterBase>(shared_from_this())
 	);
 
 	UIContainer::GetInstance().Add(ui);
@@ -43,16 +70,6 @@ void EnemyMelee::Update()
 
 void EnemyMelee::Draw()
 {
-	DrawCapsule3D(
-		GetCapsuleBottom(),
-		GetCapsuleTop(),
-		param.bodyRadius,
-		8,
-		GetColor(255, 0, 0),
-		GetColor(0, 0, 0),
-		TRUE
-	);
-
 	Object::Draw();
 }
 

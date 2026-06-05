@@ -8,6 +8,7 @@
 
 void EnemyDamageState::OnStart()
 {
+    GetEnemy()->PlayAnimation((int)(EnemyAnimState::Damage), false);
 }
 
 void EnemyDamageState::OnUpdate()

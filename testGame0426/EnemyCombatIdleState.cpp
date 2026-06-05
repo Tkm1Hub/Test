@@ -7,7 +7,7 @@
 
 void EnemyCombatIdleState::OnStart()
 {
-
+	GetEnemy()->PlayAnimation((int)(EnemyAnimState::Idle), true);
 }
 
 void EnemyCombatIdleState::OnUpdate()

@@ -5,7 +5,7 @@
 
 void EnemyChaseState::OnStart()
 {
-
+	GetEnemy()->PlayAnimation((int)(EnemyAnimState::Chase), true);
 }
 
 void EnemyChaseState::OnUpdate()

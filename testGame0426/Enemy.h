@@ -5,6 +5,18 @@
 #include "StunComponent.h"
 #include "AttackData.h"
 
+enum class EnemyAnimState :int
+{
+	None = -1,			// なし
+	Idle = 0,			// アイドル
+	Chase = 1,			// 歩き
+	JumpUp = 2,			// ジャンプ開始
+	Fall = 3,			// 落下
+	Attack = 4,			// 攻撃
+	Damage = 5,			// ダメージ
+	Dead = 6,			// 死亡
+};
+
 class Player;
 class Enemy : 
 	public CharacterBase,

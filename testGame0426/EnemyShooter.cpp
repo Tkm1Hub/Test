@@ -22,7 +22,7 @@ void EnemyShooter::Init()
 
 	// UIê∂ê¨
 	auto ui = UIFactory::CreateHPBarUI(
-		std::static_pointer_cast<DamageableObject>(shared_from_this())
+		std::static_pointer_cast<CharacterBase>(shared_from_this())
 	);
 
 	UIContainer::GetInstance().Add(ui);

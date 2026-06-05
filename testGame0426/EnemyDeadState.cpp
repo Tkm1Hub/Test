@@ -12,6 +12,7 @@ void EnemyDeadState::OnStart()
 	enemy->SetIsCollisionEnabled(false);
 
 	// 死亡アニメーション再生など
+	enemy->PlayAnimation((int)(EnemyAnimState::Dead), false);
 }
 
 void EnemyDeadState::OnUpdate()

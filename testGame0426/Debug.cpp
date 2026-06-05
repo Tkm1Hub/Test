@@ -11,6 +11,14 @@
 void Debug::Update()
 {
 
+	bool nowF1 = (CheckHitKey(KEY_INPUT_F1) != 0);
+	if (nowF1 && !prevF1)
+	{
+		isDebugMode = !isDebugMode;
+	}
+
+	if (!isDebugMode)return;
+
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
 		float timeScale = Time::GetInstance().GetWorldTimeScale();
@@ -28,6 +36,8 @@ void Debug::Update()
 
 void Debug::Draw()
 {
+	if (!isDebugMode)return;
+
 	// 地面グリッド
 	DrawGridLine(50.0f, 1000.0f);
 

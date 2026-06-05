@@ -2,9 +2,10 @@
 #include "HPBarUI.h"
 #include "DamageableObject.h"
 #include "StunComponent.h"
+#include "CharacterBase.h"
 
 void HPBarUI::SetTarget(
-	std::weak_ptr<DamageableObject> target
+	std::weak_ptr<CharacterBase> target
 )
 {
 	this->target = target;
@@ -24,12 +25,51 @@ void HPBarUI::Update()
 	// HP割合
 	//--------------------------------
 
-	hpRate =
+	float currentHpRate =
 		static_cast<float>(t->GetHP()) /
 		static_cast<float>(t->GetMaxHP());
 
-	hpRate =
-		std::max(0.0f, std::min(hpRate, 1.0f));
+	currentHpRate =
+		std::clamp(currentHpRate, 0.0f, 1.0f);
+
+	// 初回同期
+	if (damageHpRate <= 0.0f && currentHpRate > 0.0f)
+	{
+		damageHpRate = currentHpRate;
+	}
+
+	// HP減少
+	if (currentHpRate < hpRate)
+	{
+		damageDelayTimer = 0.0f;
+	}
+
+	hpRate = currentHpRate;
+
+	//--------------------------------
+	// ダメージバー更新
+	//--------------------------------
+
+	if (damageHpRate > hpRate)
+	{
+		damageDelayTimer += 1.0f;
+
+		if (damageDelayTimer >= DamageDelay)
+		{
+			damageHpRate +=
+				(hpRate - damageHpRate)
+				* 0.08f;
+
+			if (damageHpRate < hpRate)
+			{
+				damageHpRate = hpRate;
+			}
+		}
+	}
+	else
+	{
+		damageHpRate = hpRate;
+	}
 
 	//--------------------------------
 	// スタン割合
@@ -47,7 +87,7 @@ void HPBarUI::Update()
 			stun->GetMaxStunGauge();
 
 		stunRate =
-			std::max(0.0f, std::min(stunRate, 1.0f));
+			std::clamp(stunRate, 0.0f, 1.0f);
 	}
 
 	//--------------------------------
@@ -56,20 +96,22 @@ void HPBarUI::Update()
 
 	screenPos =
 		ConvWorldPosToScreenPos(
-			t->GetPosition()
+			t->GetCapsuleTop()
 		);
+
+	screenPos.y -= 80;
 }
 
 void HPBarUI::Draw()
 {
+	//--------------------------------
+	// HPバー
+	//--------------------------------
+
 	int left =
 		static_cast<int>(
 			screenPos.x - width * 0.5f
 			);
-
-	//--------------------------------
-	// HPバー
-	//--------------------------------
 
 	int hpTop =
 		static_cast<int>(
@@ -81,6 +123,36 @@ void HPBarUI::Draw()
 			hpTop + hpHeight
 			);
 
+	// 背景
+	DrawBox(
+		left,
+		hpTop,
+		left + static_cast<int>(width),
+		hpBottom,
+		GetColor(30, 30, 30),
+		TRUE
+	);
+
+	// ダメージバー（遅れて減る）
+	DrawBox(
+		left,
+		hpTop,
+		left + static_cast<int>(width * damageHpRate),
+		hpBottom,
+		GetColor(220, 120, 120),
+		TRUE
+	);
+
+	// 現在HP
+	DrawBox(
+		left,
+		hpTop,
+		left + static_cast<int>(width * hpRate),
+		hpBottom,
+		GetColor(180, 40, 40),
+		TRUE
+	);
+
 	// 枠
 	DrawBox(
 		left,
@@ -89,16 +161,6 @@ void HPBarUI::Draw()
 		hpBottom,
 		GetColor(50, 50, 50),
 		FALSE
-	);
-
-	// 中身
-	DrawBox(
-		left,
-		hpTop,
-		left + static_cast<int>(width * hpRate),
-		hpBottom,
-		GetColor(180, 40, 40),
-		TRUE
 	);
 
 	//--------------------------------
