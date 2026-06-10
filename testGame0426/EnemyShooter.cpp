@@ -20,6 +20,8 @@ void EnemyShooter::Init()
 	bodyHeight = param.bodyHeight;
     stunTime = param.stunTime;
 
+    MV1DuplicateModel(modelHandle);
+
 	// UIê∂ê¨
 	auto ui = UIFactory::CreateHPBarUI(
 		std::static_pointer_cast<CharacterBase>(shared_from_this())

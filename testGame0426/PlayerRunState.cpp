@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "PlayerIdleState.h"
+#include "PlayerRunState.h"
 #include "PlayerWalkState.h"
 #include "PlayerJumpState.h"
 #include "PlayerDodgeState.h"
@@ -10,13 +11,13 @@
 #include "PlayerAimState.h"
 #include "PlayerBlockState.h"
 
-void PlayerWalkState::OnStart()
+void PlayerRunState::OnStart()
 {
 	GetPlayer()->PlayAnimation((int)(PlayerAnimState::Walk), true);
-	GetPlayer()->SetMaxMoveSpeed(3.6f);
+	GetPlayer()->SetMaxMoveSpeed(5.0f);
 }
 
-void PlayerWalkState::OnUpdate()
+void PlayerRunState::OnUpdate()
 {
 	GetPlayer()->MoveInput();
 
@@ -82,7 +83,7 @@ void PlayerWalkState::OnUpdate()
 	}
 }
 
-void PlayerWalkState::OnExit()
+void PlayerRunState::OnExit()
 {
 
 }

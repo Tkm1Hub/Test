@@ -35,6 +35,7 @@
     <ClCompile Include="EnemyCombatIdleState.cpp" />
     <ClCompile Include="EnemyDamageState.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
+    <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnemyMelee.cpp" />
     <ClCompile Include="EnemyShooter.cpp" />
     <ClCompile Include="EnemyStateBase.cpp" />
@@ -58,6 +59,7 @@
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
     <ClCompile Include="PlayerJustDodgeState.cpp" />
+    <ClCompile Include="PlayerRunState.cpp" />
     <ClCompile Include="PlayerWalkState.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -71,6 +73,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIFactory.cpp" />
   </ItemGroup>
@@ -91,6 +94,7 @@
     <ClInclude Include="EnemyCombatIdleState.h" />
     <ClInclude Include="EnemyDamageState.h" />
     <ClInclude Include="EnemyDeadState.h" />
+    <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnemyMeleeParameter.h" />
     <ClInclude Include="EnemyParameter.h" />
     <ClInclude Include="EnemyShooter.h" />
@@ -122,6 +126,7 @@
     <ClInclude Include="PlayerJumpState.h" />
     <ClInclude Include="PlayerJustDodgeState.h" />
     <ClInclude Include="PlayerParameter.h" />
+    <ClInclude Include="PlayerRunState.h" />
     <ClInclude Include="PlayerStateBase.h" />
     <ClInclude Include="PlayerWalkState.h" />
     <ClInclude Include="Scene.h" />
@@ -138,6 +143,7 @@
     <ClInclude Include="TargetMarkerUI.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIFactory.h" />

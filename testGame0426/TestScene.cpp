@@ -18,6 +18,7 @@
 #include "Shadow.h"
 #include "StageCollision.h"
 #include "Sword.h"
+#include "EnemyFactory.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -54,6 +55,8 @@ void TestScene::Init()
 
 	shadow->Init();
 
+	EnemyFactory::GetInstance().Init();
+
 	// UI生成
 	auto playerHPUI = std::make_shared<PlayerHPUI>();
 	playerHPUI->SetPlayer(player.get());
@@ -86,40 +89,31 @@ void TestScene::Update()
 	Input::GetInput().Update();
 	Time::GetInstance().Update();
 	debug->Update();
+	UIContainer::GetInstance().Update();
+	Objects::GetInstance().Update();
+	camera->Update();
+	shadow->Update(player->GetPosition());
+
+	EffectContainer::GetInstance().Update();
+
 
 	// デバッグ：Meleeスポーン
 	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_DPAD_UP))
 	{
-		auto enemy = std::make_shared<EnemyMelee>();
-
-		enemy->SetPlayer(player);
-
-		Objects::GetInstance().Add(enemy);
-
-		enemy->SetPosition(player->GetPosition());
+		EnemyFactory::GetInstance().Create(
+			EnemyType::Melee,
+			player,
+			player->GetPosition());
 	}
 
 	// デバッグ：Shooterスポーン
 	if (Input::GetInput().IsTrigger(XINPUT_BUTTON_DPAD_RIGHT))
 	{
-		auto enemy = std::make_shared<EnemyShooter>();
-
-		enemy->SetPlayer(player);
-
-		Objects::GetInstance().Add(enemy);
-		
-		enemy->SetPosition(player->GetPosition());
+		EnemyFactory::GetInstance().Create(
+			EnemyType::Shooter,
+			player,
+			player->GetPosition());
 	}
-
-
-	UIContainer::GetInstance().Update();
-	Objects::GetInstance().Update();
-	camera->Update();
-
-	shadow->Update(player->GetPosition());
-
-	EffectContainer::GetInstance().Update();
-
 }
 
 void TestScene::Draw() const

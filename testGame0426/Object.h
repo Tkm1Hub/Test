@@ -27,6 +27,7 @@ public:
 	const VECTOR& GetMoveDir() const { return moveDir; }
 	bool GetIsGround()const { return isGround; }
 
+	void SetMaxMoveSpeed(const float speed) { maxMoveSpeed = speed; }
 	void SetPosition(const VECTOR& newPos) { pos = newPos; }
 	void SetMoveVelocity(const VECTOR& velocity) { moveVelocity = velocity; }
 	void SetExternalVelocity(const VECTOR& velocity) { externalVelocity = velocity; }

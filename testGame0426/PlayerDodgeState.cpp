@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "PlayerIdleState.h"
-#include "PlayerWalkState.h"
+#include "PlayerRunState.h"
 #include "PlayerDodgeState.h"
 #include "Enemy.h"
 #include "Time.h"
@@ -14,6 +14,8 @@ void PlayerDodgeState::OnStart()
 	auto player = GetPlayer();
 
 	auto target = player->GetTarget().lock();
+
+	player->SetMaxMoveSpeed(2.0f);
 
 	//--------------------------------
 	// 向きを合わせる
@@ -93,6 +95,8 @@ void PlayerDodgeState::OnUpdate()
 
 	dodgeTimer += Time::GetInstance().GetDeltaTime();
 
+	GetPlayer()->MoveInput();
+
 	// 回避時間が経過したらステート変更
 	if (dodgeTimer >=
 		GetPlayer()->GetParam().dodgeTime)
@@ -102,7 +106,7 @@ void PlayerDodgeState::OnUpdate()
 		{
 			// Walk
 			auto state =
-				std::make_shared<PlayerWalkState>();
+				std::make_shared<PlayerRunState>();
 
 			GetPlayer()->ChangeState(state);
 		}

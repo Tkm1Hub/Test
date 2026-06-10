@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "TestScene.h"
+#include "TitleScene.h"
 #include "Font.h"
 
 //画面設定
@@ -63,7 +64,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	std::shared_ptr<SceneManager> sceneManager = std::make_shared<SceneManager>();
 
+	sceneManager->Add<TitleScene>("Title");
 	sceneManager->Add<TestScene>("Test");
+
 
 	//メインループ開始、ESCキーで終了
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)

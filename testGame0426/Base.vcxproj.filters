@@ -209,6 +209,15 @@
     <Filter Include="ソース ファイル\State\PlayerState\SPAttack">
       <UniqueIdentifier>{c132e087-0122-4982-bdbf-774d595e046d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scenes\TitleScene">
+      <UniqueIdentifier>{000d840b-3cef-46aa-adee-745ba8b30025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState\Run">
+      <UniqueIdentifier>{2402676e-415f-4840-b3b3-48577d08174a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\EnemyFactory">
+      <UniqueIdentifier>{9e0148ef-5990-4415-8297-0d3c8680b740}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -372,6 +381,15 @@
     </ClCompile>
     <ClCompile Include="PlayerSPAttackState.cpp">
       <Filter>ソース ファイル\State\PlayerState\SPAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>ソース ファイル\Scenes\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRunState.cpp">
+      <Filter>ソース ファイル\State\PlayerState\Run</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>ソース ファイル\EnemyFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,6 +590,15 @@
     </ClInclude>
     <ClInclude Include="PlayerSPAttackState.h">
       <Filter>ソース ファイル\State\PlayerState\SPAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>ソース ファイル\Scenes\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunState.h">
+      <Filter>ソース ファイル\State\PlayerState\Run</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>ソース ファイル\EnemyFactory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

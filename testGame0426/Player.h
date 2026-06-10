@@ -28,6 +28,7 @@ enum class PlayerAnimState :int
 	Parry = 19,			// パリィ
 	SPAttack1 = 20,		// スペシャル攻撃1段
 	SPAttack2 = 21,		// スペシャル攻撃2段
+	Run = 22,			// ダッシュ
 };
 
 class Camera;

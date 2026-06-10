@@ -93,7 +93,7 @@ void Camera::Update()
 	// ステージ当たり判定
 	//--------------------------------
 
-	ResolveStageCollision(target,pos);
+	ResolveStageCollision(p->GetCapsuleTop(), pos);
 
 	//--------------------------------
 	// forward更新
@@ -667,7 +667,7 @@ VECTOR Camera::SmoothTarget(
 }
 
 void Camera::ResolveStageCollision(
-	const VECTOR& targetPos,
+	const VECTOR& playerPos,
 	VECTOR& cameraPos
 )
 {
@@ -675,7 +675,7 @@ void Camera::ResolveStageCollision(
 		MV1CollCheck_Line(
 			StageCollision::GetInstance().GetCollisionModelHandle(),
 			-1,
-			targetPos,
+			playerPos,
 			cameraPos
 		);
 
@@ -683,7 +683,7 @@ void Camera::ResolveStageCollision(
 	{
 		VECTOR dir =
 			VNorm(
-				VSub(cameraPos, targetPos)
+				VSub(cameraPos, playerPos)
 			);
 
 		cameraPos =

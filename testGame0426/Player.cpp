@@ -51,6 +51,10 @@ void Player::Init()
 		MV1LoadModel("data/animation/Running.mv1")
 	);
 	animation.AddAnimation(
+		(int)PlayerAnimState::Run,
+		MV1LoadModel("data/animation/Run.mv1")
+	);
+	animation.AddAnimation(
 		(int)PlayerAnimState::JumpUp,
 		MV1LoadModel("data/animation/JumpingUp.mv1")
 	);

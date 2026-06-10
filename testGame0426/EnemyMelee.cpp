@@ -22,7 +22,7 @@ void EnemyMelee::Init()
 	bodyHeight = param.bodyHeight;
 	scale = VGet(0.5f, 0.5f, 0.5f);
 
-	modelHandle = MV1LoadModel("data/model/EnemyMelee.mv1");
+	modelHandle = MV1DuplicateModel(baseModelHandle);
 	MV1SetScale(modelHandle, scale);
 
 	// アニメーション

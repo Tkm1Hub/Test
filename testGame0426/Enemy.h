@@ -58,6 +58,8 @@ public:
 	// 攻撃可能範囲を取得
 	float GetAttackRange() const { return GetParam().attackRange; }
 
+	void SetBaseModelHandle(int handle) { baseModelHandle = handle; }
+
 	// 攻撃クールダウン
 	float GetAttackCoolDown()const { return attackCooldown; }
 	void SetAttackCooldown(float value) { attackCooldown = value; }
@@ -76,4 +78,5 @@ protected:
 	std::weak_ptr<Player> player;
 	float attackCooldown = 0.0f;
 	bool isAttack = false;
+	int baseModelHandle = -1;
 };
