@@ -46,6 +46,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="ParameterContainer.cpp" />
     <ClCompile Include="PlayerParryState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAimState.cpp" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="HPBarUI.h" />
     <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="ParameterContainer.h" />
     <ClInclude Include="PlayerParryState.h" />
     <ClInclude Include="PlayerAimState.h" />
     <ClInclude Include="PlayerAttackState.h" />
@@ -235,7 +237,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../EffekseerForDXLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../EffekseerForDXLib;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -246,7 +248,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../EffekseerForDXLib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../EffekseerForDXLib;include</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -218,6 +218,9 @@
     <Filter Include="ソース ファイル\EnemyFactory">
       <UniqueIdentifier>{9e0148ef-5990-4415-8297-0d3c8680b740}</UniqueIdentifier>
     </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{7bec6fb8-ba6a-41ee-aadf-5c0dd5fa2127}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -390,6 +393,9 @@
     </ClCompile>
     <ClCompile Include="EnemyFactory.cpp">
       <Filter>ソース ファイル\EnemyFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ParameterContainer.cpp">
+      <Filter>json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -599,6 +605,9 @@
     </ClInclude>
     <ClInclude Include="EnemyFactory.h">
       <Filter>ソース ファイル\EnemyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterContainer.h">
+      <Filter>json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

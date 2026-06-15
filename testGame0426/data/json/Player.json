@@ -1,0 +1,174 @@
+{
+  "HP": 100,
+  "BulletNum": 3,
+  "attackPower": 12,
+  "stunPower": 30,
+
+  "scale": {
+    "x": 0.5,
+    "y": 0.5,
+    "z": 0.5
+  },
+
+  "move": {
+    "moveAccel": 0.14,
+    "moveDecel": 0.84,
+    "maxMoveSpeed": 3.6,
+    "jumpPower": 5.0,
+    "angleSpeed": 0.22
+  },
+
+  "aim": {
+    "aimTriggerDeadZone": 0.3,
+    "fireTriggerDeadZone": 0.5,
+    "fireKnockBackPower": 12.0
+  },
+
+  "attack": {
+    "windupTime": 0.0,
+    "activeTime": 12.0,
+    "recoveryTime": 6.0,
+
+    "attackForwardOffset": 18.0,
+    "attackMoveSpeed": 8.0,
+    "attackHitRadius": 20.0,
+
+    "SearchEnemyDistance": 450.0
+  },
+
+  "damage": {
+    "damageTime": 4.0
+  },
+
+  "dodge": {
+    "dodgeSpeed": 12.0,
+    "dodgeTime": 0.6
+  },
+
+  "collision": {
+    "bodyRadius": 15.0,
+    "bodyHeight": 32.0,
+    "extraHitRadius": 50.0
+  },
+
+  "bullet": {
+    "bulletSpeed": 35.0,
+
+    "attackStep": {
+      "windupTime": 20.0,
+      "activeTime": 8.0,
+      "recoveryTime": 20.0,
+      "damage": 20,
+      "stunPower": 50.0,
+      "attackMoveSpeed": 6.0,
+      "attackHitRadius": 18.0,
+      "attackForwardOffset": 16.0,
+      "knockBackPower": 30.0
+    }
+  },
+
+  "combo": [
+    {
+      "windupTime": 5.0,
+      "activeTime": 5.0,
+      "recoveryTime": 15.0,
+      "damage": 9,
+      "stunPower": 3.0,
+      "attackMoveSpeed": 4.0,
+      "attackHitRadius": 16.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 5.0,
+      "activeTime": 5.0,
+      "recoveryTime": 15.0,
+      "damage": 10,
+      "stunPower": 5.0,
+      "attackMoveSpeed": 5.0,
+      "attackHitRadius": 18.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 10.0,
+      "activeTime": 5.0,
+      "recoveryTime": 15.0,
+      "damage": 14,
+      "stunPower": 7.0,
+      "attackMoveSpeed": 5.0,
+      "attackHitRadius": 22.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 10.0,
+      "activeTime": 5.0,
+      "recoveryTime": 18.0,
+      "damage": 22,
+      "stunPower": 10.0,
+      "attackMoveSpeed": 6.0,
+      "attackHitRadius": 26.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 40.0,
+      "activeTime": 5.0,
+      "recoveryTime": 25.0,
+      "damage": 45,
+      "stunPower": 20.0,
+      "attackMoveSpeed": 7.0,
+      "attackHitRadius": 35.0,
+      "attackForwardOffset": 40.0,
+      "knockBackPower": 10.0
+    }
+  ],
+
+  "SPAttack": [
+    {
+      "windupTime": 50.0,
+      "activeTime": 3.0,
+      "recoveryTime": 0.0,
+      "damage": 40,
+      "stunPower": 3.0,
+      "attackMoveSpeed": 10.0,
+      "attackHitRadius": 45.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 0.0,
+      "activeTime": 3.0,
+      "recoveryTime": 2.0,
+      "damage": 45,
+      "stunPower": 5.0,
+      "attackMoveSpeed": 0.0,
+      "attackHitRadius": 50.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 0.0,
+      "activeTime": 3.0,
+      "recoveryTime": 2.0,
+      "damage": 45,
+      "stunPower": 5.0,
+      "attackMoveSpeed": 0.0,
+      "attackHitRadius": 50.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    },
+    {
+      "windupTime": 0.0,
+      "activeTime": 3.0,
+      "recoveryTime": 2.0,
+      "damage": 45,
+      "stunPower": 5.0,
+      "attackMoveSpeed": 0.0,
+      "attackHitRadius": 50.0,
+      "attackForwardOffset": 30.0,
+      "knockBackPower": 5.0
+    }
+  ]
+}

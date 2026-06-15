@@ -19,6 +19,7 @@
 #include "StageCollision.h"
 #include "Sword.h"
 #include "EnemyFactory.h"
+#include "ParameterContainer.h"
 
 TestScene::TestScene(SceneManager& manager)
 	:Scene{manager}{ }
@@ -27,6 +28,8 @@ TestScene::~TestScene(){}
 
 void TestScene::Init()
 {
+	ParameterContainer::GetInstance().Load();
+
 	// オブジェクト生成
 	auto stage = std::make_shared<Stage>();
 	debug = std::make_shared<Debug>();

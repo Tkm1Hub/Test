@@ -9,3 +9,4 @@
 #include <algorithm>
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
+#include "nlohmann/json.hpp"

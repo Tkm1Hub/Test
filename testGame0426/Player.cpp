@@ -12,6 +12,7 @@
 #include "PlayerBlockState.h"
 #include "PlayerParryState.h"
 #include "Enemy.h"
+#include "ParameterContainer.h"
 
 void Player::SetCamera(const std::weak_ptr<Camera>& cameraPtr)
 {
@@ -29,6 +30,8 @@ void Player::Init()
 	// 初期ステートをIdleに設定
 	auto spIdleState = std::make_shared<PlayerIdleState>();
 	ChangeState(spIdleState);
+
+	param = ParameterContainer::GetInstance().GetPlayerParameter();
 
 	MaxHP = param.HP;
 	HP = MaxHP;
